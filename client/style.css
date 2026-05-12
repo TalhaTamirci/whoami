@@ -1,7 +1,5 @@
 /* ══════════════════════════════════════
-   Ben Kimim? — Placeholder Stiller
-   Kullanıcı kendi tasarımını yapacak,
-   bu dosya sadece layout + minimal stil.
+   Ben Kimim? — Flat Design Stiller
    ══════════════════════════════════════ */
 
 * {
@@ -11,9 +9,9 @@
 }
 
 body {
-    font-family: Arial, sans-serif;
-    background: #1a1a2e;
-    color: #eee;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #f5f6fa;
+    color: #2f3640;
     min-height: 100vh;
 }
 
@@ -40,15 +38,20 @@ body {
     max-width: 400px;
     width: 100%;
     text-align: center;
+    background: #ffffff;
+    padding: 30px;
+    border-radius: 8px;
+    border: 1px solid #dcdde1;
 }
 
 .lobby-container h1 {
     font-size: 2rem;
     margin-bottom: 5px;
+    color: #2f3640;
 }
 
 .subtitle {
-    color: #888;
+    color: #7f8fa6;
     margin-bottom: 25px;
 }
 
@@ -61,73 +64,82 @@ body {
     display: block;
     margin-bottom: 5px;
     font-size: 0.9rem;
+    font-weight: bold;
 }
 
 .hint {
-    color: #666;
+    color: #7f8fa6;
     font-size: 0.8rem;
+    font-weight: normal;
 }
 
 input[type="text"] {
     width: 100%;
     padding: 10px 14px;
-    border: 2px solid #333;
-    border-radius: 8px;
-    background: #16213e;
-    color: #eee;
+    border: 2px solid #dcdde1;
+    border-radius: 6px;
+    background: #ffffff;
+    color: #2f3640;
     font-size: 1rem;
     outline: none;
 }
 
 input[type="text"]:focus {
-    border-color: #e94560;
+    border-color: #0097e6;
 }
 
 /* ── Butonlar ────────────────────── */
 .btn-primary {
     padding: 12px 24px;
     border: none;
-    border-radius: 8px;
-    background: #e94560;
-    color: #fff;
+    border-radius: 6px;
+    background: #0097e6;
+    color: #ffffff;
     font-size: 1rem;
+    font-weight: bold;
     cursor: pointer;
     margin-top: 10px;
-    transition: background 0.2s;
 }
 
 .btn-primary:hover {
-    background: #c73a52;
+    background: #00a8ff;
 }
 
 .btn-primary:disabled {
-    background: #555;
+    background: #dcdde1;
+    color: #7f8fa6;
     cursor: not-allowed;
 }
 
 .btn-small {
     padding: 4px 8px;
-    border: 1px solid #444;
+    border: 1px solid #dcdde1;
     border-radius: 4px;
-    background: transparent;
-    color: #eee;
+    background: #f5f6fa;
+    color: #2f3640;
     cursor: pointer;
     font-size: 0.8rem;
+}
+
+.btn-small:hover {
+    background: #e84118;
+    color: #ffffff;
 }
 
 /* ── Oda kodu ────────────────────── */
 .room-code-display {
     margin: 20px 0 10px;
     padding: 10px;
-    background: #16213e;
-    border-radius: 8px;
+    background: #f5f6fa;
+    border: 1px solid #dcdde1;
+    border-radius: 6px;
     font-size: 1.2rem;
     font-weight: bold;
     letter-spacing: 3px;
 }
 
 #display-room-code {
-    color: #e94560;
+    color: #0097e6;
 }
 
 /* ── Oyuncu listesi (lobby) ──────── */
@@ -138,28 +150,30 @@ input[type="text"]:focus {
 }
 
 #player-list li {
-    padding: 6px 10px;
-    border-bottom: 1px solid #333;
+    padding: 8px 10px;
+    border-bottom: 1px solid #dcdde1;
 }
 
 #player-list li .host-badge {
-    color: #f0a500;
+    color: #e1b12c;
     font-size: 0.75rem;
     margin-left: 5px;
+    font-weight: bold;
 }
 
 /* ── Bağlantı durumu ─────────────── */
 #connection-status {
     margin-top: 20px;
     font-size: 0.8rem;
+    font-weight: bold;
 }
 
 .status-disconnected {
-    color: #e94560;
+    color: #e84118;
 }
 
 .status-connected {
-    color: #4ecca3;
+    color: #44bd32;
 }
 
 /* ══════════════════════════════════
@@ -168,13 +182,14 @@ input[type="text"]:focus {
 
 .game-header {
     text-align: center;
-    margin-bottom: 10px;
+    margin-bottom: 20px;
 }
 
 .room-badge {
-    font-size: 0.8rem;
-    color: #888;
-    letter-spacing: 2px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    color: #7f8fa6;
+    letter-spacing: 1px;
 }
 
 /* ── Masa alanı ──────────────────── */
@@ -193,16 +208,17 @@ input[type="text"]:focus {
     width: 150px;
     height: 150px;
     border-radius: 50%;
-    background: #16213e;
-    border: 3px solid #333;
+    background: #ffffff;
+    border: 2px solid #dcdde1;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
 .table-placeholder {
-    color: #555;
+    color: #7f8fa6;
     font-size: 0.9rem;
+    font-weight: bold;
 }
 
 /* ── Oyuncu yuvarları ────────────── */
@@ -224,53 +240,61 @@ input[type="text"]:focus {
     width: 60px;
     height: 60px;
     border-radius: 50%;
-    background: #0f3460;
-    border: 3px solid #e94560;
+    background: #dcdde1;
+    border: 3px solid #7f8fa6;
+    color: #2f3640;
     display: flex;
     justify-content: center;
     align-items: center;
     margin: 0 auto;
     font-size: 1.5rem;
+    font-weight: bold;
 }
 
 .player-avatar.revealed {
-    background: #4ecca3;
-    border-color: #4ecca3;
-    color: #1a1a2e;
+    background: #44bd32;
+    border-color: #44bd32;
+    color: #ffffff;
 }
 
 .player-assigned-name {
     margin-top: 4px;
-    padding: 3px 8px;
-    background: #e94560;
-    border-radius: 10px;
-    font-size: 0.75rem;
+    padding: 4px 8px;
+    background: #0097e6;
+    color: #ffffff;
+    border-radius: 4px;
+    font-size: 0.8rem;
     font-weight: bold;
     white-space: nowrap;
     display: inline-block;
 }
 
 .player-assigned-name.mystery {
-    background: #f0a500;
-    color: #000;
+    background: #e1b12c;
+    color: #ffffff;
 }
 
 .player-assigned-name.revealed {
-    background: #4ecca3;
-    color: #000;
+    background: #44bd32;
+    color: #ffffff;
 }
 
 .player-real-name {
-    font-size: 0.7rem;
-    color: #999;
-    margin-top: 2px;
+    font-size: 0.8rem;
+    font-weight: bold;
+    color: #7f8fa6;
+    margin-top: 4px;
 }
 
 /* ── Tahmin alanı ────────────────── */
 #guess-area {
     max-width: 500px;
-    margin: 20px auto 0;
+    margin: 30px auto 0;
     text-align: center;
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    border: 1px solid #dcdde1;
 }
 
 .guess-input-row {
@@ -283,22 +307,23 @@ input[type="text"]:focus {
 }
 
 #guess-feedback {
-    padding: 8px 12px;
+    padding: 10px 12px;
     border-radius: 6px;
     margin-bottom: 10px;
     font-size: 0.9rem;
+    font-weight: bold;
 }
 
 #guess-feedback.correct {
-    background: #1b4332;
-    color: #4ecca3;
-    border: 1px solid #4ecca3;
+    background: #e5f9e7;
+    color: #44bd32;
+    border: 1px solid #44bd32;
 }
 
 #guess-feedback.wrong {
-    background: #3d0814;
-    color: #e94560;
-    border: 1px solid #e94560;
+    background: #fdeaea;
+    color: #e84118;
+    border: 1px solid #e84118;
 }
 
 /* ══════════════════════════════════
@@ -309,14 +334,20 @@ input[type="text"]:focus {
     text-align: center;
     max-width: 400px;
     width: 100%;
+    background: #ffffff;
+    padding: 30px;
+    border-radius: 8px;
+    border: 1px solid #dcdde1;
 }
 
 .result-container h1 {
     margin-bottom: 20px;
+    color: #2f3640;
 }
 
 #rankings-list {
     text-align: left;
+    margin-bottom: 20px;
 }
 
 .ranking-item {
@@ -324,7 +355,7 @@ input[type="text"]:focus {
     align-items: center;
     gap: 12px;
     padding: 10px;
-    border-bottom: 1px solid #333;
+    border-bottom: 1px solid #dcdde1;
 }
 
 .ranking-position {
@@ -334,9 +365,9 @@ input[type="text"]:focus {
     text-align: center;
 }
 
-.ranking-position.gold { color: #f0a500; }
-.ranking-position.silver { color: #c0c0c0; }
-.ranking-position.bronze { color: #cd7f32; }
+.ranking-position.gold { color: #e1b12c; }
+.ranking-position.silver { color: #7f8fa6; }
+.ranking-position.bronze { color: #cd6133; }
 
 .ranking-details {
     flex: 1;
@@ -344,9 +375,10 @@ input[type="text"]:focus {
 
 .ranking-details .name {
     font-weight: bold;
+    color: #2f3640;
 }
 
 .ranking-details .assigned {
     font-size: 0.8rem;
-    color: #888;
+    color: #7f8fa6;
 }
