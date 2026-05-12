@@ -39,3 +39,4 @@ Sunucu `ws://localhost:8765` adresinde başlayacak.
 - Frontend: Vanilla HTML/CSS/JS
 - WebSocket portu: 8765
 - Minimum oyuncu: 2
+site:https://talhatamirci.github.io/whoami/client/index.html
