@@ -1,0 +1,352 @@
+/* ══════════════════════════════════════
+   Ben Kimim? — Placeholder Stiller
+   Kullanıcı kendi tasarımını yapacak,
+   bu dosya sadece layout + minimal stil.
+   ══════════════════════════════════════ */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #1a1a2e;
+    color: #eee;
+    min-height: 100vh;
+}
+
+/* ── Ekran yönetimi ─────────────── */
+.screen {
+    display: none;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.screen.active {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* ── LOBBY ───────────────────────── */
+.lobby-container {
+    max-width: 400px;
+    width: 100%;
+    text-align: center;
+}
+
+.lobby-container h1 {
+    font-size: 2rem;
+    margin-bottom: 5px;
+}
+
+.subtitle {
+    color: #888;
+    margin-bottom: 25px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-size: 0.9rem;
+}
+
+.hint {
+    color: #666;
+    font-size: 0.8rem;
+}
+
+input[type="text"] {
+    width: 100%;
+    padding: 10px 14px;
+    border: 2px solid #333;
+    border-radius: 8px;
+    background: #16213e;
+    color: #eee;
+    font-size: 1rem;
+    outline: none;
+}
+
+input[type="text"]:focus {
+    border-color: #e94560;
+}
+
+/* ── Butonlar ────────────────────── */
+.btn-primary {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 8px;
+    background: #e94560;
+    color: #fff;
+    font-size: 1rem;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: background 0.2s;
+}
+
+.btn-primary:hover {
+    background: #c73a52;
+}
+
+.btn-primary:disabled {
+    background: #555;
+    cursor: not-allowed;
+}
+
+.btn-small {
+    padding: 4px 8px;
+    border: 1px solid #444;
+    border-radius: 4px;
+    background: transparent;
+    color: #eee;
+    cursor: pointer;
+    font-size: 0.8rem;
+}
+
+/* ── Oda kodu ────────────────────── */
+.room-code-display {
+    margin: 20px 0 10px;
+    padding: 10px;
+    background: #16213e;
+    border-radius: 8px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    letter-spacing: 3px;
+}
+
+#display-room-code {
+    color: #e94560;
+}
+
+/* ── Oyuncu listesi (lobby) ──────── */
+#player-list {
+    list-style: none;
+    margin: 10px 0;
+    text-align: left;
+}
+
+#player-list li {
+    padding: 6px 10px;
+    border-bottom: 1px solid #333;
+}
+
+#player-list li .host-badge {
+    color: #f0a500;
+    font-size: 0.75rem;
+    margin-left: 5px;
+}
+
+/* ── Bağlantı durumu ─────────────── */
+#connection-status {
+    margin-top: 20px;
+    font-size: 0.8rem;
+}
+
+.status-disconnected {
+    color: #e94560;
+}
+
+.status-connected {
+    color: #4ecca3;
+}
+
+/* ══════════════════════════════════
+   OYUN EKRANI
+   ══════════════════════════════════ */
+
+.game-header {
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.room-badge {
+    font-size: 0.8rem;
+    color: #888;
+    letter-spacing: 2px;
+}
+
+/* ── Masa alanı ──────────────────── */
+#game-table-area {
+    position: relative;
+    width: 500px;
+    height: 500px;
+    margin: 0 auto;
+}
+
+#table-center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    background: #16213e;
+    border: 3px solid #333;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.table-placeholder {
+    color: #555;
+    font-size: 0.9rem;
+}
+
+/* ── Oyuncu yuvarları ────────────── */
+#players-circle {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.player-node {
+    position: absolute;
+    text-align: center;
+    transform: translate(-50%, -50%);
+}
+
+.player-avatar {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: #0f3460;
+    border: 3px solid #e94560;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+    font-size: 1.5rem;
+}
+
+.player-avatar.revealed {
+    background: #4ecca3;
+    border-color: #4ecca3;
+    color: #1a1a2e;
+}
+
+.player-assigned-name {
+    margin-top: 4px;
+    padding: 3px 8px;
+    background: #e94560;
+    border-radius: 10px;
+    font-size: 0.75rem;
+    font-weight: bold;
+    white-space: nowrap;
+    display: inline-block;
+}
+
+.player-assigned-name.mystery {
+    background: #f0a500;
+    color: #000;
+}
+
+.player-assigned-name.revealed {
+    background: #4ecca3;
+    color: #000;
+}
+
+.player-real-name {
+    font-size: 0.7rem;
+    color: #999;
+    margin-top: 2px;
+}
+
+/* ── Tahmin alanı ────────────────── */
+#guess-area {
+    max-width: 500px;
+    margin: 20px auto 0;
+    text-align: center;
+}
+
+.guess-input-row {
+    display: flex;
+    gap: 10px;
+}
+
+.guess-input-row input {
+    flex: 1;
+}
+
+#guess-feedback {
+    padding: 8px 12px;
+    border-radius: 6px;
+    margin-bottom: 10px;
+    font-size: 0.9rem;
+}
+
+#guess-feedback.correct {
+    background: #1b4332;
+    color: #4ecca3;
+    border: 1px solid #4ecca3;
+}
+
+#guess-feedback.wrong {
+    background: #3d0814;
+    color: #e94560;
+    border: 1px solid #e94560;
+}
+
+/* ══════════════════════════════════
+   SONUÇ EKRANI
+   ══════════════════════════════════ */
+
+.result-container {
+    text-align: center;
+    max-width: 400px;
+    width: 100%;
+}
+
+.result-container h1 {
+    margin-bottom: 20px;
+}
+
+#rankings-list {
+    text-align: left;
+}
+
+.ranking-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px;
+    border-bottom: 1px solid #333;
+}
+
+.ranking-position {
+    font-size: 1.5rem;
+    font-weight: bold;
+    width: 40px;
+    text-align: center;
+}
+
+.ranking-position.gold { color: #f0a500; }
+.ranking-position.silver { color: #c0c0c0; }
+.ranking-position.bronze { color: #cd7f32; }
+
+.ranking-details {
+    flex: 1;
+}
+
+.ranking-details .name {
+    font-weight: bold;
+}
+
+.ranking-details .assigned {
+    font-size: 0.8rem;
+    color: #888;
+}
