@@ -60,7 +60,7 @@ async def handle_join(websocket, data: dict) -> Player | None:
     return player
 
 
-async def handle_start_game(player_id: str):
+async def handle_start_game(player_id: str, data: dict):
     """Oyunu başlat (sadece host yapabilir)."""
     room = get_player_room(player_id)
     if not room:
@@ -81,7 +81,8 @@ async def handle_start_game(player_id: str):
     #     return
 
     # İsimleri ata ve oyunu başlat
-    room.assign_names()
+    category = data.get("category", "unluler")
+    room.assign_names(category)
     await room.send_game_state()
 
     print(f"[▶] Oda {room.code} oyunu başlattı ({len(room.players)} oyuncu)")
@@ -139,7 +140,7 @@ async def handle_guess(player_id: str, data: dict):
             print(f"[★] {player.name} doğru tahmin etti: {player.assigned_name} (sıra: {player.rank})")
 
 
-async def handle_new_round(player_id: str):
+async def handle_new_round(player_id: str, data: dict):
     """Yeni tur başlat."""
     room = get_player_room(player_id)
     if not room:
@@ -152,7 +153,8 @@ async def handle_new_round(player_id: str):
         })
         return
 
-    room.assign_names()
+    category = data.get("category", "unluler")
+    room.assign_names(category)
     await room.send_game_state()
     print(f"[▶] Oda {room.code} yeni tur başlattı")
 
@@ -196,7 +198,7 @@ async def handler(websocket):
 
             elif msg_type == "start_game":
                 if player_id:
-                    await handle_start_game(player_id)
+                    await handle_start_game(player_id, data)
 
             elif msg_type == "guess":
                 if player_id:
@@ -204,7 +206,7 @@ async def handler(websocket):
 
             elif msg_type == "new_round":
                 if player_id:
-                    await handle_new_round(player_id)
+                    await handle_new_round(player_id, data)
 
             else:
                 await websocket.send(json.dumps({

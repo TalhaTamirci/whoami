@@ -78,10 +78,10 @@ class Room:
         if self.host.id == player_id and self.players:
             self.host = next(iter(self.players.values()))
 
-    def assign_names(self):
-        """Her oyuncuya rastgele ünlü isim ata."""
+    def assign_names(self, category: str = "unluler"):
+        """Her oyuncuya rastgele kelime ata."""
         player_list = list(self.players.values())
-        names = get_random_names(len(player_list))
+        names = get_random_names(len(player_list), category)
         for player, name in zip(player_list, names):
             player.assigned_name = name
             player.revealed = False

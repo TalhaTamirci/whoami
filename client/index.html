@@ -37,7 +37,18 @@
                 <h3>Oyuncular</h3>
                 <ul id="player-list"></ul>
 
-                <button id="btn-start" class="btn-primary hidden">Oyunu Başlat</button>
+                <div id="host-controls" class="hidden">
+                    <div class="form-group" style="margin-top: 15px;">
+                        <label for="select-category">Oyun Modu</label>
+                        <select id="select-category" style="width: 100%; padding: 8px; border-radius: 4px; border: 1px solid #dcdde1;">
+                            <option value="unluler">Ünlü Kişiler</option>
+                            <option value="irklar">Milletler / Irklar</option>
+                            <option value="tarihi_olaylar">Tarihi Olaylar</option>
+                        </select>
+                    </div>
+                    <button id="btn-start" class="btn-primary">Oyunu Başlat</button>
+                </div>
+                
                 <p id="waiting-msg" class="hint">Oda sahibinin başlatmasını bekle...</p>
             </div>
 
@@ -78,7 +89,19 @@
         <div class="result-container">
             <h1>🏆 Oyun Bitti!</h1>
             <div id="rankings-list"></div>
-            <button id="btn-new-round" class="btn-primary hidden">Yeni Tur</button>
+            
+            <div id="host-controls-result" class="hidden" style="margin-top: 20px;">
+                <div class="form-group" style="text-align: center;">
+                    <label for="select-category-result" style="display: inline-block; margin-right: 10px;">Oyun Modu:</label>
+                    <select id="select-category-result" style="padding: 6px; border-radius: 4px; border: 1px solid #dcdde1;">
+                        <option value="unluler">Ünlü Kişiler</option>
+                        <option value="irklar">Milletler / Irklar</option>
+                        <option value="tarihi_olaylar">Tarihi Olaylar</option>
+                    </select>
+                </div>
+                <button id="btn-new-round" class="btn-primary">Yeni Tur</button>
+            </div>
+
             <p id="waiting-new-round" class="hint">Oda sahibinin yeni tur başlatmasını bekle...</p>
         </div>
     </div>

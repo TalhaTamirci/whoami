@@ -28,7 +28,9 @@ const lobbyInfo = $("lobby-info");
 const displayRoomCode = $("display-room-code");
 const btnCopyCode = $("btn-copy-code");
 const playerList = $("player-list");
+const hostControls = $("host-controls");
 const btnStart = $("btn-start");
+const selectCategory = $("select-category");
 const waitingMsg = $("waiting-msg");
 const connectionStatus = $("connection-status");
 
@@ -41,7 +43,9 @@ const guessFeedback = $("guess-feedback");
 
 // Sonuç
 const rankingsList = $("rankings-list");
+const hostControlsResult = $("host-controls-result");
 const btnNewRound = $("btn-new-round");
+const selectCategoryResult = $("select-category-result");
 const waitingNewRound = $("waiting-new-round");
 
 
@@ -225,10 +229,10 @@ function handleGameOver(data) {
     renderRankings(data.rankings);
 
     if (isHost) {
-        btnNewRound.classList.remove("hidden");
+        hostControlsResult.classList.remove("hidden");
         waitingNewRound.classList.add("hidden");
     } else {
-        btnNewRound.classList.add("hidden");
+        hostControlsResult.classList.add("hidden");
         waitingNewRound.classList.remove("hidden");
     }
 }
@@ -244,10 +248,10 @@ function handleError(data) {
 
 function updateHostUI() {
     if (isHost) {
-        btnStart.classList.remove("hidden");
+        hostControls.classList.remove("hidden");
         waitingMsg.classList.add("hidden");
     } else {
-        btnStart.classList.add("hidden");
+        hostControls.classList.add("hidden");
         waitingMsg.classList.remove("hidden");
     }
 }
@@ -379,7 +383,8 @@ btnCopyCode.addEventListener("click", () => {
 
 // Oyunu başlat
 btnStart.addEventListener("click", () => {
-    sendMessage({ type: "start_game" });
+    const category = selectCategory.value;
+    sendMessage({ type: "start_game", category });
 });
 
 // Tahmin gönder
@@ -396,5 +401,6 @@ inputGuess.addEventListener("keydown", (e) => {
 
 // Yeni tur
 btnNewRound.addEventListener("click", () => {
-    sendMessage({ type: "new_round" });
+    const category = selectCategoryResult.value;
+    sendMessage({ type: "new_round", category });
 });
