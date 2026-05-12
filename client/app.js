@@ -3,7 +3,7 @@
  */
 
 // ── Ayarlar ─────────────────────────────────────────
-const WS_URL = "wss://registry-representation-level-logging.trycloudflare.com";
+const WS_URL = "wss://whoami-kaa7.onrender.com";
 
 // ── State ───────────────────────────────────────────
 let ws = null;
