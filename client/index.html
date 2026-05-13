@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Ben Kimim? — Discord'da arka planda oynanan çok oyunculu tahmin oyunu">
+    <title>Ben Kimim? 🎭</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <button id="theme-toggle" class="theme-btn" title="Temayı Değiştir">
+        <svg id="moon-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-moon"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+        <svg id="sun-icon" class="hidden" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-sun"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+    </button>
+
+    <!-- ═══════════════ LOBBY EKRANI ═══════════════ -->
+    <div id="screen-lobby" class="screen active">
+        <div class="lobby-container">
+            <h1>🎭 Ben Kimim?</h1>
+            <p class="subtitle">Discord'da arka planda oyna!</p>
+
+            <div class="form-group">
+                <label for="input-name">Adın</label>
+                <input type="text" id="input-name" placeholder="Adını yaz..." maxlength="20" autocomplete="off">
+            </div>
+
+            <div class="form-group">
+                <label for="input-room">Oda Kodu <span class="hint">(boş bırak = yeni oda)</span></label>
+                <input type="text" id="input-room" placeholder="ABC123" maxlength="6" autocomplete="off" style="text-transform: uppercase;">
+            </div>
+
+            <button id="btn-join" class="btn-primary">Odaya Katıl</button>
+
+            <!-- Bağlantı sonrası lobby bilgisi -->
+            <div id="lobby-info" class="hidden">
+                <div class="room-code-display">
+                    Oda Kodu: <span id="display-room-code">---</span>
+                    <button id="btn-copy-code" class="btn-small" title="Kodu kopyala">📋</button>
+                </div>
+
+                <h3>Oyuncular</h3>
+                <ul id="player-list"></ul>
+                
+                <div id="host-controls" class="hidden">
+                    <div class="form-group" style="margin-top: 15px;">
+                        <label for="select-category">Oyun Modu</label>
+                        <select id="select-category" style="width: 100%; padding: 8px; border-radius: 4px; border: 1px solid #dcdde1;">
+                            <option value="populer_ikonlar">İkonik Kişiler Karakterler</option>
+                            <option value="hayvanlar">Hayvanlar (Kurgusal Dahil)</option>
+                            <option value="tarihi_olaylar">Tarihi Olaylar</option>
+                        </select>
+                    </div>
+                    <button id="btn-start" class="btn-primary">Oyunu Başlat</button>
+                </div>
+                
+                <p id="waiting-msg" class="hint">Oda sahibinin başlatmasını bekle...</p>
+            </div>
+
+            <div id="connection-status" class="status-disconnected">● Bağlantı yok</div>
+        </div>
+    </div>
+
+    <!-- ═══════════════ OYUN EKRANI ═══════════════ -->
+    <div id="screen-game" class="screen">
+        <div class="game-header">
+            <span class="room-badge" id="game-room-code"></span>
+            <h2>🎭 Ben Kimim?</h2>
+        </div>
+
+        <!-- Masa ve oyuncular -->
+        <div id="game-table-area">
+            <div id="table-center">
+                <!-- placeholder: masa görseli -->
+                <div class="table-placeholder">MASA</div>
+            </div>
+            <div id="players-circle">
+                <!-- JS tarafından doldurulacak -->
+            </div>
+        </div>
+
+        <!-- Tahmin alanı -->
+        <div id="guess-area">
+            <div id="guess-feedback" class="hidden"></div>
+            <div class="guess-input-row">
+                <input type="text" id="input-guess" placeholder="Kafandaki ismi tahmin et..." autocomplete="off">
+                <div class="guess-controls">
+                    <button id="btn-guess" class="btn-primary">Tahmin Et</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════════════ SONUÇ EKRANI ═══════════════ -->
+    <div id="screen-result" class="screen">
+        <div class="result-container">
+            <h1>🏆 Oyun Bitti!</h1>
+            <div id="rankings-list"></div>
+            
+            <div id="host-controls-result" class="hidden" style="margin-top: 20px;">
+                <div class="form-group" style="text-align: center;">
+                    <label for="select-category-result" style="display: inline-block; margin-right: 10px;">Oyun Modu:</label>
+                    <select id="select-category-result" style="padding: 6px; border-radius: 4px; border: 1px solid #dcdde1;">
+                        <option value="populer_ikonlar">İkonik Kişiler Karakterler</option>
+                        <option value="hayvanlar">Hayvanlar (Kurgusal Dahil)</option>
+                        <option value="tarihi_olaylar">Tarihi Olaylar</option>
+                    </select>
+                </div>
+                <button id="btn-new-round" class="btn-primary">Yeni Tur</button>
+            </div>
+
+            <p id="waiting-new-round" class="hint">Oda sahibinin yeni tur başlatmasını bekle...</p>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
