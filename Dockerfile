@@ -10,6 +10,4 @@ COPY server/ ./
 ENV PORT=8686
 EXPOSE 8686
 
-HEALTHCHECK NONE
-
 CMD ["python", "main.py"]
