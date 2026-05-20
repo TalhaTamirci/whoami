@@ -76,7 +76,13 @@
                         <select id="select-difficulty" class="select-styled">
                             <option value="kolay">Kolay (Sadece çok bilinenler)</option>
                             <option value="hepsi" selected>Hepsi (Tüm liste)</option>
+                            <option value="ozel_sayi">Özel (Toplam seçenek sayısı)</option>
                         </select>
+                    </div>
+
+                    <div id="pool-size-group" class="form-group hidden">
+                        <label for="input-pool-size">Toplam Seçenek Sayısı <span class="hint">(havuzdan kaç öğe çekilsin — eleme defterinde de bu kadar gösterilir)</span></label>
+                        <input type="number" id="input-pool-size" min="2" max="3000" step="1" value="30" class="select-styled">
                     </div>
 
                     <div class="form-group">
@@ -109,9 +115,7 @@
                 <span id="turn-player-name" class="turn-name">-</span>
                 <span id="timer-pill" class="timer-pill hidden">⏱ <span id="timer-value">00:00</span></span>
                 <button id="btn-pass" class="btn-small pass-btn">Pas ⏭</button>
-                <button id="btn-hint" class="btn-small hint-btn">İpucu 💡</button>
             </div>
-            <div id="hint-display" class="hint-display hidden"></div>
         </div>
 
         <!-- Masa ve oyuncular -->

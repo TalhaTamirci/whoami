@@ -951,7 +951,7 @@ body.dark-mode .select-styled {
 
 
 /* ══════════════════════════════════
-   TURN BAR + TIMER + PAS + HINT
+   TURN BAR + TIMER + PAS
    ══════════════════════════════════ */
 .turn-bar {
     display: flex;
@@ -1009,26 +1009,14 @@ body.dark-mode .select-styled {
     50% { opacity: 0.55; }
 }
 
-.pass-btn, .hint-btn {
+.pass-btn {
     padding: 5px 10px !important;
     font-weight: bold;
+    background: #e1f5fe;
+    color: #0097e6;
+    border-color: #b3e5fc;
 }
-.pass-btn { background: #e1f5fe; color: #0097e6; border-color: #b3e5fc; }
 .pass-btn:hover { background: #0097e6; color: white; }
-.hint-btn { background: #fff8e1; color: #e1b12c; border-color: #f4d35e; }
-.hint-btn:hover { background: #e1b12c; color: white; }
-
-.hint-display {
-    max-width: 540px;
-    margin: 8px auto 0;
-    padding: 8px 12px;
-    background: #fff8e1;
-    border: 1px dashed #e1b12c;
-    color: #2f3640;
-    border-radius: 8px;
-    font-size: 0.9rem;
-    text-align: center;
-}
 
 body.dark-mode .turn-bar {
     background: #1e1e1e;
@@ -1037,7 +1025,6 @@ body.dark-mode .turn-bar {
 body.dark-mode .turn-name { background: #0d3a52; color: #4fc3f7; }
 body.dark-mode .turn-name.is-me { background: #44bd32; color: white; }
 body.dark-mode .timer-pill { background: #2d3136; color: #f4d35e; border-color: #3f444b; }
-body.dark-mode .hint-display { background: #2d3136; color: #f4d35e; border-color: #f4d35e; }
 
 
 /* ══════════════════════════════════
@@ -1158,6 +1145,8 @@ body.dark-mode .hint-display { background: #2d3136; color: #f4d35e; border-color
 .log-entry[data-kind="no"] .log-entry-text { background: #f8d7da; color: #721c24; }
 .log-entry[data-kind="maybe"] .log-entry-text { background: #fff3cd; color: #856404; }
 .log-entry[data-kind="note"] .log-entry-text { background: #e1f5fe; color: #01579b; }
+.log-entry[data-kind="guess_correct"] .log-entry-text { background: #c3f7d4; color: #0a4f24; font-weight: bold; }
+.log-entry[data-kind="guess_wrong"] .log-entry-text { background: #fde2e2; color: #842029; font-style: italic; }
 
 .log-quick {
     display: flex;

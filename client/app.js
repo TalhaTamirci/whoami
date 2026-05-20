@@ -3,7 +3,22 @@
  */
 
 // ── Ayarlar ─────────────────────────────────────────
-const WS_URL = "wss://whoami-kaa7.onrender.com";
+// WS sunucusu:
+//   - oyun.ahmetkadir.com altında: wss://oyun.ahmetkadir.com/ws  (auto)
+//   - GitHub Pages / localhost: fallback olarak Render URL'i
+const WS_URL = (() => {
+    if (window.WS_URL) return window.WS_URL;
+    const host = location.hostname;
+    if (host === "oyun.ahmetkadir.com" || host.endsWith(".ahmetkadir.com")) {
+        return `wss://${location.host}/ws`;
+    }
+    // Localhost dev: ws://localhost:8765
+    if (host === "localhost" || host === "127.0.0.1") {
+        return "ws://localhost:8765";
+    }
+    // GitHub Pages vs.
+    return "wss://whoami-kaa7.onrender.com";
+})();
 
 const AVATAR_OPTIONS = [
     "🎭", "🦊", "🐶", "🐱", "🐼", "🐯",
@@ -48,6 +63,8 @@ const btnStart = $("btn-start");
 const selectCategory = $("select-category");
 const selectDifficulty = $("select-difficulty");
 const inputTimer = $("input-timer");
+const poolSizeGroup = $("pool-size-group");
+const inputPoolSize = $("input-pool-size");
 const customCategoryGroup = $("custom-category-group");
 const inputCustomWords = $("input-custom-words");
 const waitingMsg = $("waiting-msg");
@@ -65,8 +82,6 @@ const turnPlayerName = $("turn-player-name");
 const timerPill = $("timer-pill");
 const timerValue = $("timer-value");
 const btnPass = $("btn-pass");
-const btnHint = $("btn-hint");
-const hintDisplay = $("hint-display");
 
 // Q&A log
 const btnLogToggle = $("btn-log-toggle");
@@ -158,7 +173,6 @@ const sounds = {
     tick:    () => playTone(800, 0.04, "square", 0.08),
     gameOver:() => { [523, 659, 784, 1047].forEach((f, i) => setTimeout(() => playTone(f, 0.18), i * 100)); },
     message: () => playTone(720, 0.06, "triangle", 0.12),
-    hint:    () => { playTone(660, 0.08); setTimeout(() => playTone(990, 0.1), 80); },
 };
 
 
@@ -219,7 +233,6 @@ function handleMessage(data) {
         case "timer_tick":       handleTimerTick(data); break;
         case "timer_expired":    handleTimerExpired(data); break;
         case "log_message":      handleLogMessage(data); break;
-        case "hint":             handleHint(data); break;
         case "error":            handleError(data); break;
         default: console.warn("[WS] Bilinmeyen event:", data.type);
     }
@@ -286,8 +299,6 @@ function handleGameStarted(data) {
     timerTotal = data.timerTotal || 0;
     qaLog = [];
     logPanelSeenCount = 0;
-    hintDisplay.classList.add("hidden");
-    hintDisplay.textContent = "";
 
     showScreen(screenGame);
     gameRoomCode.textContent = `Oda: ${myRoomCode}`;
@@ -309,7 +320,8 @@ function handleGameStarted(data) {
     }
 
     if (data.categoryItems) {
-        initElimPanel(data.category, data.difficulty || "hepsi", data.categoryItems);
+        const diffKey = (data.difficulty || "hepsi") + (data.poolLimit ? `_n${data.poolLimit}` : "");
+        initElimPanel(data.category, diffKey, data.categoryItems);
     }
 }
 
@@ -390,17 +402,6 @@ function handleLogMessage(data) {
         }
     } else {
         logPanelSeenCount = qaLog.length;
-    }
-}
-
-function handleHint(data) {
-    if (data.hint) {
-        hintDisplay.textContent = "💡 " + data.hint;
-        hintDisplay.classList.remove("hidden");
-        sounds.hint();
-    } else {
-        hintDisplay.textContent = data.message || "İpucu alınamadı.";
-        hintDisplay.classList.remove("hidden");
     }
 }
 
@@ -559,7 +560,13 @@ function renderLog() {
 
         const txt = document.createElement("div");
         txt.className = "log-entry-text";
-        txt.textContent = entry.text;
+        if (entry.kind === "guess_correct") {
+            txt.textContent = `✅ Tahmin etti: "${entry.text}" — Doğru!`;
+        } else if (entry.kind === "guess_wrong") {
+            txt.textContent = `❌ Tahmin etti: "${entry.text}" — Yanlış`;
+        } else {
+            txt.textContent = entry.text;
+        }
 
         body.appendChild(author);
         body.appendChild(txt);
@@ -760,10 +767,22 @@ selectCategory.addEventListener("change", () => {
     }
 });
 
-btnStart.addEventListener("click", () => {
-    const category = selectCategory.value;
+// Özel zorluk (toplam sayı) seçilince sayı input'unu göster
+function updatePoolSizeVisibility() {
+    if (selectDifficulty.value === "ozel_sayi") {
+        poolSizeGroup.classList.remove("hidden");
+    } else {
+        poolSizeGroup.classList.add("hidden");
+    }
+}
+selectDifficulty.addEventListener("change", updatePoolSizeVisibility);
+
+function buildGameConfig(category) {
     const difficulty = selectDifficulty.value;
     const timerSeconds = parseInt(inputTimer.value || "0", 10) || 0;
+    const poolLimit = difficulty === "ozel_sayi"
+        ? Math.max(0, parseInt(inputPoolSize.value || "0", 10) || 0)
+        : 0;
     let customWords = [];
     if (category === "ozel") {
         customWords = inputCustomWords.value
@@ -772,15 +791,32 @@ btnStart.addEventListener("click", () => {
             .filter((s) => s.length > 0);
         if (customWords.length < currentPlayers.length && customWords.length < 2) {
             alert(`Özel kategori için en az 2 kelime girmelisin (şu an ${customWords.length}).`);
-            return;
+            return null;
         }
     }
+    if (difficulty === "ozel_sayi") {
+        if (poolLimit < currentPlayers.length) {
+            alert(`Toplam seçenek sayısı oyuncu sayısından (${currentPlayers.length}) az olamaz.`);
+            return null;
+        }
+        if (poolLimit < 2) {
+            alert("Toplam seçenek sayısı en az 2 olmalı.");
+            return null;
+        }
+    }
+    return { category, difficulty, timerSeconds, customWords, poolLimit };
+}
+
+btnStart.addEventListener("click", () => {
+    const cfg = buildGameConfig(selectCategory.value);
+    if (!cfg) return;
     sendMessage({
         type: "start_game",
-        category,
-        difficulty,
-        customWords,
-        timerSeconds,
+        category: cfg.category,
+        difficulty: cfg.difficulty,
+        customWords: cfg.customWords,
+        timerSeconds: cfg.timerSeconds,
+        poolLimit: cfg.poolLimit,
     });
 });
 
@@ -792,22 +828,31 @@ btnGuess.addEventListener("click", () => {
 inputGuess.addEventListener("keydown", (e) => { if (e.key === "Enter") btnGuess.click(); });
 
 btnNewRound.addEventListener("click", () => {
-    const category = selectCategoryResult.value;
-    const timerSeconds = parseInt(inputTimer.value || "0", 10) || 0;
+    const cfg = buildGameConfig(selectCategoryResult.value);
+    if (!cfg) return;
     sendMessage({
         type: "new_round",
-        category,
-        difficulty: selectDifficulty.value,
-        timerSeconds,
+        category: cfg.category,
+        difficulty: cfg.difficulty,
+        customWords: cfg.customWords,
+        timerSeconds: cfg.timerSeconds,
+        poolLimit: cfg.poolLimit,
     });
 });
 
-// Pas / İpucu
+// Pas
 btnPass.addEventListener("click", () => {
     sendMessage({ type: "next_turn" });
 });
-btnHint.addEventListener("click", () => {
-    sendMessage({ type: "request_hint" });
+
+// Boşluk = Pas (oyun ekranı açıkken, input/textarea'da değilse)
+document.addEventListener("keydown", (e) => {
+    if (e.key !== " " && e.code !== "Space") return;
+    if (!screenGame.classList.contains("active")) return;
+    const t = e.target;
+    if (t && (t.tagName === "INPUT" || t.tagName === "TEXTAREA" || t.isContentEditable)) return;
+    e.preventDefault();
+    sendMessage({ type: "next_turn" });
 });
 
 // Q&A log
@@ -915,6 +960,7 @@ document.addEventListener("DOMContentLoaded", () => {
     renderAvatarGrid();
     prefillFromUrl();
     updateSoundIcon();
+    updatePoolSizeVisibility();
 
     // PWA service worker registrasyonu
     if ("serviceWorker" in navigator) {
