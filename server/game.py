@@ -5,23 +5,26 @@ import string
 import random
 import asyncio
 import json
-from names import get_random_names
+from names import get_random_names, get_all_names
 
 
 class Player:
     """Bir oyuncuyu temsil eder."""
 
+    DEFAULT_AVATAR = "🎭"
+
     def __init__(self, player_id: str, name: str, websocket):
         self.id = player_id
         self.name = name
         self.ws = websocket
+        self.avatar: str = self.DEFAULT_AVATAR
         self.assigned_name: str | None = None  # kafasındaki isim
         self.revealed: bool = False  # doğru tahmin ettiyse True
         self.rank: int | None = None  # sıralama (1., 2., 3. ...)
 
     def to_dict(self) -> dict:
         """Lobby için oyuncu bilgisi."""
-        return {"id": self.id, "name": self.name}
+        return {"id": self.id, "name": self.name, "avatar": self.avatar}
 
     def to_game_dict(self, for_player_id: str) -> dict:
         """Oyun ekranı için oyuncu bilgisi.
@@ -39,6 +42,7 @@ class Player:
         return {
             "id": self.id,
             "name": self.name,
+            "avatar": self.avatar,
             "assignedName": shown_name,
             "revealed": self.revealed,
         }
@@ -65,6 +69,15 @@ class Room:
         self.players: dict[str, Player] = {host.id: host}
         self.state = self.LOBBY
         self._next_rank = 1  # sıradaki açılan oyuncunun sırası
+        self.current_category: str = "populer_ikonlar"
+        self.current_difficulty: str = "hepsi"
+        self.custom_words: list[str] = []
+        self.qa_log: list[dict] = []
+        self.turn_order: list[str] = []
+        self.current_turn_id: str | None = None
+        self.timer_total: int = 0
+        self.timer_remaining: int = 0
+        self._timer_task = None
 
     def add_player(self, player: Player):
         """Odaya oyuncu ekle."""
@@ -78,16 +91,74 @@ class Room:
         if self.host.id == player_id and self.players:
             self.host = next(iter(self.players.values()))
 
-    def assign_names(self, category: str = "unluler"):
+    def assign_names(self, category: str = "unluler", difficulty: str = "hepsi",
+                     custom_words: list[str] | None = None, timer_seconds: int = 0):
         """Her oyuncuya rastgele kelime ata."""
         player_list = list(self.players.values())
-        names = get_random_names(len(player_list), category)
+        names = get_random_names(
+            len(player_list), category, difficulty, custom_words
+        )
         for player, name in zip(player_list, names):
             player.assigned_name = name
             player.revealed = False
             player.rank = None
         self._next_rank = 1
         self.state = self.PLAYING
+        self.current_category = category
+        self.current_difficulty = difficulty
+        self.custom_words = list(custom_words or [])
+
+        # Sıra ve log sıfırla
+        self.qa_log = []
+        self.turn_order = [p.id for p in player_list]
+        self.current_turn_id = self.turn_order[0] if self.turn_order else None
+
+        # Timer ayarla
+        self.timer_total = max(0, int(timer_seconds or 0))
+        self.timer_remaining = self.timer_total
+        self._cancel_timer()
+
+    def _cancel_timer(self):
+        if self._timer_task and not self._timer_task.done():
+            self._timer_task.cancel()
+        self._timer_task = None
+
+    def advance_turn(self) -> str | None:
+        """Sıradaki açılmamış oyuncuya geç. Açık olanları atla."""
+        if not self.turn_order:
+            return None
+        # geçerli pozisyonu bul
+        try:
+            idx = self.turn_order.index(self.current_turn_id) if self.current_turn_id else -1
+        except ValueError:
+            idx = -1
+
+        n = len(self.turn_order)
+        for step in range(1, n + 1):
+            candidate_id = self.turn_order[(idx + step) % n]
+            player = self.players.get(candidate_id)
+            if player and not player.revealed:
+                self.current_turn_id = candidate_id
+                self.timer_remaining = self.timer_total
+                return candidate_id
+        self.current_turn_id = None
+        return None
+
+    def add_log_entry(self, entry: dict):
+        """Q&A loguna yeni kayıt ekle (son 100 mesajı tut)."""
+        self.qa_log.append(entry)
+        if len(self.qa_log) > 100:
+            self.qa_log = self.qa_log[-100:]
+
+    def get_hint_for(self, player_id: str) -> str | None:
+        """Oyuncunun atanmış isminden ipucu üret (ilk harf + uzunluk)."""
+        player = self.players.get(player_id)
+        if not player or not player.assigned_name or player.revealed:
+            return None
+        name = player.assigned_name
+        first = name[0] if name else "?"
+        word_count = len(name.split())
+        return f"İlk harf: {first} · {len(name)} karakter · {word_count} kelime"
 
     def check_guess(self, player_id: str, guess: str) -> tuple[bool, str]:
         """Oyuncunun tahminini kontrol et.
@@ -139,6 +210,9 @@ class Room:
 
     async def send_game_state(self):
         """Her oyuncuya kendi perspektifinden oyun durumunu gönder."""
+        category_items = get_all_names(
+            self.current_category, self.current_difficulty, self.custom_words
+        )
         for player in self.players.values():
             players_data = [
                 p.to_game_dict(for_player_id=player.id)
@@ -147,7 +221,51 @@ class Room:
             await player.send({
                 "type": "game_started",
                 "players": players_data,
+                "category": self.current_category,
+                "difficulty": self.current_difficulty,
+                "categoryItems": category_items,
+                "turnPlayerId": self.current_turn_id,
+                "timerTotal": self.timer_total,
+                "timerRemaining": self.timer_remaining,
             })
+
+    async def broadcast_turn(self):
+        await self.broadcast({
+            "type": "turn_changed",
+            "turnPlayerId": self.current_turn_id,
+            "timerRemaining": self.timer_remaining,
+            "timerTotal": self.timer_total,
+        })
+
+    async def run_timer(self):
+        """Süre sayacını arka planda çalıştır."""
+        try:
+            while self.state == self.PLAYING and self.timer_total > 0:
+                await asyncio.sleep(1)
+                if self.state != self.PLAYING:
+                    return
+                self.timer_remaining -= 1
+                if self.timer_remaining <= 0:
+                    # Süre doldu — sırayı kaydır
+                    self.advance_turn()
+                    await self.broadcast({
+                        "type": "timer_expired",
+                        "turnPlayerId": self.current_turn_id,
+                        "timerRemaining": self.timer_remaining,
+                        "timerTotal": self.timer_total,
+                    })
+                else:
+                    await self.broadcast({
+                        "type": "timer_tick",
+                        "timerRemaining": self.timer_remaining,
+                    })
+        except asyncio.CancelledError:
+            pass
+
+    def start_timer_task(self):
+        self._cancel_timer()
+        if self.timer_total > 0:
+            self._timer_task = asyncio.create_task(self.run_timer())
 
     async def send_lobby_update(self):
         """Lobbydeki oyuncu listesini herkese gönder."""

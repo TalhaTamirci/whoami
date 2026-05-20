@@ -757,214 +757,232 @@ CATEGORIES = {
 
     "hayvanlar": [
         # ═══════════════ MEMELİLER ═══════════════
-        # Büyük kediler
+        # Kediler (büyük ve küçük)
         "Aslan", "Kaplan", "Leopar", "Jaguar", "Çita", "Puma", "Vaşak",
-        "Karakulak", "Servalin", "Kar Leoparı", "Bengal Kaplanı", "Sibirya Kaplanı",
-        "Sumatra Kaplanı", "Beyaz Aslan", "Beyaz Kaplan", "Siyah Panter",
-        "Kara Leopar", "Karakal", "Manul Kedisi", "Pallas Kedisi",
+        "Karakulak", "Kar Leoparı", "Siyah Panter", "Kedi",
 
-        # Kediler (evcil ve yaban)
-        "Kedi", "Yavru Kedi", "Sokak Kedisi", "İran Kedisi", "Siyam Kedisi",
-        "British Shorthair", "Scottish Fold", "Maine Coon", "Sfenks Kedisi",
-        "Russian Blue", "Bengal Kedisi", "Ragdoll", "Norveç Orman Kedisi",
-        "Anadolu Kedisi", "Van Kedisi", "Ankara Kedisi",
+        # Köpekgiller ve yakınları
+        "Köpek", "Kurt", "Çakal", "Tilki", "Fenek", "Sırtlan", "Dingo",
+        "Kangal", "Husky", "Bulldog", "Chihuahua", "Dalmaçyalı",
 
-        # Köpekler
-        "Köpek", "Yavru Köpek", "Sokak Köpeği", "Kangal", "Akbaş", "Aksaray Malaklısı",
-        "Çoban Köpeği", "Alman Çobanı", "Belçika Çoban Köpeği", "Border Collie",
-        "Husky", "Sibirya Husky", "Alaskan Malamute", "Samoyed", "Pomeranian",
-        "Chihuahua", "Pug", "Bulldog", "Fransız Bulldog", "İngiliz Bulldog",
-        "Boxer", "Doberman", "Rottweiler", "Pitbull", "Staffordshire Terrier",
-        "Golden Retriever", "Labrador", "Beagle", "Dachshund (Sosis)",
-        "Yorkshire Terrier", "Maltese", "Shih Tzu", "Poodle", "Jack Russell",
-        "Saint Bernard", "Great Dane", "Mastiff", "Cocker Spaniel",
-        "Springer Spaniel", "İrlandalı Setter", "Tibet Mastifi",
-
-        # Atlar ve eşekler
-        "At", "Tay", "Aygır", "Kısrak", "Eşek", "Sıpa", "Katır", "Zebra",
-        "Yarış Atı", "Yabani At", "Mustang", "Arap Atı", "Ahal-Teke", "Pony",
-        "Shetland Midillisi", "Friesian At", "Andalusian", "Akıncı Atı",
+        # Atgiller
+        "At", "Eşek", "Katır", "Zebra", "Midilli",
 
         # Çiftlik hayvanları
-        "İnek", "Boğa", "Dana", "Buzağı", "Koyun", "Kuzu", "Koç", "Keçi",
-        "Oğlak", "Teke", "Domuz", "Yaban Domuzu", "Yavru Domuz",
-        "Tavuk", "Horoz", "Civciv", "Hindi", "Ördek", "Kaz", "Bıldırcın",
-        "Manda", "Su Bufaloyu", "Yak", "Lama", "Alpaka", "Vikunya", "Develer",
-        "Deve", "Tek Hörgüçlü Deve", "Çift Hörgüçlü Deve", "Hecin Devesi",
+        "İnek", "Boğa", "Manda", "Koyun", "Keçi", "Domuz", "Yaban Domuzu",
+        "Tavuk", "Horoz", "Hindi", "Ördek", "Kaz",
+        "Yak", "Lama", "Alpaka", "Deve",
 
-        # Vahşi memeli
-        "Fil", "Asya Fili", "Afrika Fili", "Mamut", "Mastodon",
-        "Zürafa", "Okapi", "Gergedan", "Ak Gergedan", "Kara Gergedan",
-        "Hipopotam", "Su Aygırı", "Bizon", "Mandagora", "Manda",
-        "Antilop", "Geyik", "Karaca", "Ren Geyiği", "Sığın", "Mooz Geyiği",
-        "Ceylan", "Gazelle", "Impala", "Gnu", "Springbok", "Kuduy",
-        "Goril", "Şempanze", "Orangutan", "Gibon", "Bonobo", "Maymun",
-        "Babun", "Makak", "Capuchin", "Kapuçin", "Marmoset", "Tarsier",
-        "Lemur", "Çita", "Sphynx", "Akrep", "Aye-Aye",
-        "Kanguru", "Wallaby", "Koala", "Veni Veni", "Tasmanya Şeytanı",
-        "Wombat", "Possum", "Opossum", "Platypus", "Ornitorenk", "Echidna",
-        "Tavşan", "Yavru Tavşan", "Yaban Tavşanı", "Tavşan",
-        "Sincap", "Yer Sincabı", "Uçan Sincap", "Çinkilla", "Marmot",
-        "Bizam", "Kunduz", "Su Samuru", "Vidra", "Sansar", "Gelincik",
-        "Porsuk", "Skunk", "Kokarca", "Rakun", "Tanuki", "Mongoose", "Firavun Faresi",
-        "Fare", "Sıçan", "Hamster", "Cobay", "Kobay", "Yer Faresi", "Köstebek",
-        "Karıncayiyen", "Pangolin", "Tembel Hayvan", "Kirpi", "Yaban Kirpisi",
-        "Iguana", "Bukalemun", "Komodo Ejderi", "Yarasa", "Vampir Yarasası",
-        "Meyve Yarasası", "Uçan Tilki", "Kunduz", "Castor",
+        # Büyük vahşi memeli
+        "Fil", "Mamut", "Zürafa", "Okapi", "Gergedan", "Su Aygırı",
+        "Bizon", "Geyik", "Karaca", "Ren Geyiği", "Sığın",
+        "Ceylan", "Antilop", "Impala", "Gnu",
+
+        # Primatlar
+        "Goril", "Şempanze", "Orangutan", "Gibon", "Bonobo", "Babun",
+        "Makak", "Kapuçin Maymunu", "Marmoset", "Tarsier", "Lemur", "Aye-Aye",
+
+        # Avustralya / kese hayvanları
+        "Kanguru", "Koala", "Wallaby", "Tasmanya Şeytanı", "Wombat",
+        "Opossum", "Ornitorenk", "Echidna",
+
+        # Kemirgenler ve küçük memeliler
+        "Tavşan", "Sincap", "Uçan Sincap", "Marmot", "Çinçilla",
+        "Kunduz", "Su Samuru", "Sansar", "Gelincik", "Porsuk",
+        "Kokarca", "Rakun", "Tanuki", "Firavun Faresi",
+        "Fare", "Sıçan", "Hamster", "Kobay", "Köstebek",
+        "Karıncayiyen", "Pangolin", "Tembel Hayvan", "Kirpi",
+        "Yarasa", "Vampir Yarasası",
 
         # Ayılar
-        "Ayı", "Boz Ayı", "Kahverengi Ayı", "Kara Ayı", "Kutup Ayısı",
-        "Panda", "Panda Ayısı", "Kızıl Panda", "Grizli Ayısı", "Kodiak Ayısı",
-        "Tembel Ayı", "Güneş Ayısı", "Panda Bear", "Koala Bear",
-
-        # Kurtgiller
-        "Kurt", "Gri Kurt", "Kızıl Kurt", "Bozkurt", "Arctic Kurt", "Çakal",
-        "Tilki", "Kızıl Tilki", "Kutup Tilkisi", "Fenek", "Çöl Tilkisi",
-        "Sırtlan", "Çizgili Sırtlan", "Benekli Sırtlan", "Dingo",
+        "Boz Ayı", "Kutup Ayısı", "Panda", "Kızıl Panda", "Güneş Ayısı",
 
         # ═══════════════ DENİZ CANLILARI ═══════════════
-        "Balık", "Yunus", "Balina", "Mavi Balina", "Katil Balina", "Orka",
-        "Sperm Balinası", "Beluga Balinası", "Mors", "Fok", "Deniz Aslanı",
-        "Köpekbalığı", "Beyaz Köpekbalığı", "Çekiç Balığı", "Boğa Köpekbalığı",
-        "Kaplan Köpekbalığı", "Tiger Shark", "Megalodon", "Megaladon",
-        "Vatoz", "Manta Vatozu", "Ahtapot", "Yumru Ahtapotu", "Dev Pasifik Ahtapotu",
-        "Mürekkep Balığı", "Mavi Halkalı Ahtapot", "Nautilus", "Kalamar",
-        "Dev Kalamar", "Kraken", "Denizatı", "Denizyıldızı", "Deniz Hıyarı",
-        "Deniz Kestanesi", "Mercan", "Anemone", "Denizanası", "Kutu Denizanası",
-        "Ay Denizanası", "Karavela", "Yengeç", "Yengeç Yamyam", "Pavurya",
-        "Karides", "Istakoz", "Kırmızı Istakoz", "Kerevit", "Mantis Karidesi",
-        "Pirana", "Som Balığı", "Salamon Balığı", "Levrek", "Çupra",
-        "Hamsi", "Sardalya", "Lüfer", "Palamut", "Ton Balığı", "Orkinos",
-        "Uskumru", "Kefal", "Mersin Balığı", "Yılan Balığı", "Mığrı",
-        "Vatos", "Trança", "Mezgit", "Berlam", "Kalkan", "Dil Balığı",
-        "Pisi Balığı", "Akvaryum Balığı", "Japon Balığı", "Anatari", "Beta",
-        "Goldfish", "Discus", "Lepistes", "Moli", "Karadeniz Hamsi",
-        "Penguen", "İmparator Penguen", "Kral Penguen", "Adelie Penguen",
-        "Magellan Penguen", "Yunus", "Şişeburun Yunus", "Killer Whale",
+        # Memeliler ve büyük balıklar
+        "Yunus", "Mavi Balina", "Orka", "Sperm Balinası", "Beluga",
+        "Mors", "Fok", "Deniz Aslanı", "Manati",
+        "Beyaz Köpekbalığı", "Çekiç Balığı", "Kaplan Köpekbalığı",
+        "Megalodon", "Vatoz", "Manta", "Pirana",
+        "Som Balığı", "Levrek", "Çipura", "Hamsi", "Sardalya",
+        "Lüfer", "Palamut", "Orkinos", "Uskumru", "Kefal",
+        "Mersin Balığı", "Yılan Balığı", "Kalkan", "Dil Balığı",
+        "Japon Balığı", "Beta Balığı", "Lepistes", "Kılıçbalığı",
+        "Kirpi Balığı", "Çıraklık Balığı", "Anglerfish", "Barakuda",
+
+        # Yumuşakçalar ve kabuklular
+        "Ahtapot", "Mavi Halkalı Ahtapot", "Nautilus", "Kalamar", "Dev Kalamar",
+        "Mürekkep Balığı", "Denizatı", "Denizyıldızı", "Deniz Hıyarı",
+        "Deniz Kestanesi", "Mercan", "Deniz Şakayığı", "Denizanası",
+        "Yengeç", "Karides", "Istakoz", "Kerevit", "Mantis Karidesi",
+        "Salyangoz", "Midye", "İstiridye",
+        "Penguen",
 
         # ═══════════════ KUŞLAR ═══════════════
-        "Kuş", "Serçe", "Güvercin", "Karga", "Saka Kuşu", "Bülbül", "Kırlangıç",
-        "Tarla Kuşu", "Ağaçkakan", "Sığırcık", "Çıngıraklı Kuş",
-        "Papağan", "Muhabbet Kuşu", "Cennet Papağanı", "Ara Papağanı",
-        "Kakadu", "Ara", "Macaw", "Sevda Papağanı", "Sultan Papağanı",
-        "Kanarya", "Kanaryalar", "Bülbül", "İskete", "Saka",
-        "Kartal", "Şahin", "Atmaca", "Doğan", "Akbaba", "Kara Akbaba",
-        "Mısır Akbabası", "Sakallı Akbaba", "Bald Eagle", "Kel Kartal",
-        "Altın Kartal", "Balık Kartalı", "Baykuş", "Puhu Kuşu", "Buut",
-        "Kar Baykuşu", "Karabatak", "Pelikan", "Flamingo", "Leylek",
-        "Beyaz Leylek", "Kara Leylek", "Turna", "Telli Turna", "Yelve",
-        "Iguana", "Pelikan", "Albatros", "Martı", "Karabaş Martı",
-        "Kuyrukçu", "Saksağan", "Alakarga", "Çobanaldatan", "Bıldırcın",
-        "Sülün", "Keklik", "Tavus Kuşu", "Toy Kuşu", "Boz Kaz",
-        "Yaban Ördeği", "Kızılbaş Yaban Ördeği", "Tepeli Patka", "Karatavuk",
-        "Robins", "Ardıç", "Reyhan", "Çulluk", "Su Tavuğu", "Sumru",
-        "Avustralya Kazı", "Kazoo", "Karbatak", "Devekuşu", "Emu",
-        "Kazuar", "Kivi", "Hint Tavus Kuşu", "Cennet Kuşu", "Tukan",
-        "Sinek Kuşu", "Hummingbird", "Tıkırdayan", "Çayır Tarla Kuşu",
-        "Mavi Jay", "Kırmızı Kardinal", "Robin", "Çulha Kuşu",
-        "Pekin Ördeği", "Mandalin Ördeği", "Yaban Hindisi", "Mor Bataklık Tavuğu",
+        "Serçe", "Güvercin", "Karga", "Saka", "Bülbül", "Kırlangıç",
+        "Ağaçkakan", "Sığırcık", "İbibik",
+        "Papağan", "Muhabbet Kuşu", "Kakadu", "Ara Papağanı",
+        "Kanarya", "İskete",
+        "Kartal", "Şahin", "Atmaca", "Doğan", "Akbaba",
+        "Baykuş", "Puhu",
+        "Karabatak", "Pelikan", "Flamingo", "Leylek", "Turna",
+        "Albatros", "Martı", "Saksağan", "Alakarga",
+        "Sülün", "Keklik", "Tavus Kuşu",
+        "Yaban Ördeği", "Karatavuk", "Çulluk",
+        "Devekuşu", "Emu", "Kazuar", "Kivi",
+        "Tukan", "Sinek Kuşu", "Cennet Kuşu",
 
-        # ═══════════════ SÜRÜNGENLER ═══════════════
-        "Yılan", "Kobra", "Kral Kobra", "Çıngıraklı Yılan", "Mamba",
-        "Yeşil Mamba", "Kara Mamba", "Anakonda", "Boa", "Boa Konstriktor",
-        "Sarı Anakonda", "Piton", "Kraliyet Pitonu", "Burma Pitonu",
-        "Topuk Pitonu", "Engerek", "Boynuzlu Engerek", "Ok Yılanı",
-        "Su Yılanı", "Çayır Yılanı", "Mercan Yılanı", "Süt Yılanı",
-        "Timsah", "Nil Timsahı", "Tuzlu Su Timsahı", "Yaba Timsahı",
-        "Alligator", "Misisipi Aligatörü", "Çinli Aligatör", "Kayman",
-        "Gharial", "Kaplumbağa", "Su Kaplumbağası", "Kara Kaplumbağası",
-        "Deniz Kaplumbağası", "Yeşil Deniz Kaplumbağası", "Caretta Caretta",
-        "Galapagos Kaplumbağası", "Yıldız Kaplumbağası", "Boncuk Kaplumbağa",
-        "Kertenkele", "Yeşil Kertenkele", "Çöl Kertenkelesi", "Geko",
-        "Bukalemun", "Yaprak Bukalemunu", "Iguana", "Komodo Ejderi",
-        "Suriye Kertenkelesi", "Tuatara", "Suaygırı",
+        # ═══════════════ SÜRÜNGENLER ve AMFİBİLER ═══════════════
+        "Yılan", "Kobra", "Çıngıraklı Yılan", "Kara Mamba",
+        "Anakonda", "Boa", "Piton", "Engerek",
+        "Timsah", "Aligatör", "Kayman",
+        "Kaplumbağa", "Caretta Caretta", "Galapagos Kaplumbağası",
+        "Kertenkele", "Geko", "Bukalemun", "İguana", "Komodo Ejderi",
+        "Kurbağa", "Karakurbağası", "Semender", "Aksolotl",
 
         # ═══════════════ BÖCEKLER VE ÖRÜMCEKLER ═══════════════
-        "Karınca", "Asker Karınca", "Ateş Karıncası", "Karınca Yiyen",
-        "Arı", "Bal Arısı", "Yaban Arısı", "Eşek Arısı", "Bumblebee",
-        "Yaban Arısı", "Sinek", "Karasinek", "Meyve Sineği", "Atsineği",
-        "Çekirge", "Cırcır Böceği", "Ağustos Böceği", "Mantis Karidesi",
-        "Peygamber Devesi", "Çekirge", "Çekirge Sürüsü", "Ateş Böceği",
-        "Şimşek Böceği", "Hamamböceği", "Kelebek", "Monark Kelebeği",
-        "Atlas Güvesi", "Güve", "Tırtıl", "Salyangoz", "Sümüklü Böcek",
-        "Akrep", "Sarı Akrep", "Çöl Akrebi", "Örümcek", "Tarantula",
-        "Karadul", "Brown Recluse", "Kahverengi Örümcek", "Sarıkız",
-        "Sahil Sineği", "Bit", "Pire", "Kene", "Sülük", "Solucan",
-        "Toprak Solucanı", "Tenya", "Süet", "Su Pireleri", "Trilobit",
-        "Vidre", "Termit", "Yarasa Sineği", "Eşek Arıları", "Karasinek",
-        "Sivrisinek", "Atsinek", "Üğürcek", "Cırcırböceği", "Toprak Solucanı",
+        "Karınca", "Bal Arısı", "Eşek Arısı", "Yaban Arısı",
+        "Sinek", "Sivrisinek", "Meyve Sineği",
+        "Çekirge", "Cırcır Böceği", "Ağustos Böceği", "Peygamber Devesi",
+        "Ateş Böceği", "Hamamböceği", "Termit",
+        "Kelebek", "Monark Kelebeği", "Güve", "Tırtıl",
+        "Akrep", "Örümcek", "Tarantula", "Karadul",
+        "Uğur Böceği", "Gergedan Böceği", "Bok Böceği",
+        "Bit", "Pire", "Kene", "Sülük", "Solucan",
 
-        # ═══════════════ KURGUSAL / MİTOLOJİK HAYVANLAR ═══════════════
-        "Unicorn", "Tek Boynuzlu At", "Pegasus", "Kanatlı At", "Ejderha",
-        "Çin Ejderhası", "Avrupa Ejderhası", "Hydra", "Çok Başlı Hydra",
-        "Griffin", "Aslan Kartal", "Phoenix", "Anka Kuşu", "Simurg",
-        "Kraken", "Dev Ahtapot", "Leviathan", "Behemoth", "Minotaur",
-        "Boğa Adam", "Centaur", "At Adam", "Satyr", "Keçi Adam",
-        "Medusa", "Yılan Saçlı Kadın", "Sirenler", "Deniz Kızı", "Denizkızı",
-        "Mermaid", "Triton", "Naga", "Yılan İnsan", "Goblin", "Trol",
-        "Cüce", "Orc", "Elf", "Hobbit", "Cin", "Peri", "Sprite",
-        "Werewolf", "Kurt Adam", "Vampir", "Vampir Yarasası", "Zombi",
-        "Hayalet", "Cadı", "Büyücü", "Goçmen", "Yeti", "Kar Adamı",
-        "Bigfoot", "Sasquatch", "Loch Ness Canavarı", "Chupacabra",
-        "Banshee", "Wendigo", "Manticore", "Manticore", "Basilisk",
-        "Cockatrice", "Wyvern", "Wyrm", "Salamander", "Cerberus", "Üç Başlı Köpek",
-        "Garmir", "Anubis Köpeği", "Sphinx", "Sfenks", "Chimera", "Chimaira",
-        "Pixie", "Centaur", "Banshee", "Leprechaun", "Boggart",
-        "Slime", "Golem", "Taş Golem", "Magma Golem", "Toprak Golem",
-        "Crystal Dragon", "Hayalet At", "Gece At", "Dark Horse",
-        "King Kong", "Godzilla", "Mothra", "Rodan", "Ghidorah", "Mechagodzilla",
-        "Cthulhu", "Shoggoth", "Dagon", "Yog-Sothoth", "Azathoth",
-        "Beholder", "Mind Flayer", "Owlbear", "Dryad", "Nymph",
-        "Fenrir", "Sleipnir", "Jormungandr", "Audumbla", "Ratatoskr",
-        "Pegasus", "Hippogriff", "Thestral", "Buckbeak", "Norbert",
-        "Lord Voldemort'un Yılanı Nagini", "Hedwig", "Crookshanks", "Scabbers",
-        "Patronus", "Aslan Patronus", "Geyik Patronus", "Köpek Patronus",
-        "Smaug", "Drogon", "Viserion", "Rhaegal", "Balerion", "Vhagar",
-        "Ghost (Direwolf)", "Nymeria", "Lady", "Grey Wind", "Summer", "Shaggydog",
-        "Hodor'un Atı", "Drogon'un Annesi", "Patronus", "Yoshi", "Pikachu",
-        "Charizard", "Bulbasaur", "Squirtle", "Mewtwo", "Mew", "Eevee",
-        "Snorlax", "Gengar", "Lucario", "Greninja", "Charmander", "Pidgey",
-        "Magikarp", "Gyarados", "Dragonite", "Lugia", "Ho-Oh", "Rayquaza",
-        "Arceus", "Dialga", "Palkia", "Giratina", "Reshiram", "Zekrom",
-        "Garfield", "Odie", "Snoopy", "Tom", "Jerry", "Sylvester", "Tweety",
-        "Bugs Bunny", "Pluto", "Goofy", "Donald Duck", "Daffy Duck",
-        "Mickey Mouse", "Minnie Mouse", "Çizmeli Kedi", "Garfield", "Süngerbob",
-        "Patrick Star", "Squidward", "Sandy", "Mr. Krabs", "Gary", "Pearl",
-        "Plankton", "Dory", "Nemo", "Marlin", "Bruce", "Doraemon",
-        "Hıçgıdık", "Hello Kitty", "Pikachu", "Doraemon", "Pichu",
-        "Mickey", "Pluto", "Bambi", "Thumper", "Dumbo", "Lady", "Tramp",
-        "Lassie", "Rin Tin Tin", "Marley", "Beethoven", "Hachiko",
-        "Scooby-Doo", "Brian Griffin", "Santa's Little Helper", "Snowball",
-        "K-9", "Cerberus", "Hellhound", "Cwn Annwn", "Dişsiz",
-        "Toothless", "Stitch", "Pegasus", "Maximus", "Khan",
+        # ═══════════════ KURGUSAL / MİTOLOJİK YARATIKLAR ═══════════════
+        "Unicorn", "Pegasus", "Ejderha", "Hydra", "Griffin",
+        "Phoenix", "Simurg", "Kraken", "Leviathan", "Behemoth",
+        "Minotor", "Centaur", "Satyr", "Medusa", "Siren",
+        "Deniz Kızı", "Triton", "Naga",
+        "Goblin", "Trol", "Cüce", "Orc", "Elf", "Hobbit", "Peri",
+        "Kurt Adam", "Vampir", "Zombi", "Hayalet", "Cadı",
+        "Yeti", "Bigfoot", "Loch Ness Canavarı", "Chupacabra",
+        "Banshee", "Wendigo", "Manticore", "Basilisk",
+        "Wyvern", "Cerberus", "Sfenks", "Chimera",
+        "Leprechaun", "Golem",
+        "King Kong", "Godzilla", "Mothra", "Ghidorah",
+        "Cthulhu", "Mind Flayer", "Beholder", "Owlbear",
+        "Fenrir", "Sleipnir", "Jormungandr",
+        "Hippogriff", "Thestral", "Buckbeak", "Nagini", "Hedwig",
+        "Smaug", "Drogon", "Balerion", "Vhagar",
+        "Ghost (Direwolf)", "Nymeria",
+        "Pikachu", "Charizard", "Bulbasaur", "Squirtle", "Mewtwo",
+        "Eevee", "Snorlax", "Gengar", "Lucario", "Magikarp", "Gyarados",
+        "Garfield", "Snoopy", "Tom", "Jerry", "Tweety", "Bugs Bunny",
+        "Pluto", "Goofy", "Donald Duck", "Mickey Mouse",
+        "Çizmeli Kedi", "Süngerbob", "Patrick Star", "Gary",
+        "Nemo", "Dory", "Bambi", "Dumbo", "Hachiko", "Scooby-Doo",
+        "Brian Griffin", "Dişsiz", "Stitch", "Maximus",
 
         # ═══════════════ DİNOZORLAR ve PREHİSTORİK HAYVANLAR ═══════════════
-        "T-Rex", "Tyrannosaurus Rex", "Velociraptor", "Stegosaurus",
-        "Triceratops", "Brachiosaurus", "Brontosaurus", "Diplodocus",
-        "Apatosaurus", "Ankylosaurus", "Pterodactyl", "Pteranodon",
-        "Spinosaurus", "Allosaurus", "Carnotaurus", "Giganotosaurus",
-        "Iguanodon", "Parasaurolophus", "Pachycephalosaurus", "Compsognathus",
-        "Dilophosaurus", "Therizinosaurus", "Mosasaurus", "Plesiosaurus",
-        "Ichthyosaur", "Liopleurodon", "Mamut", "Yünlü Mamut", "Mastodon",
-        "Kılıç Dişli Kaplan", "Smilodon", "Dev Tembel Hayvan", "Megatherium",
-        "Megaladon", "Megalodon", "Argentinosaurus", "Quetzalcoatlus",
+        "T-Rex", "Velociraptor", "Stegosaurus", "Triceratops",
+        "Brachiosaurus", "Brontosaurus", "Diplodocus", "Ankylosaurus",
+        "Pterodactyl", "Spinosaurus", "Allosaurus", "Carnotaurus",
+        "Giganotosaurus", "Parasaurolophus", "Pachycephalosaurus",
+        "Dilophosaurus", "Mosasaurus", "Plesiosaurus", "Liopleurodon",
+        "Kılıç Dişli Kaplan", "Megatherium",
+        "Argentinosaurus", "Quetzalcoatlus",
         "Archaeopteryx", "Dimetrodon", "Trilobit", "Anomalocaris",
-        "Dodo", "Dodo Kuşu", "Tasmanya Kaplanı", "Yolcu Güvercini",
+        "Dodo", "Tasmanya Kaplanı", "Yolcu Güvercini",
         "Quagga", "Steller Deniz İneği",
     ],
 
 }
 
+# Her kategorideki duplikatları sırayı bozmadan temizle.
+CATEGORIES = {k: list(dict.fromkeys(v)) for k, v in CATEGORIES.items()}
 
-def get_random_names(count: int, category: str = "populer_ikonlar") -> list[str]:
-    """Seçilen kategoriden belirtilen sayıda benzersiz rastgele isim seç."""
+
+# "Kolay" mod için her kategoriden en yaygın bilinen seçimler.
+EASY_NAMES = {
+    "populer_ikonlar": [
+        "Atatürk", "Tarkan", "Barış Manço", "Kemal Sunal", "Cem Yılmaz",
+        "Şener Şen", "Sezen Aksu", "Türkan Şoray", "Fatih Terim", "Recep İvedik",
+        "Recep Tayyip Erdoğan", "Fatih Sultan Mehmet", "Mevlana", "Nasreddin Hoca",
+        "Albert Einstein", "Leonardo da Vinci", "Napoleon", "Kleopatra",
+        "Mozart", "Beethoven", "Michael Jackson", "Elvis Presley",
+        "Charlie Chaplin", "Bruce Lee", "Muhammad Ali", "Lionel Messi",
+        "Cristiano Ronaldo", "Michael Jordan", "Elon Musk", "Steve Jobs",
+        "Bill Gates", "Mark Zuckerberg", "Mr.Beast", "Adolf Hitler",
+        "Obama", "Putin", "Trump", "Hz. Muhammed", "İsa Mesih",
+        "Darth Vader", "Harry Potter", "Gandalf", "Batman", "Spider-Man",
+        "Sherlock Holmes", "James Bond", "Shrek", "Jack Sparrow", "Joker",
+        "Iron Man", "Superman", "Walter White", "Pikachu", "Goku",
+        "Naruto", "Mario", "Sonic", "Master Chief", "Kratos",
+        "Lara Croft", "Mickey Mouse", "Süngerbob", "Garfield", "Yoda",
+        "Zeus", "Hades",
+    ],
+    "tarihi_olaylar": [
+        "İstanbul'un Fethi", "Kurtuluş Savaşı", "Çanakkale Savaşı",
+        "Cumhuriyetin İlanı", "1. Dünya Savaşı", "2. Dünya Savaşı",
+        "Fransız İhtilali", "Sanayi Devrimi", "Amerika'nın Keşfi",
+        "Aya İniş", "Çernobil Faciası", "Berlin Duvarı'nın Yıkılışı",
+        "Titanik'in Batışı", "Hiroşima Bombalaması", "9/11 Saldırıları",
+        "Covid-19 Pandemisi", "Matbaanın İcadı", "Tekerleğin İcadı",
+        "Rönesans", "Haçlı Seferleri", "Kara Veba", "Holokost",
+        "Soğuk Savaş", "Kennedy Suikastı", "Truva Savaşı",
+        "Piramitlerin İnşası", "İslam'ın Doğuşu", "Bolşevik Devrimi",
+        "Pearl Harbor Saldırısı",
+    ],
+    "hayvanlar": [
+        "Aslan", "Kaplan", "Fil", "Zürafa", "Panda", "Kanguru", "Zebra",
+        "Goril", "Timsah", "Ayı", "Kurt", "Tilki", "Kedi", "Köpek",
+        "At", "İnek", "Koyun", "Domuz", "Tavuk", "Ördek", "Sincap",
+        "Fare", "Yarasa", "Papağan", "Penguen", "Ahtapot", "Yunus",
+        "Balina", "Beyaz Köpekbalığı", "T-Rex", "Unicorn", "Ejderha",
+        "Phoenix", "Kraken", "Pikachu", "Çita", "Kanarya", "Tavşan",
+        "Devekuşu", "Yılan",
+    ],
+}
+
+
+def _resolve_pool(category: str, difficulty: str = "hepsi",
+                  custom_words: list[str] | None = None) -> list[str]:
+    """Verilen ayarlara göre öğe havuzunu döndür."""
+    # Özel kategori — host'un girdiği kelimeler
+    if category == "ozel":
+        return list(dict.fromkeys([w.strip() for w in (custom_words or []) if w and w.strip()]))
+
+    # Karma mod — tüm kategorileri birleştir
+    if category == "karma":
+        if difficulty == "kolay":
+            merged = []
+            for v in EASY_NAMES.values():
+                merged.extend(v)
+            return list(dict.fromkeys(merged))
+        merged = []
+        for v in CATEGORIES.values():
+            merged.extend(v)
+        return list(dict.fromkeys(merged))
+
     if category not in CATEGORIES:
-        category = "populer_ikonlar"  # varsayılan veya hatalı kategori ise
+        category = "populer_ikonlar"
 
-    pool = CATEGORIES[category]
+    if difficulty == "kolay" and category in EASY_NAMES:
+        return EASY_NAMES[category]
+
+    return CATEGORIES[category]
+
+
+def get_random_names(count: int, category: str = "populer_ikonlar",
+                     difficulty: str = "hepsi",
+                     custom_words: list[str] | None = None) -> list[str]:
+    """Seçilen kategoriden belirtilen sayıda benzersiz rastgele isim seç."""
+    pool = _resolve_pool(category, difficulty, custom_words)
+
+    if not pool:
+        raise ValueError("Kategori boş, oyun başlatılamaz.")
 
     if count > len(pool):
         raise ValueError(
             f"Seçilen kategoride en fazla {len(pool)} kelime var, {count} istendi."
         )
     return random.sample(pool, count)
+
+
+def get_all_names(category: str = "populer_ikonlar",
+                  difficulty: str = "hepsi",
+                  custom_words: list[str] | None = None) -> list[str]:
+    """Bir kategorideki tüm öğeleri alfabetik sırada döndür (eleme paneli için)."""
+    pool = _resolve_pool(category, difficulty, custom_words)
+    return sorted(pool, key=lambda s: s.lower())

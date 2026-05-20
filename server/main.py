@@ -73,19 +73,24 @@ async def handle_start_game(player_id: str, data: dict):
         })
         return
 
-    # if len(room.players) < 2:
-    #     await room.players[player_id].send({
-    #         "type": "error",
-    #         "message": "Oyun başlatmak için en az 2 oyuncu gerekli!"
-    #     })
-    #     return
+    category = data.get("category", "populer_ikonlar")
+    difficulty = data.get("difficulty", "hepsi")
+    custom_words = data.get("customWords") or []
+    timer_seconds = int(data.get("timerSeconds") or 0)
 
-    # İsimleri ata ve oyunu başlat
-    category = data.get("category", "unluler")
-    room.assign_names(category)
+    try:
+        room.assign_names(category, difficulty, custom_words, timer_seconds)
+    except ValueError as e:
+        await room.players[player_id].send({
+            "type": "error",
+            "message": str(e)
+        })
+        return
+
     await room.send_game_state()
+    room.start_timer_task()
 
-    print(f"[▶] Oda {room.code} oyunu başlattı ({len(room.players)} oyuncu)")
+    print(f"[▶] Oda {room.code} oyunu başlattı ({len(room.players)} oyuncu, kategori={category}, zorluk={difficulty}, süre={timer_seconds}s)")
     for p in room.players.values():
         print(f"    {p.name} → {p.assigned_name}")
 
@@ -131,12 +136,17 @@ async def handle_guess(player_id: str, data: dict):
         # Oyun bitti mi kontrol et
         if room.is_game_over():
             room.state = Room.FINISHED
+            room._cancel_timer()
             await room.broadcast({
                 "type": "game_over",
                 "rankings": room.get_rankings(),
             })
             print(f"[✓] Oda {room.code} oyunu bitti!")
         else:
+            # Sırayı kaydır — açılan oyuncu sıradan çıkar
+            if room.current_turn_id == player.id:
+                room.advance_turn()
+                await room.broadcast_turn()
             print(f"[★] {player.name} doğru tahmin etti: {player.assigned_name} (sıra: {player.rank})")
 
 
@@ -153,10 +163,107 @@ async def handle_new_round(player_id: str, data: dict):
         })
         return
 
-    category = data.get("category", "unluler")
-    room.assign_names(category)
+    category = data.get("category", "populer_ikonlar")
+    difficulty = data.get("difficulty", "hepsi")
+    custom_words = data.get("customWords") or []
+    timer_seconds = int(data.get("timerSeconds") or 0)
+
+    try:
+        room.assign_names(category, difficulty, custom_words, timer_seconds)
+    except ValueError as e:
+        await room.players[player_id].send({
+            "type": "error",
+            "message": str(e)
+        })
+        return
+
     await room.send_game_state()
+    room.start_timer_task()
     print(f"[▶] Oda {room.code} yeni tur başlattı")
+
+
+async def handle_set_avatar(player_id: str, data: dict):
+    """Oyuncu avatar emojisini değiştirir."""
+    room = get_player_room(player_id)
+    if not room:
+        return
+    player = room.players.get(player_id)
+    if not player:
+        return
+    avatar = (data.get("avatar") or "").strip()
+    if not avatar:
+        return
+    # En fazla 4 karakter (emoji sequence olabilir)
+    player.avatar = avatar[:8]
+    await room.send_lobby_update()
+
+
+async def handle_post_message(player_id: str, data: dict):
+    """Q&A log paneline mesaj gönder (oda chat'i)."""
+    room = get_player_room(player_id)
+    if not room:
+        return
+    player = room.players.get(player_id)
+    if not player:
+        return
+    text = (data.get("text") or "").strip()
+    if not text:
+        return
+    kind = data.get("kind") or "question"  # "question" | "yes" | "no" | "maybe" | "note"
+    if kind not in ("question", "yes", "no", "maybe", "note"):
+        kind = "question"
+
+    entry = {
+        "id": f"m{len(room.qa_log) + 1}",
+        "playerId": player.id,
+        "playerName": player.name,
+        "avatar": player.avatar,
+        "text": text[:200],
+        "kind": kind,
+    }
+    room.add_log_entry(entry)
+    await room.broadcast({
+        "type": "log_message",
+        "entry": entry,
+    })
+
+
+async def handle_next_turn(player_id: str, data: dict):
+    """Sırayı bir sonraki oyuncuya kaydır (pas hakkı)."""
+    room = get_player_room(player_id)
+    if not room or room.state != Room.PLAYING:
+        return
+    # Sıradaki oyuncu ya da host pas çekebilir
+    if player_id != room.current_turn_id and player_id != room.host.id:
+        await room.players[player_id].send({
+            "type": "error",
+            "message": "Sadece sırası gelen oyuncu veya oda sahibi pas çekebilir."
+        })
+        return
+    room.advance_turn()
+    await room.broadcast_turn()
+
+
+async def handle_request_hint(player_id: str, data: dict):
+    """Oyuncuya atanmış ismi hakkında ipucu ver."""
+    room = get_player_room(player_id)
+    if not room:
+        return
+    player = room.players.get(player_id)
+    if not player:
+        return
+    hint = room.get_hint_for(player_id)
+    if not hint:
+        await player.send({
+            "type": "hint",
+            "hint": None,
+            "message": "İpucu şu an verilemez.",
+        })
+        return
+    await player.send({
+        "type": "hint",
+        "hint": hint,
+    })
 
 
 async def handle_disconnect(websocket):
@@ -207,6 +314,22 @@ async def handler(websocket):
             elif msg_type == "new_round":
                 if player_id:
                     await handle_new_round(player_id, data)
+
+            elif msg_type == "set_avatar":
+                if player_id:
+                    await handle_set_avatar(player_id, data)
+
+            elif msg_type == "post_message":
+                if player_id:
+                    await handle_post_message(player_id, data)
+
+            elif msg_type == "next_turn":
+                if player_id:
+                    await handle_next_turn(player_id, data)
+
+            elif msg_type == "request_hint":
+                if player_id:
+                    await handle_request_hint(player_id, data)
 
             else:
                 await websocket.send(json.dumps({

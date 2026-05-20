@@ -4,15 +4,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Ben Kimim? — Discord'da arka planda oynanan çok oyunculu tahmin oyunu">
+    <meta name="theme-color" content="#0097e6">
     <title>Ben Kimim? 🎭</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🎭%3C/text%3E%3C/svg%3E">
 </head>
 <body>
 
-    <button id="theme-toggle" class="theme-btn" title="Temayı Değiştir">
-        <svg id="moon-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-moon"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
-        <svg id="sun-icon" class="hidden" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-sun"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
-    </button>
+    <div class="top-right-controls">
+        <button id="btn-sound-toggle" class="theme-btn sound-btn" title="Ses Efektleri">
+            <span id="sound-icon-on">🔊</span>
+            <span id="sound-icon-off" class="hidden">🔇</span>
+        </button>
+        <button id="theme-toggle" class="theme-btn" title="Temayı Değiştir">
+            <svg id="moon-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-moon"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+            <svg id="sun-icon" class="hidden" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-sun"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+        </button>
+    </div>
 
     <!-- ═══════════════ LOBBY EKRANI ═══════════════ -->
     <div id="screen-lobby" class="screen active">
@@ -23,6 +32,13 @@
             <div class="form-group">
                 <label for="input-name">Adın</label>
                 <input type="text" id="input-name" placeholder="Adını yaz..." maxlength="20" autocomplete="off">
+            </div>
+
+            <div class="form-group">
+                <label>Avatar Seç</label>
+                <div id="avatar-grid" class="avatar-grid">
+                    <!-- JS dolduracak -->
+                </div>
             </div>
 
             <div class="form-group">
@@ -37,23 +53,45 @@
                 <div class="room-code-display">
                     Oda Kodu: <span id="display-room-code">---</span>
                     <button id="btn-copy-code" class="btn-small" title="Kodu kopyala">📋</button>
+                    <button id="btn-copy-link" class="btn-small" title="Davet linkini kopyala">🔗</button>
                 </div>
 
                 <h3>Oyuncular</h3>
                 <ul id="player-list"></ul>
-                
+
                 <div id="host-controls" class="hidden">
                     <div class="form-group" style="margin-top: 15px;">
                         <label for="select-category">Oyun Modu</label>
-                        <select id="select-category" style="width: 100%; padding: 8px; border-radius: 4px; border: 1px solid #dcdde1;">
+                        <select id="select-category" class="select-styled">
                             <option value="populer_ikonlar">İkonik Kişiler Karakterler</option>
                             <option value="hayvanlar">Hayvanlar (Kurgusal Dahil)</option>
                             <option value="tarihi_olaylar">Tarihi Olaylar</option>
+                            <option value="karma">🎲 Karma Mod (Hepsi Birden)</option>
+                            <option value="ozel">✏️ Özel Kategori (Sen Yaz)</option>
                         </select>
                     </div>
+
+                    <div class="form-group">
+                        <label for="select-difficulty">Zorluk</label>
+                        <select id="select-difficulty" class="select-styled">
+                            <option value="kolay">Kolay (Sadece çok bilinenler)</option>
+                            <option value="hepsi" selected>Hepsi (Tüm liste)</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="input-timer">Tur Süresi (saniye, 0 = kapalı)</label>
+                        <input type="number" id="input-timer" min="0" max="300" step="5" value="0" class="select-styled">
+                    </div>
+
+                    <div id="custom-category-group" class="form-group hidden">
+                        <label for="input-custom-words">Özel Kelimeler <span class="hint">(her satıra bir tane, en az oyuncu sayısı kadar)</span></label>
+                        <textarea id="input-custom-words" class="select-styled" rows="5" placeholder="Mesela:&#10;Ahmet Hoca&#10;Berfin&#10;Kantinci Hasan&#10;..."></textarea>
+                    </div>
+
                     <button id="btn-start" class="btn-primary">Oyunu Başlat</button>
                 </div>
-                
+
                 <p id="waiting-msg" class="hint">Oda sahibinin başlatmasını bekle...</p>
             </div>
 
@@ -66,6 +104,14 @@
         <div class="game-header">
             <span class="room-badge" id="game-room-code"></span>
             <h2>🎭 Ben Kimim?</h2>
+            <div id="turn-bar" class="turn-bar hidden">
+                <span class="turn-label">Sıra:</span>
+                <span id="turn-player-name" class="turn-name">-</span>
+                <span id="timer-pill" class="timer-pill hidden">⏱ <span id="timer-value">00:00</span></span>
+                <button id="btn-pass" class="btn-small pass-btn">Pas ⏭</button>
+                <button id="btn-hint" class="btn-small hint-btn">İpucu 💡</button>
+            </div>
+            <div id="hint-display" class="hint-display hidden"></div>
         </div>
 
         <!-- Masa ve oyuncular -->
@@ -89,6 +135,66 @@
                 </div>
             </div>
         </div>
+
+        <!-- ═══════════════ SORU/CEVAP LOG (sol alt) ═══════════════ -->
+        <button id="btn-log-toggle" class="log-fab" title="Soru/Cevap Defteri">
+            <span class="log-fab-icon">💬</span>
+            <span class="log-fab-badge hidden" id="log-fab-badge">0</span>
+        </button>
+
+        <div id="log-panel" class="log-panel hidden">
+            <div class="elim-header">
+                <div class="elim-title">
+                    <span>💬 Soru / Cevap</span>
+                </div>
+                <button id="btn-log-close" class="elim-close" title="Kapat">✕</button>
+            </div>
+
+            <div id="log-list" class="log-list"></div>
+
+            <div class="log-quick">
+                <button class="log-quick-btn" data-kind="yes">✅ Evet</button>
+                <button class="log-quick-btn" data-kind="no">❌ Hayır</button>
+                <button class="log-quick-btn" data-kind="maybe">🤔 Belki</button>
+            </div>
+
+            <div class="log-input-row">
+                <input type="text" id="log-input" placeholder="Soru/Not yaz... (örn. 'Erkek misin?')" maxlength="200" autocomplete="off">
+                <button id="btn-log-send" class="btn-primary log-send">Gönder</button>
+            </div>
+        </div>
+
+        <!-- ═══════════════ ELEME PANELİ (sağ alt) ═══════════════ -->
+        <button id="btn-elim-toggle" class="elim-fab" title="Eleme Defteri">
+            <span class="elim-fab-icon">📝</span>
+            <span class="elim-fab-badge" id="elim-fab-badge">0</span>
+        </button>
+
+        <div id="elim-panel" class="elim-panel hidden">
+            <div class="elim-header">
+                <div class="elim-title">
+                    <span>📝 Eleme Defteri</span>
+                    <span class="elim-count" id="elim-count">0 / 0</span>
+                </div>
+                <button id="btn-elim-close" class="elim-close" title="Kapat">✕</button>
+            </div>
+
+            <textarea id="elim-notes" class="elim-notes" placeholder="Notların... (örn. 'erkek, tarihi figür, asker olabilir')" rows="2"></textarea>
+
+            <div class="elim-toolbar">
+                <input type="text" id="elim-search" class="elim-search" placeholder="🔍 Ara..." autocomplete="off">
+                <button id="btn-elim-reset" class="btn-small elim-reset" title="Hepsini geri al">↺</button>
+            </div>
+
+            <div class="elim-tabs">
+                <button class="elim-tab active" data-tab="all">Hepsi</button>
+                <button class="elim-tab" data-tab="active">Aday</button>
+                <button class="elim-tab" data-tab="suspect">Şüpheli</button>
+                <button class="elim-tab" data-tab="eliminated">Elenen</button>
+            </div>
+
+            <div id="elim-list" class="elim-list"></div>
+        </div>
     </div>
 
     <!-- ═══════════════ SONUÇ EKRANI ═══════════════ -->
@@ -100,13 +206,15 @@
             <div id="host-controls-result" class="hidden" style="margin-top: 20px;">
                 <div class="form-group" style="text-align: center;">
                     <label for="select-category-result" style="display: inline-block; margin-right: 10px;">Oyun Modu:</label>
-                    <select id="select-category-result" style="padding: 6px; border-radius: 4px; border: 1px solid #dcdde1;">
+                    <select id="select-category-result" class="select-styled" style="display: inline-block; width: auto;">
                         <option value="populer_ikonlar">İkonik Kişiler Karakterler</option>
                         <option value="hayvanlar">Hayvanlar (Kurgusal Dahil)</option>
                         <option value="tarihi_olaylar">Tarihi Olaylar</option>
+                        <option value="karma">🎲 Karma Mod</option>
                     </select>
                 </div>
-                <button id="btn-new-round" class="btn-primary">Yeni Tur</button>
+                <button id="btn-new-round" class="btn-primary">Aynı Oyuncularla Yeni Tur</button>
+                <p class="hint" style="margin-top:6px;">Aynı odada, aynı oyuncularla devam edersiniz.</p>
             </div>
 
             <p id="waiting-new-round" class="hint">Oda sahibinin yeni tur başlatmasını bekle...</p>
