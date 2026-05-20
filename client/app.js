@@ -4,19 +4,18 @@
 
 // ── Ayarlar ─────────────────────────────────────────
 // WS sunucusu:
-//   - oyun.ahmetkadir.com altında: wss://oyun.ahmetkadir.com/ws  (auto)
-//   - GitHub Pages / localhost: fallback olarak Render URL'i
+//   - oyun.ahmetkadir.com → ws.oyun.ahmetkadir.com (subdomain)
+//   - localhost dev → ws://localhost:8765
+//   - GitHub Pages / fallback → Render
 const WS_URL = (() => {
     if (window.WS_URL) return window.WS_URL;
     const host = location.hostname;
-    if (host === "oyun.ahmetkadir.com" || host.endsWith(".ahmetkadir.com")) {
-        return `wss://${location.host}/ws`;
+    if (host === "oyun.ahmetkadir.com") {
+        return "wss://ws.oyun.ahmetkadir.com";
     }
-    // Localhost dev: ws://localhost:8765
     if (host === "localhost" || host === "127.0.0.1") {
         return "ws://localhost:8765";
     }
-    // GitHub Pages vs.
     return "wss://whoami-kaa7.onrender.com";
 })();
 
