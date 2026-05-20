@@ -77,9 +77,10 @@ async def handle_start_game(player_id: str, data: dict):
     difficulty = data.get("difficulty", "hepsi")
     custom_words = data.get("customWords") or []
     timer_seconds = int(data.get("timerSeconds") or 0)
+    pool_limit = int(data.get("poolLimit") or 0)
 
     try:
-        room.assign_names(category, difficulty, custom_words, timer_seconds)
+        room.assign_names(category, difficulty, custom_words, timer_seconds, pool_limit)
     except ValueError as e:
         await room.players[player_id].send({
             "type": "error",
@@ -90,7 +91,7 @@ async def handle_start_game(player_id: str, data: dict):
     await room.send_game_state()
     room.start_timer_task()
 
-    print(f"[▶] Oda {room.code} oyunu başlattı ({len(room.players)} oyuncu, kategori={category}, zorluk={difficulty}, süre={timer_seconds}s)")
+    print(f"[▶] Oda {room.code} oyunu başlattı ({len(room.players)} oyuncu, kategori={category}, zorluk={difficulty}, havuz={pool_limit or 'tam'}, süre={timer_seconds}s)")
     for p in room.players.values():
         print(f"    {p.name} → {p.assigned_name}")
 
@@ -121,6 +122,21 @@ async def handle_guess(player_id: str, data: dict):
         "type": "guess_result",
         "correct": correct,
         "message": message,
+    })
+
+    # Herkese tahmini chat log'a bildir
+    guess_entry = {
+        "id": f"g{len(room.qa_log) + 1}",
+        "playerId": player.id,
+        "playerName": player.name,
+        "avatar": player.avatar,
+        "text": guess,
+        "kind": "guess_correct" if correct else "guess_wrong",
+    }
+    room.add_log_entry(guess_entry)
+    await room.broadcast({
+        "type": "log_message",
+        "entry": guess_entry,
     })
 
     if correct:
@@ -167,9 +183,10 @@ async def handle_new_round(player_id: str, data: dict):
     difficulty = data.get("difficulty", "hepsi")
     custom_words = data.get("customWords") or []
     timer_seconds = int(data.get("timerSeconds") or 0)
+    pool_limit = int(data.get("poolLimit") or 0)
 
     try:
-        room.assign_names(category, difficulty, custom_words, timer_seconds)
+        room.assign_names(category, difficulty, custom_words, timer_seconds, pool_limit)
     except ValueError as e:
         await room.players[player_id].send({
             "type": "error",
@@ -244,28 +261,6 @@ async def handle_next_turn(player_id: str, data: dict):
     await room.broadcast_turn()
 
 
-async def handle_request_hint(player_id: str, data: dict):
-    """Oyuncuya atanmış ismi hakkında ipucu ver."""
-    room = get_player_room(player_id)
-    if not room:
-        return
-    player = room.players.get(player_id)
-    if not player:
-        return
-    hint = room.get_hint_for(player_id)
-    if not hint:
-        await player.send({
-            "type": "hint",
-            "hint": None,
-            "message": "İpucu şu an verilemez.",
-        })
-        return
-    await player.send({
-        "type": "hint",
-        "hint": hint,
-    })
-
-
 async def handle_disconnect(websocket):
     """Bağlantı koptuğunda temizlik yap."""
     player_id = connected_players.pop(websocket, None)
@@ -326,10 +321,6 @@ async def handler(websocket):
             elif msg_type == "next_turn":
                 if player_id:
                     await handle_next_turn(player_id, data)
-
-            elif msg_type == "request_hint":
-                if player_id:
-                    await handle_request_hint(player_id, data)
 
             else:
                 await websocket.send(json.dumps({

@@ -958,10 +958,17 @@ def _resolve_pool(category: str, difficulty: str = "hepsi",
     if category not in CATEGORIES:
         category = "populer_ikonlar"
 
+    # "ozel_sayi" zorluğu = tam havuzdan al (Room sub-sample edecek)
     if difficulty == "kolay" and category in EASY_NAMES:
         return EASY_NAMES[category]
 
     return CATEGORIES[category]
+
+
+def resolve_pool(category: str, difficulty: str = "hepsi",
+                 custom_words: list[str] | None = None) -> list[str]:
+    """Public: kategoriye göre tam havuzu döndür."""
+    return _resolve_pool(category, difficulty, custom_words)
 
 
 def get_random_names(count: int, category: str = "populer_ikonlar",

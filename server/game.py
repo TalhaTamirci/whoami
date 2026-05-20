@@ -5,7 +5,7 @@ import string
 import random
 import asyncio
 import json
-from names import get_random_names, get_all_names
+from names import resolve_pool
 
 
 class Player:
@@ -72,6 +72,8 @@ class Room:
         self.current_category: str = "populer_ikonlar"
         self.current_difficulty: str = "hepsi"
         self.custom_words: list[str] = []
+        self.pool_limit: int = 0  # 0 = sınırsız (tüm havuz)
+        self.active_pool: list[str] = []  # bu turda kullanılan havuz
         self.qa_log: list[dict] = []
         self.turn_order: list[str] = []
         self.current_turn_id: str | None = None
@@ -92,12 +94,39 @@ class Room:
             self.host = next(iter(self.players.values()))
 
     def assign_names(self, category: str = "unluler", difficulty: str = "hepsi",
-                     custom_words: list[str] | None = None, timer_seconds: int = 0):
-        """Her oyuncuya rastgele kelime ata."""
+                     custom_words: list[str] | None = None, timer_seconds: int = 0,
+                     pool_limit: int = 0):
+        """Her oyuncuya rastgele kelime ata.
+
+        pool_limit > 0 ise, tam havuzdan o kadar öğe rastgele seçilir ve
+        hem isim atama hem eleme defteri o alt-küme üzerinden çalışır.
+        """
         player_list = list(self.players.values())
-        names = get_random_names(
-            len(player_list), category, difficulty, custom_words
-        )
+        full_pool = resolve_pool(category, difficulty, custom_words)
+        if not full_pool:
+            raise ValueError("Kategori boş, oyun başlatılamaz.")
+
+        # Pool limit uygula
+        limit = max(0, int(pool_limit or 0))
+        if limit > 0:
+            if limit < len(player_list):
+                raise ValueError(
+                    f"Toplam seçenek ({limit}) oyuncu sayısından ({len(player_list)}) az olamaz."
+                )
+            if limit < len(full_pool):
+                active = random.sample(full_pool, limit)
+            else:
+                active = list(full_pool)
+                limit = len(full_pool)
+        else:
+            active = list(full_pool)
+
+        if len(player_list) > len(active):
+            raise ValueError(
+                f"Havuzda en fazla {len(active)} kelime var, {len(player_list)} oyuncuya yetmez."
+            )
+
+        names = random.sample(active, len(player_list))
         for player, name in zip(player_list, names):
             player.assigned_name = name
             player.revealed = False
@@ -107,6 +136,8 @@ class Room:
         self.current_category = category
         self.current_difficulty = difficulty
         self.custom_words = list(custom_words or [])
+        self.pool_limit = limit
+        self.active_pool = active
 
         # Sıra ve log sıfırla
         self.qa_log = []
@@ -149,16 +180,6 @@ class Room:
         self.qa_log.append(entry)
         if len(self.qa_log) > 100:
             self.qa_log = self.qa_log[-100:]
-
-    def get_hint_for(self, player_id: str) -> str | None:
-        """Oyuncunun atanmış isminden ipucu üret (ilk harf + uzunluk)."""
-        player = self.players.get(player_id)
-        if not player or not player.assigned_name or player.revealed:
-            return None
-        name = player.assigned_name
-        first = name[0] if name else "?"
-        word_count = len(name.split())
-        return f"İlk harf: {first} · {len(name)} karakter · {word_count} kelime"
 
     def check_guess(self, player_id: str, guess: str) -> tuple[bool, str]:
         """Oyuncunun tahminini kontrol et.
@@ -210,9 +231,7 @@ class Room:
 
     async def send_game_state(self):
         """Her oyuncuya kendi perspektifinden oyun durumunu gönder."""
-        category_items = get_all_names(
-            self.current_category, self.current_difficulty, self.custom_words
-        )
+        category_items = sorted(self.active_pool, key=lambda s: s.lower())
         for player in self.players.values():
             players_data = [
                 p.to_game_dict(for_player_id=player.id)
@@ -224,6 +243,7 @@ class Room:
                 "category": self.current_category,
                 "difficulty": self.current_difficulty,
                 "categoryItems": category_items,
+                "poolLimit": self.pool_limit,
                 "turnPlayerId": self.current_turn_id,
                 "timerTotal": self.timer_total,
                 "timerRemaining": self.timer_remaining,
