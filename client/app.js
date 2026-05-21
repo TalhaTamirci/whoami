@@ -308,15 +308,7 @@ function handleGameStarted(data) {
     inputGuess.value = "";
     guessFeedback.classList.add("hidden");
 
-    const me = currentPlayers.find((p) => p.id === myPlayerId);
-    if (me && me.revealed) {
-        inputGuess.disabled = true;
-        btnGuess.disabled = true;
-    } else {
-        inputGuess.disabled = false;
-        btnGuess.disabled = false;
-        inputGuess.focus();
-    }
+    updateGuessUIState();
 
     if (data.categoryItems) {
         const diffKey = (data.difficulty || "hepsi") + (data.poolLimit ? `_n${data.poolLimit}` : "");
@@ -326,19 +318,18 @@ function handleGameStarted(data) {
 
 function handleGuessResult(data) {
     guessFeedback.classList.remove("hidden", "correct", "wrong");
-    guessFeedback.textContent = data.message;
+    const stats = data.correct ? formatRevealStats(data) : "";
+    guessFeedback.textContent = data.message + (stats ? "  " + stats : "");
 
     if (data.correct) {
         guessFeedback.classList.add("correct");
-        inputGuess.disabled = true;
-        btnGuess.disabled = true;
         sounds.correct();
     } else {
         guessFeedback.classList.add("wrong");
         inputGuess.value = "";
-        inputGuess.focus();
         sounds.wrong();
     }
+    updateGuessUIState();
 }
 
 function handlePlayerRevealed(data) {
@@ -348,6 +339,8 @@ function handlePlayerRevealed(data) {
         player.assignedName = data.assignedName;
     }
     renderPlayersOnTable(currentPlayers);
+    renderElimList();
+    updateGuessUIState();
     if (data.playerId !== myPlayerId) sounds.correct();
 }
 
@@ -371,6 +364,8 @@ function handleTurnChanged(data) {
     timerTotal = data.timerTotal || 0;
     renderTurnBar();
     renderPlayersOnTable(currentPlayers);
+    renderElimList();
+    updateGuessUIState();
     if (turnPlayerId === myPlayerId) sounds.turn();
 }
 
@@ -386,6 +381,8 @@ function handleTimerExpired(data) {
     timerTotal = data.timerTotal || 0;
     renderTurnBar();
     renderPlayersOnTable(currentPlayers);
+    renderElimList();
+    updateGuessUIState();
     sounds.wrong();
 }
 
@@ -510,9 +507,13 @@ function renderRankings(rankings) {
 
         const details = document.createElement("div");
         details.className = "ranking-details";
+        const statsHtml = entry.rank
+            ? `<div class="ranking-stats">${escapeHtml(formatRevealStats(entry))}</div>`
+            : "";
         details.innerHTML = `
             <div class="name">${escapeHtml(entry.name)}</div>
             <div class="assigned">${escapeHtml(entry.assignedName)}</div>
+            ${statsHtml}
         `;
 
         item.appendChild(pos);
@@ -525,6 +526,43 @@ function escapeHtml(s) {
     return String(s || "").replace(/[&<>"']/g, (c) => ({
         "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
     }[c]));
+}
+
+function formatDuration(seconds) {
+    const s = Math.max(0, Math.floor(Number(seconds) || 0));
+    if (s < 60) return `${s}sn`;
+    const m = Math.floor(s / 60);
+    const r = s % 60;
+    return r === 0 ? `${m}dk` : `${m}dk ${r}sn`;
+}
+
+function updateGuessUIState() {
+    const me = currentPlayers.find((p) => p.id === myPlayerId);
+    const iAmRevealed = !!(me && me.revealed);
+    const isMyTurn = turnPlayerId === myPlayerId;
+
+    if (iAmRevealed) {
+        inputGuess.disabled = true;
+        btnGuess.disabled = true;
+        inputGuess.placeholder = "Bildin! Diğer oyuncuları izle.";
+    } else if (!isMyTurn) {
+        inputGuess.disabled = true;
+        btnGuess.disabled = true;
+        inputGuess.placeholder = "Sıran değil, bekle...";
+    } else {
+        inputGuess.disabled = false;
+        btnGuess.disabled = false;
+        inputGuess.placeholder = "Kafandaki ismi tahmin et...";
+        if (document.activeElement !== inputGuess) inputGuess.focus();
+    }
+}
+
+function formatRevealStats(entry) {
+    const parts = [];
+    if (entry.rank) parts.push(`${entry.rank}. bilen`);
+    if (entry.turnCount) parts.push(`${entry.turnCount}. tur`);
+    if (entry.elapsedSeconds != null) parts.push(formatDuration(entry.elapsedSeconds));
+    return parts.length ? `(${parts.join(" · ")})` : "";
 }
 
 
@@ -560,7 +598,8 @@ function renderLog() {
         const txt = document.createElement("div");
         txt.className = "log-entry-text";
         if (entry.kind === "guess_correct") {
-            txt.textContent = `✅ Tahmin etti: "${entry.text}" — Doğru!`;
+            const stats = formatRevealStats(entry);
+            txt.textContent = `✅ Tahmin etti: "${entry.text}" — Doğru!${stats ? "  " + stats : ""}`;
         } else if (entry.kind === "guess_wrong") {
             txt.textContent = `❌ Tahmin etti: "${entry.text}" — Yanlış`;
         } else {
@@ -656,8 +695,29 @@ function renderElimList() {
             text.className = "elim-item-text";
             text.textContent = item;
 
+            const me = currentPlayers.find((p) => p.id === myPlayerId);
+            const iAmRevealed = !!(me && me.revealed);
+            const isMyTurn = turnPlayerId === myPlayerId;
+            const canGuess = !iAmRevealed && isMyTurn;
+
+            const guessBtn = document.createElement("button");
+            guessBtn.type = "button";
+            guessBtn.className = "elim-item-guess";
+            guessBtn.textContent = "Tahmin Et";
+            guessBtn.disabled = !canGuess;
+            guessBtn.title = canGuess
+                ? `"${item}" olarak tahmin gönder`
+                : iAmRevealed ? "Zaten bildin" : "Sıran değil";
+            guessBtn.addEventListener("click", (e) => {
+                e.stopPropagation();
+                if (!canGuess) return;
+                if (!confirm(`"${item}" olarak tahmin gönderilsin mi?`)) return;
+                sendMessage({ type: "guess", guess: item });
+            });
+
             row.appendChild(mark);
             row.appendChild(text);
+            row.appendChild(guessBtn);
             row.title = "Tıkla → aday / şüpheli / elenmiş";
             row.addEventListener("click", () => cycleElim(item));
             elimList.appendChild(row);

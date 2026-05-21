@@ -5,6 +5,7 @@ import string
 import random
 import asyncio
 import json
+import time
 from names import resolve_pool
 
 
@@ -21,6 +22,8 @@ class Player:
         self.assigned_name: str | None = None  # kafasındaki isim
         self.revealed: bool = False  # doğru tahmin ettiyse True
         self.rank: int | None = None  # sıralama (1., 2., 3. ...)
+        self.reveal_turn: int | None = None  # kaçıncı turda bildi
+        self.reveal_time_seconds: int | None = None  # oyun başından kaç saniyede bildi
 
     def to_dict(self) -> dict:
         """Lobby için oyuncu bilgisi."""
@@ -80,6 +83,8 @@ class Room:
         self.timer_total: int = 0
         self.timer_remaining: int = 0
         self._timer_task = None
+        self.round_number: int = 0  # tam tur sayısı (turn_order başa sardıkça artar)
+        self.started_at: float | None = None  # oyun başlangıç zamanı (epoch sn)
 
     def add_player(self, player: Player):
         """Odaya oyuncu ekle."""
@@ -131,7 +136,11 @@ class Room:
             player.assigned_name = name
             player.revealed = False
             player.rank = None
+            player.reveal_turn = None
+            player.reveal_time_seconds = None
         self._next_rank = 1
+        self.round_number = 1
+        self.started_at = time.time()
         self.state = self.PLAYING
         self.current_category = category
         self.current_difficulty = difficulty
@@ -166,9 +175,13 @@ class Room:
 
         n = len(self.turn_order)
         for step in range(1, n + 1):
-            candidate_id = self.turn_order[(idx + step) % n]
+            new_idx = (idx + step) % n
+            candidate_id = self.turn_order[new_idx]
             player = self.players.get(candidate_id)
             if player and not player.revealed:
+                # Başa sarıldıysa (wrap) yeni tur başlamış demektir
+                if idx >= 0 and new_idx <= idx:
+                    self.round_number += 1
                 self.current_turn_id = candidate_id
                 self.timer_remaining = self.timer_total
                 return candidate_id
@@ -198,6 +211,8 @@ class Room:
             player.revealed = True
             player.rank = self._next_rank
             self._next_rank += 1
+            player.reveal_turn = self.round_number
+            player.reveal_time_seconds = int(time.time() - self.started_at) if self.started_at else 0
             return True, f"Doğru! Sen {player.assigned_name} idin!"
         else:
             return False, "Yanlış tahmin, tekrar dene!"
@@ -216,9 +231,21 @@ class Room:
         unranked = [p for p in self.players.values() if not p.revealed]
         result = []
         for p in ranked:
-            result.append({"name": p.name, "rank": p.rank, "assignedName": p.assigned_name})
+            result.append({
+                "name": p.name,
+                "rank": p.rank,
+                "assignedName": p.assigned_name,
+                "turnCount": p.reveal_turn,
+                "elapsedSeconds": p.reveal_time_seconds,
+            })
         for p in unranked:
-            result.append({"name": p.name, "rank": None, "assignedName": p.assigned_name})
+            result.append({
+                "name": p.name,
+                "rank": None,
+                "assignedName": p.assigned_name,
+                "turnCount": None,
+                "elapsedSeconds": None,
+            })
         return result
 
     async def broadcast(self, data: dict, exclude: str | None = None):

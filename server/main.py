@@ -106,6 +106,23 @@ async def handle_guess(player_id: str, data: dict):
     if not player:
         return
 
+    if room.state != Room.PLAYING:
+        await player.send({
+            "type": "guess_result",
+            "correct": False,
+            "message": "Oyun aktif değil.",
+        })
+        return
+
+    # Sadece sıradaki oyuncu tahmin yapabilir
+    if room.current_turn_id != player_id:
+        await player.send({
+            "type": "guess_result",
+            "correct": False,
+            "message": "Sıran değil, biraz bekle!",
+        })
+        return
+
     guess = data.get("guess", "").strip()
     if not guess:
         await player.send({
@@ -122,6 +139,9 @@ async def handle_guess(player_id: str, data: dict):
         "type": "guess_result",
         "correct": correct,
         "message": message,
+        "rank": player.rank if correct else None,
+        "turnCount": player.reveal_turn if correct else None,
+        "elapsedSeconds": player.reveal_time_seconds if correct else None,
     })
 
     # Herkese tahmini chat log'a bildir
@@ -133,6 +153,10 @@ async def handle_guess(player_id: str, data: dict):
         "text": guess,
         "kind": "guess_correct" if correct else "guess_wrong",
     }
+    if correct:
+        guess_entry["rank"] = player.rank
+        guess_entry["turnCount"] = player.reveal_turn
+        guess_entry["elapsedSeconds"] = player.reveal_time_seconds
     room.add_log_entry(guess_entry)
     await room.broadcast({
         "type": "log_message",
@@ -147,6 +171,8 @@ async def handle_guess(player_id: str, data: dict):
             "playerName": player.name,
             "assignedName": player.assigned_name,
             "rank": player.rank,
+            "turnCount": player.reveal_turn,
+            "elapsedSeconds": player.reveal_time_seconds,
         })
 
         # Oyun bitti mi kontrol et
@@ -159,11 +185,14 @@ async def handle_guess(player_id: str, data: dict):
             })
             print(f"[✓] Oda {room.code} oyunu bitti!")
         else:
-            # Sırayı kaydır — açılan oyuncu sıradan çıkar
-            if room.current_turn_id == player.id:
-                room.advance_turn()
-                await room.broadcast_turn()
+            # Açılan oyuncu sıradan çıkar — sıra otomatik kayar
+            room.advance_turn()
+            await room.broadcast_turn()
             print(f"[★] {player.name} doğru tahmin etti: {player.assigned_name} (sıra: {player.rank})")
+    else:
+        # Yanlış tahmin — sıra bir sonraki oyuncuya geçer
+        room.advance_turn()
+        await room.broadcast_turn()
 
 
 async def handle_new_round(player_id: str, data: dict):

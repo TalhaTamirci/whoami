@@ -887,6 +887,597 @@ CATEGORIES = {
         "Quagga", "Steller Deniz İneği",
     ],
 
+    "yemekler": [
+        # Türk yemekleri — ana yemekler
+        "Lahmacun", "Pide", "Karadeniz Pidesi", "Kıymalı Pide", "Kuşbaşılı Pide", "Kaşarlı Pide",
+        "Mantı", "Kayseri Mantısı", "Çiğ Köfte", "İçli Köfte", "Kısır", "Mercimek Köftesi",
+        "Döner", "Tavuk Döner", "Et Döner", "İskender Kebap", "Adana Kebap", "Urfa Kebap",
+        "Şiş Kebap", "Beyti Kebap", "Patlıcan Kebap", "Tas Kebabı", "Kuzu Tandır", "Kuzu Çevirme",
+        "Köfte", "Sulu Köfte", "İzmir Köfte", "Tekirdağ Köfte", "Akçaabat Köftesi", "İnegöl Köfte",
+        "Karnıyarık", "Musakka", "İmam Bayıldı", "Etli Biber Dolması", "Yaprak Sarma", "Lahana Sarması",
+        "Mercimek Çorbası", "Tarhana Çorbası", "Yayla Çorbası", "Düğün Çorbası", "Ezogelin Çorbası",
+        "İşkembe Çorbası", "Domates Çorbası", "Tavuk Çorbası", "Şehriye Çorbası",
+        "Menemen", "Sucuklu Yumurta", "Çılbır", "Kahvaltı Tabağı", "Simit", "Açma", "Poğaça",
+        "Su Böreği", "Sigara Böreği", "Talaş Böreği", "Çiğ Börek", "Patatesli Börek", "Ispanaklı Börek",
+        "Künefe", "Baklava", "Kadayıf", "Şekerpare", "Revani", "Tulumba Tatlısı", "Lokma",
+        "Kazandibi", "Sütlaç", "Aşure", "Helva", "Tahin Helvası", "Pişmaniye", "Cevizli Sucuk",
+        "Pestil", "Lokum", "Maraş Dondurması", "Kemalpaşa Tatlısı",
+        "Hamsi Tava", "Levrek Buğulama", "Çupra Izgara", "Palamut Buğulama", "Hamsili Pilav",
+        "Mıhlama", "Muhlama", "Karadeniz Hamsisi",
+        "Pilav", "Bulgur Pilavı", "İç Pilav", "Şehriyeli Pilav", "Erişte",
+        "Hünkar Beğendi", "Etli Ekmek", "Kuru Fasulye", "Nohut Yemeği", "Pilaki", "Türlü",
+        "Patlıcan Musakka", "Etli Patlıcan", "Etli Bamya", "Etli Kabak",
+        "Ayran", "Şalgam Suyu", "Boza", "Salep", "Türk Kahvesi", "Türk Çayı",
+
+        # Dünya mutfağı
+        "Pizza", "Margherita Pizza", "Pepperoni Pizza", "Hawai Pizzası", "Lazanya", "Spagetti",
+        "Carbonara", "Bolognese", "Risotto", "Ravioli", "Bruschetta", "Tiramisu", "Gelato", "Cannoli",
+        "Sushi", "Sashimi", "Maki", "Ramen", "Udon", "Tempura", "Yakitori", "Onigiri",
+        "Miso Çorbası", "Mochi",
+        "Pad Thai", "Tom Yum", "Pho", "Bibimbap", "Kimchi", "Bulgogi", "Dim Sum", "Spring Roll",
+        "Hamburger", "Cheeseburger", "Hot Dog", "Sandviç", "Cheesecake", "Pancake", "Waffle",
+        "Donut", "Brownie", "Muffin", "Cupcake", "Sufle",
+        "Taco", "Burrito", "Nachos", "Quesadilla", "Guacamole", "Fajitas", "Enchilada", "Salsa",
+        "Croissant", "Baguette", "Macaron", "Crème Brûlée", "Fondü", "Ratatouille", "Quiche",
+        "Falafel", "Humus", "Tabule", "Şawarma", "Pita",
+        "Paella", "Tapas", "Gazpacho", "Churros", "Tortilla",
+        "Schnitzel", "Bratwurst", "Pretzel", "Strudel",
+        "Curry", "Tandoori Tavuk", "Biryani", "Naan", "Samosa", "Tikka Masala", "Butter Chicken",
+        "Borç Çorbası", "Stroganoff",
+        "Patates Kızartması", "Patates Püresi", "Patates Salatası", "Fish and Chips",
+        "Omlet", "Sahanda Yumurta", "Haşlanmış Yumurta", "Yumurta Salatası",
+        "Salata", "Sezar Salata", "Çoban Salata", "Akdeniz Salatası",
+        "Kruvasan", "Tost", "Karışık Tost", "Kumru",
+
+        # İçecekler
+        "Kola", "Pepsi", "Fanta", "Sprite", "Limonata", "Portakal Suyu", "Vişne Suyu", "Süt",
+        "Smoothie", "Milkshake", "Latte", "Cappuccino", "Espresso", "Mocha", "Frappe",
+        "Sıcak Çikolata", "Soğuk Kahve",
+        "Şarap", "Bira", "Şampanya", "Votka", "Viski", "Cin", "Tekila", "Rakı",
+
+        # Atıştırmalık & şekerleme
+        "Çikolata", "Çikolatalı Gofret", "Sütlü Çikolata", "Bitter Çikolata", "Beyaz Çikolata",
+        "Patates Cipsi", "Patlamış Mısır", "Kuruyemiş", "Fıstık", "Badem", "Ceviz", "Fındık",
+        "Ayçekirdeği", "Antep Fıstığı", "Kestane Kebabı", "Kuru Yemiş Karışımı",
+        "Dondurma", "Marshmallow", "Sakız", "Lolipop", "Karamel", "Reçel", "Bal", "Pekmez",
+        "Yoğurt", "Cacık", "Tzatziki", "Peynir Tabağı", "Beyaz Peynir", "Kaşar", "Tulum Peyniri",
+        "Mozzarella", "Parmesan", "Cheddar", "Feta",
+    ],
+
+    "filmler": [
+        # Hollywood — gişe & kült (yaygın bilindik)
+        "Titanik", "Avatar", "Avatar 2: Suyun Yolu", "Avengers", "Avengers: Yenilmezler",
+        "Avengers: Sonsuzluk Savaşı", "Avengers: Endgame", "Iron Man", "Captain America",
+        "Thor", "Hulk", "Spider-Man", "Black Panther", "Doctor Strange", "Black Widow",
+        "Aquaman", "Wonder Woman", "Justice League", "Man of Steel", "Shazam",
+        "Batman", "The Dark Knight", "Kara Şövalye", "Joker", "Suicide Squad",
+        "Star Wars", "Yıldız Savaşları", "Star Wars: Yeni Bir Umut", "İmparator'un Geri Dönüşü",
+        "Harry Potter ve Felsefe Taşı", "Harry Potter ve Sırlar Odası", "Harry Potter ve Azkaban Tutsağı",
+        "Harry Potter ve Ateş Kadehi", "Harry Potter ve Zümrüdüanka Yoldaşlığı",
+        "Harry Potter ve Melez Prens", "Harry Potter ve Ölüm Yadigarları",
+        "Yüzüklerin Efendisi: Yüzük Kardeşliği", "Yüzüklerin Efendisi: İki Kule",
+        "Yüzüklerin Efendisi: Kralın Dönüşü", "Hobbit",
+        "Inception (Başlangıç)", "Interstellar (Yıldızlararası)", "Tenet", "Memento",
+        "The Prestige", "Dunkirk", "Oppenheimer",
+        "The Matrix", "Matrix Reloaded", "Matrix Revolutions",
+        "Forrest Gump", "Esaretin Bedeli", "Pulp Fiction", "Reservoir Dogs", "Kill Bill",
+        "Django Zincirsiz", "Soysuzlar Çetesi", "Bir Zamanlar Hollywood'da",
+        "Baba", "Baba 2", "Sıkı Dostlar", "Yara İzi", "Casino", "Irlandalı",
+        "Jurassic Park", "Jurassic World", "Indiana Jones", "E.T.", "Schindler'in Listesi",
+        "Er Ryan'ı Kurtarmak",
+        "Dövüş Kulübü", "Yedi", "Sosyal Ağ", "Kayıp Kız", "Zodiac",
+        "Gladyatör", "Cesur Yürek", "300 Spartalı", "Truva",
+        "Rocky", "Rambo", "Terminator", "Yokedici", "Predator", "Yırtıcı", "Alien", "Yaratık",
+        "Zor Ölüm", "Görevimiz Tehlike", "John Wick", "James Bond", "Casino Royale", "Skyfall",
+        "Ölmek İçin Yaşamak", "Hızlı ve Öfkeli",
+        "Karayip Korsanları", "Karayip Korsanları: Siyah İnci'nin Laneti",
+        "Oyuncak Hikayesi", "Kayıp Balık Nemo", "Yukarı Bak", "Aslan Kral",
+        "Karlar Ülkesi", "Karlar Ülkesi 2",
+        "Şrek", "Madagaskar", "Buz Devri", "Kung Fu Panda", "Ratatuy", "Wall-E",
+        "Coco", "Encanto", "Moana", "Ters Yüz",
+        "Çılgın Hırsız", "Minyonlar", "Sing",
+        "Hayalet Avcıları",
+        "Wall Street Kurdu", "Sıkı Yakaladım Seni", "Zindan Adası",
+        "Siyah Kuğu", "Defter", "Pretty Woman",
+        "Açlık Oyunları", "Alacakaranlık", "Maze Runner",
+        "Joy Köpeğim Eve Dön Hachi", "Joker (2019)",
+        "Top Gun", "Top Gun: Maverick",
+        "La La Land", "Whiplash", "Bohemian Rhapsody",
+        "Parazit (Parasite)",
+        "Cast Away (Yaşam Mücadelesi)",
+        "Aşk-ı Memnu", "Yedinci Koğuştaki Mucize",
+        "Saw", "Testere", "Conjuring", "Korku Seansı", "It (O)", "Annabelle",
+        "Sevgili Lara", "Yüzüklerin Efendisi",
+        "Ev Yalnız", "Evde Tek Başına",
+        "Polis Akademisi",
+        "Geri Dönüş Yok", "Geleceğe Dönüş",
+
+        # Türk gişe filmleri (bilindik)
+        "GORA", "AROG", "ARIF V 216", "Cem Yılmaz'ın CMYLMZ",
+        "Recep İvedik", "Recep İvedik 2", "Recep İvedik 3", "Recep İvedik 4",
+        "Recep İvedik 5", "Recep İvedik 6", "Recep İvedik 7",
+        "Vizontele", "Vizontele Tuuba",
+        "Babam ve Oğlum", "Eşkıya", "Hababam Sınıfı", "Hababam Sınıfı Sınıfta Kaldı",
+        "Süt Kardeşler", "Salako", "Şaban", "Korkusuz Korkak",
+        "Pek Yakında", "Kelebeğin Rüyası", "Issız Adam",
+        "Düğün Dernek", "Düğün Dernek 2", "Patron Mutlu Son İstiyor",
+        "Cep Herkülü", "Av Mevsimi",
+        "Kara Murat", "Tarkan", "Cesur Tarkan",
+        "Müslüm",
+    ],
+
+    "markalar": [
+        # Tech / sosyal medya
+        "Apple", "Google", "Microsoft", "Amazon", "Facebook", "Meta", "Instagram",
+        "WhatsApp", "TikTok", "Twitter", "X (Twitter)", "YouTube", "Netflix", "Spotify",
+        "Snapchat", "Telegram", "Discord", "Zoom", "Skype", "LinkedIn", "Pinterest",
+        "Reddit", "Twitch", "Steam", "Epic Games",
+
+        # Yiyecek-içecek
+        "Coca-Cola", "Pepsi", "Fanta", "Sprite", "7UP", "Red Bull", "Nestlé", "Lipton",
+        "Nescafé", "Starbucks", "McDonald's", "Burger King", "KFC", "Pizza Hut",
+        "Domino's Pizza", "Subway", "Popeyes", "Taco Bell", "Wendy's",
+        "Snickers", "Mars", "Twix", "Bounty", "Kit Kat", "Toblerone", "Ferrero Rocher",
+        "Milka", "Nutella", "Oreo", "Pringles", "Lay's", "Doritos", "Cheetos",
+
+        # Spor giyim & ayakkabı
+        "Nike", "Adidas", "Puma", "Reebok", "Under Armour", "New Balance", "Converse",
+        "Vans", "Asics",
+
+        # Moda lüks
+        "Lacoste", "Gucci", "Louis Vuitton", "Chanel", "Versace", "Prada", "Dior",
+        "Armani", "Hugo Boss", "Calvin Klein", "Tommy Hilfiger", "Ralph Lauren",
+        "Burberry", "Rolex", "Omega", "Cartier",
+
+        # Hızlı moda
+        "Zara", "H&M", "Mango", "Uniqlo", "Bershka", "Pull&Bear", "Stradivarius",
+        "GAP", "Levi's",
+
+        # Otomotiv
+        "BMW", "Mercedes-Benz", "Audi", "Volkswagen", "Porsche", "Ferrari", "Lamborghini",
+        "Bugatti", "Bentley", "Rolls-Royce", "Maserati",
+        "Toyota", "Honda", "Nissan", "Mazda", "Mitsubishi", "Hyundai", "Kia",
+        "Ford", "Chevrolet", "Tesla", "Cadillac", "Jeep", "Dodge",
+        "Renault", "Peugeot", "Citroën", "Fiat", "Alfa Romeo",
+        "Volvo", "Skoda", "Seat", "Opel",
+
+        # Elektronik / beyaz eşya
+        "Samsung", "LG", "Sony", "Panasonic", "Toshiba", "Philips", "Bosch", "Siemens",
+        "Whirlpool", "Arçelik", "Beko", "Vestel",
+        "Huawei", "Xiaomi", "OnePlus", "Oppo",
+        "Intel", "AMD", "Nvidia", "IBM",
+        "HP", "Dell", "Lenovo", "Asus", "Acer", "MSI", "Razer", "Logitech",
+        "Canon", "Nikon", "GoPro",
+
+        # Yazılım & dijital
+        "Adobe", "Photoshop", "Windows", "Android", "iOS", "macOS", "Linux",
+        "Chrome", "Firefox", "Safari", "Edge",
+
+        # Finans / ödeme
+        "PayPal", "Visa", "Mastercard", "American Express",
+        "Yapı Kredi", "Ziraat Bankası", "İş Bankası", "Garanti BBVA", "Akbank",
+        "Halkbank", "Vakıfbank", "Denizbank", "QNB Finansbank", "ING",
+
+        # Eğlence / medya
+        "Disney", "Pixar", "Warner Bros", "Universal", "Paramount", "Marvel", "DC",
+        "HBO", "Amazon Prime", "Disney+",
+        "Nintendo", "PlayStation", "Xbox", "Sega",
+
+        # Perakende & e-ticaret
+        "IKEA", "Walmart", "Carrefour", "Migros", "BİM", "A101", "Şok Market",
+        "MediaMarkt", "Teknosa", "Vatan Bilgisayar",
+        "Hepsiburada", "Trendyol", "n11", "Amazon Türkiye", "GittiGidiyor",
+
+        # Oyuncak & ev
+        "Lego", "Mattel", "Hasbro", "Barbie", "Hot Wheels", "Playmobil",
+
+        # Kişisel bakım
+        "Gillette", "Colgate", "Pantene", "Head & Shoulders", "Nivea", "Dove",
+        "Old Spice", "Axe", "Garnier", "L'Oréal", "Maybelline",
+
+        # Türk markaları
+        "Mavi Jeans", "DeFacto", "LC Waikiki", "Koton", "Polo Garage",
+        "Turkcell", "Vodafone", "Türk Telekom", "Türksat",
+        "THY", "Pegasus", "AnadoluJet",
+        "TOGG", "Otokar", "TEMSA",
+        "Eti", "Ülker", "Torku", "Pınar", "Sütaş", "İçim",
+        "Çaykur", "Doğadan", "Doğuş Çay",
+        "Erikli", "Damla Su", "Hayat Su",
+        "Komagene", "HD İskender",
+    ],
+
+    "sehirler": [
+        # Türkiye — 81 il + büyük ilçeler
+        "İstanbul", "Ankara", "İzmir", "Bursa", "Antalya", "Adana", "Konya", "Gaziantep",
+        "Mersin", "Kayseri", "Eskişehir", "Diyarbakır", "Şanlıurfa", "Trabzon", "Samsun",
+        "Erzurum", "Van", "Malatya", "Kahramanmaraş", "Denizli", "Sakarya", "Aydın",
+        "Tekirdağ", "Muğla", "Hatay", "Manisa", "Balıkesir", "Çanakkale", "Mardin",
+        "Ordu", "Rize", "Sivas", "Tokat", "Edirne", "Kırıkkale", "Karabük", "Zonguldak",
+        "Kütahya", "Afyonkarahisar", "Isparta", "Burdur", "Yalova", "Düzce", "Kilis",
+        "Karaman", "Bartın", "Iğdır", "Ardahan", "Şırnak", "Bayburt", "Tunceli", "Kars",
+        "Erzincan", "Bitlis", "Bingöl", "Muş", "Siirt", "Hakkari", "Ağrı", "Adıyaman",
+        "Niğde", "Nevşehir", "Aksaray", "Yozgat", "Çorum", "Çankırı", "Bolu", "Sinop",
+        "Amasya", "Kastamonu", "Kırşehir", "Kırklareli", "Bilecik", "Uşak", "Osmaniye",
+        "Artvin", "Giresun", "Gümüşhane", "Elazığ", "Batman",
+        # Önemli ilçeler
+        "Bodrum", "Marmaris", "Fethiye", "Alanya", "Kemer", "Kuşadası", "Çeşme",
+        "Şile", "Sapanca", "Abant", "Uludağ", "Kapadokya", "Pamukkale", "Mardin",
+
+        # Avrupa başkentleri & büyük şehirler
+        "Londra", "Paris", "Berlin", "Roma", "Madrid", "Lizbon", "Amsterdam", "Brüksel",
+        "Viyana", "Atina", "Dublin", "Stockholm", "Oslo", "Helsinki", "Kopenhag",
+        "Varşova", "Prag", "Budapeşte", "Bükreş", "Sofya", "Belgrad", "Saraybosna",
+        "Üsküp", "Zagreb", "Ljubljana", "Tiran", "Reykjavik", "Riga", "Vilnius", "Tallinn",
+        "Bratislava", "Lefkoşa", "Valletta",
+        "Manchester", "Liverpool", "Birmingham", "Edinburgh", "Glasgow", "Oxford", "Cambridge",
+        "Marsilya", "Lyon", "Nice", "Cannes", "Strasbourg", "Bordeaux",
+        "Münih", "Hamburg", "Frankfurt", "Köln", "Stuttgart", "Düsseldorf",
+        "Milano", "Venedik", "Napoli", "Floransa", "Torino", "Bologna", "Pisa",
+        "Barselona", "Sevilla", "Valencia", "Bilbao", "Granada",
+        "Rotterdam", "Lahey",
+        "Zürih", "Cenevre", "Bern",
+        "Salzburg", "Innsbruck",
+        "Selanik", "Santorini", "Mykonos", "Girit",
+        "Moskova", "St. Petersburg", "Soçi",
+        "Kiev", "Lviv", "Odessa",
+        "Porto", "Krakow",
+
+        # ABD & Kanada
+        "New York", "Los Angeles", "Chicago", "Houston", "Miami", "Las Vegas",
+        "San Francisco", "Boston", "Washington", "Seattle", "Dallas", "Philadelphia",
+        "Atlanta", "Detroit", "Phoenix", "San Diego", "Orlando", "New Orleans",
+        "Toronto", "Montreal", "Vancouver", "Ottawa", "Calgary",
+
+        # Asya
+        "Tokyo", "Osaka", "Kyoto", "Yokohama", "Hiroşima", "Sapporo",
+        "Seul", "Busan",
+        "Pekin", "Şangay", "Hong Kong", "Guangzhou", "Şenzhen",
+        "Taipei", "Singapur",
+        "Bangkok", "Pattaya", "Phuket",
+        "Hanoi", "Ho Chi Minh",
+        "Manila", "Jakarta", "Bali", "Kuala Lumpur",
+        "Yeni Delhi", "Bombay", "Bangalore", "Kalküta",
+        "Karaçi", "İslamabad", "Lahor",
+        "Kabil", "Tahran", "Tebriz", "İsfahan", "Şiraz",
+        "Bağdat", "Basra", "Erbil",
+        "Şam", "Halep", "Beyrut", "Amman",
+        "Kudüs", "Tel Aviv",
+        "Dubai", "Abu Dabi", "Doha", "Riyad", "Cidde", "Mekke", "Medine", "Kuveyt",
+        "Maskat", "Manama",
+        "Bakü", "Tiflis", "Yerevan", "Astana", "Almatı", "Taşkent", "Bişkek", "Aşgabat",
+        "Duşanbe", "Ulan Batur",
+
+        # Afrika
+        "Kahire", "İskenderiye", "Luksor", "Cezayir", "Tunus", "Rabat", "Kazablanka",
+        "Marakeş", "Fes", "Trablus", "Hartum", "Addis Ababa", "Nairobi", "Lagos",
+        "Cape Town", "Johannesburg", "Pretoria", "Durban", "Akra", "Dakar",
+
+        # Avustralya & Okyanusya
+        "Sidney", "Melbourne", "Brisbane", "Perth", "Adelaide", "Canberra",
+        "Auckland", "Wellington",
+
+        # Latin Amerika
+        "Mexico City", "Cancun", "Guadalajara",
+        "Havana", "Santo Domingo",
+        "Rio de Janeiro", "Sao Paulo", "Brasilia", "Salvador",
+        "Buenos Aires", "Santiago", "Lima", "Bogotá", "Caracas", "Quito", "La Paz",
+    ],
+
+    "meslekler": [
+        # Sağlık
+        "Doktor", "Hemşire", "Diş Hekimi", "Eczacı", "Veteriner", "Psikolog",
+        "Psikiyatrist", "Cerrah", "Anestezi Uzmanı", "Radyolog", "Patolog",
+        "Fizyoterapist", "Diyetisyen", "Ebe", "Optisyen", "Odyolog", "Hayvan Hekimi",
+
+        # Akademi & bilim
+        "Öğretmen", "Profesör", "Akademisyen", "Araştırmacı", "Bilim İnsanı",
+        "Matematikçi", "Fizikçi", "Kimyager", "Biyolog", "Astronom", "Jeolog",
+        "Antropolog", "Sosyolog", "Tarihçi", "Arkeolog", "Filozof",
+
+        # Hukuk & devlet
+        "Avukat", "Hakim", "Savcı", "Noter", "Müfettiş", "Diplomat", "Büyükelçi",
+        "Vali", "Belediye Başkanı", "Milletvekili", "Bakan", "Cumhurbaşkanı", "Başbakan",
+        "Müsteşar",
+
+        # Mühendislik
+        "Mühendis", "Yazılım Mühendisi", "Makine Mühendisi", "Elektrik Mühendisi",
+        "İnşaat Mühendisi", "Endüstri Mühendisi", "Bilgisayar Mühendisi",
+        "Kimya Mühendisi", "Genetik Mühendisi", "Çevre Mühendisi", "Maden Mühendisi",
+        "Uzay Mühendisi",
+        "Mimar", "İç Mimar", "Şehir Plancısı", "Peyzaj Mimarı",
+
+        # Güvenlik & ordu
+        "Polis", "Asker", "Komutan", "Subay", "İtfaiyeci", "Bekçi", "Güvenlik Görevlisi",
+        "Korsan", "Casus", "Komando",
+
+        # Ulaşım
+        "Pilot", "Hostes", "Kaptan", "Şoför", "Taksici", "Otobüs Şoförü", "Tır Şoförü",
+        "Tren Makinisti", "Vatman", "Vagon Şefi", "Hava Trafik Kontrolörü",
+
+        # Gıda & hizmet
+        "Aşçı", "Şef", "Garson", "Komi", "Pastacı", "Pasta Şefi", "Fırıncı", "Kasap",
+        "Manav", "Sucu", "Sütçü", "Bakkal",
+
+        # Güzellik & moda
+        "Kuaför", "Berber", "Estetisyen", "Manikürcü", "Makyöz",
+        "Terzi", "Modacı", "Stilist", "Manken", "Ayakkabı Tamircisi",
+
+        # Doğa & tarım
+        "Çiftçi", "Bahçıvan", "Çoban", "Balıkçı", "Avcı", "Arıcı", "Bağcı",
+
+        # Sanat & medya
+        "Müzisyen", "Şarkıcı", "Besteci", "Orkestra Şefi", "DJ", "Gitarist", "Davulcu",
+        "Piyanist", "Kemancı", "Bağlama Sanatçısı",
+        "Aktör", "Aktris", "Yönetmen", "Senarist", "Yapımcı", "Kameraman", "Ses Mühendisi",
+        "Yazar", "Şair", "Gazeteci", "Muhabir", "Editör", "Çevirmen", "Spiker",
+        "Ressam", "Heykeltıraş", "Karikatürist", "Grafik Tasarımcı", "İllüstratör",
+        "Animatör", "Fotoğrafçı",
+
+        # Spor
+        "Sporcu", "Futbolcu", "Basketbolcu", "Voleybolcu", "Tenisçi", "Boksör", "Güreşçi",
+        "Yüzücü", "Atlet", "Kayakçı", "Snowboardcu", "Sörfçü", "Dağcı",
+        "Antrenör", "Hakem", "Spor Yorumcusu", "Kondisyoner",
+
+        # Zanaat & teknik
+        "Çilingir", "Tesisatçı", "Elektrikçi", "Tornacı", "Marangoz", "Doğramacı",
+        "Boyacı", "Sıvacı", "Demirci", "Kaynakçı", "Camcı", "Sıhhi Tesisatçı",
+        "Çatıcı", "Lehimci", "Saatçi", "Kuyumcu", "Halıcı",
+
+        # Endüstriyel & ağır
+        "Madenci", "Petrol İşçisi", "Astronot", "Dalgıç", "Denizci", "Gemici",
+
+        # Hizmet sektörü
+        "Çöpçü", "Postacı", "Kapıcı", "Temizlikçi", "Bebek Bakıcısı", "Hizmetçi",
+        "Bahçıvan", "Şoför", "Hamal", "Mektup Dağıtıcısı", "Resepsiyonist", "Sekreter",
+
+        # Din
+        "İmam", "Papaz", "Haham", "Rahip", "Keşiş", "Müezzin",
+
+        # İş & finans
+        "Tüccar", "Esnaf", "Satıcı", "Mağaza Sahibi", "CEO", "Patron", "Banker",
+        "Yatırımcı", "Borsacı", "Komisyoncu", "Pazarlamacı", "Reklamcı", "Halkla İlişkiler",
+        "Muhasebeci", "Mali Müşavir", "Sigortacı", "Emlakçı",
+
+        # Eğlence & yeni
+        "Sihirbaz", "Palyaço", "Akrobat", "Cambaz", "Animatör", "İllüzyonist",
+        "Sunucu", "Showmen",
+        "YouTuber", "TikToker", "Influencer", "Streamer", "Blogger", "Podcaster",
+        "Veri Analisti", "Yapay Zeka Mühendisi", "Siber Güvenlik Uzmanı", "Veri Bilimci",
+        "Oyun Geliştirici", "UX Tasarımcı",
+    ],
+
+    "sporlar": [
+        # Takım sporları
+        "Futbol", "Basketbol", "Voleybol", "Hentbol", "Beyzbol", "Softbol",
+        "Amerikan Futbolu", "Ragbi", "Avustralya Futbolu",
+        "Buz Hokeyi", "Çim Hokeyi", "Lacrosse", "Kabaddi", "Polo",
+
+        # Raket sporları
+        "Tenis", "Masa Tenisi", "Badminton", "Squash", "Padel", "Plaj Tenisi",
+
+        # Su sporları
+        "Yüzme", "Su Topu", "Senkronize Yüzme", "Dalış", "Tüplü Dalış", "Sörf",
+        "Rüzgar Sörfü", "Yelken", "Kürek", "Kano", "Kayak (Su)", "Rafting",
+        "Jet Ski", "Flyboard", "Stand Up Paddle",
+
+        # Dövüş sanatları
+        "Boks", "Güreş", "Karate", "Tekvando", "Aikido", "Kung Fu", "Judo",
+        "Muay Thai", "Kick Boks", "Sumo", "MMA", "Eskrim", "Kendo", "Capoeira",
+        "Brezilya Jiu Jitsu",
+
+        # Atletizm
+        "Atletizm", "Maraton", "100 Metre Koşu", "200 Metre Koşu", "Sprint",
+        "Yüksek Atlama", "Uzun Atlama", "Üç Adım Atlama", "Sırıkla Atlama",
+        "Disk Atma", "Cirit Atma", "Gülle Atma", "Çekiç Atma", "Engelli Koşu",
+
+        # Salon / form
+        "Halter", "Vücut Geliştirme", "Strongman", "Crossfit", "Yoga", "Pilates",
+        "Aerobik", "Step", "Zumba",
+
+        # Kış sporları
+        "Kayak", "Snowboard", "Buz Pateni", "Buz Dansı", "Curling", "Skeleton",
+        "Bobsled", "Biathlon", "Kayaklı Koşu", "Slalom", "Kar Motoru",
+
+        # Bisiklet & motor
+        "Bisiklet", "Dağ Bisikleti", "BMX", "Yol Bisikleti",
+        "Motokros", "Süpermotokros", "Enduro",
+        "Formula 1", "Rally", "NASCAR", "MotoGP", "Karting", "Drag Yarışı",
+
+        # Atlı sporlar
+        "At Yarışı", "Binicilik", "Engel Atlama", "Cirit",
+
+        # Hedef sporları
+        "Golf", "Mini Golf", "Disk Golf",
+        "Bilardo", "Snooker", "Pool",
+        "Bowling", "Bocce", "Petanca",
+        "Dart", "Okçuluk", "Atıcılık", "Trap", "Skeet",
+
+        # Zihin sporları
+        "Satranç", "Briç", "Tavla", "Go", "Poker", "Dama",
+
+        # Hava / ekstrem
+        "Paraşüt", "Yamaç Paraşütü", "Bungee Jumping", "Wingsuit", "Base Jumping",
+        "Dağcılık", "Tırmanma", "Sportif Tırmanış", "Buz Tırmanışı", "Kayalara Tırmanış",
+
+        # Karma
+        "Triatlon", "Demir Adam (Ironman)", "Modern Pentatlon", "Heptatlon", "Dekatlon",
+
+        # Cimnastik
+        "Cimnastik", "Ritmik Cimnastik", "Trambolin", "Akrobasi", "Parkur",
+
+        # Diğer
+        "Paintball", "Airsoft", "Lazer Tag",
+        "Esports", "FIFA (Esports)", "League of Legends (Esports)",
+        "Yağlı Güreş", "Kuzey Disiplini", "Köpek Yarışı", "Boğa Güreşi",
+        "Sandboarding", "Skateboard", "Paten",
+    ],
+
+    "esyalar": [
+        # Mobilya
+        "Masa", "Sandalye", "Kanepe", "Koltuk", "Berjer", "Yatak", "Karyola", "Dolap",
+        "Gardırop", "Komodin", "Sehpa", "Vitrin", "Ayakkabılık", "Şifonyer", "Konsol",
+        "Salıncak", "Hamak", "Şezlong", "Tabure", "Bank",
+
+        # Beyaz eşya & elektronik
+        "Buzdolabı", "Çamaşır Makinesi", "Bulaşık Makinesi", "Fırın", "Mikrodalga Fırın",
+        "Ocak", "Aspiratör", "Klima", "Ütü", "Süpürge", "Robot Süpürge",
+        "Tost Makinesi", "Kahve Makinesi", "Mikser", "Blender", "Su Isıtıcısı",
+        "Çaydanlık", "Semaver", "Fritöz", "Ekmek Yapma Makinesi",
+        "Televizyon", "Bilgisayar", "Laptop", "Tablet", "Telefon", "Akıllı Telefon",
+        "Kulaklık", "Hoparlör", "Müzik Seti", "Radyo", "Kamera", "Fotoğraf Makinesi",
+        "Yazıcı", "Tarayıcı", "Klavye", "Mouse", "Monitör", "Projeksiyon",
+        "Modem", "Router", "Webcam",
+
+        # Saatler
+        "Kol Saati", "Duvar Saati", "Masa Saati", "Kum Saati", "Çalar Saat", "Guguklu Saat",
+
+        # Yazı / okul
+        "Kalem", "Tükenmez Kalem", "Kurşun Kalem", "Dolma Kalem", "Keçeli Kalem", "Silgi",
+        "Kalemtıraş", "Cetvel", "Açıölçer", "Pergel", "Defter", "Kitap", "Dergi",
+        "Sözlük", "Atlas", "Harita", "Globe", "Yer Küre",
+        "Yapıştırıcı", "Bant", "Selobant", "Zarf", "Pul", "Mektup",
+
+        # Mutfak araçları
+        "Çatal", "Kaşık", "Bıçak", "Tabak", "Bardak", "Kase", "Tencere", "Tava",
+        "Kepçe", "Spatula", "Rende", "Süzgeç", "Karavana", "Kavanoz", "Şişe",
+        "Tepsi", "Kürdan", "Peçete", "Servis Tabağı",
+
+        # Alet edevat
+        "Çekiç", "Tornavida", "Mengene", "Kerpeten", "Pense", "İngiliz Anahtarı",
+        "Matkap", "Testere", "Eğe", "Şerit Metre", "Şakül", "Su Terazisi", "Tornavida Seti",
+        "Tıraş Makinesi (Erkek)", "Çivi", "Vida", "Cıvata", "Somun", "Halat", "İp",
+
+        # Tekstil ev
+        "Halı", "Kilim", "Perde", "Tül", "Yastık", "Yorgan", "Çarşaf", "Battaniye",
+        "Havlu", "Bornoz", "Terlik", "Nevresim",
+
+        # Kapı pencere
+        "Kapı", "Pencere", "Anahtar", "Kapı Kolu", "Zil", "Kilit", "Asma Kilit",
+        "Kasa", "Sürgü",
+
+        # Kişisel bakım
+        "Diş Fırçası", "Diş Macunu", "Tarak", "Fırça", "Tıraş Bıçağı", "Sabun",
+        "Şampuan", "Saç Kremi", "Kolonya", "Parfüm", "Deodorant", "Krem", "Losyon",
+        "Ayna", "El Aynası", "Cımbız", "Tırnak Makası",
+
+        # Giyim aksesuar
+        "Şemsiye", "Çanta", "El Çantası", "Sırt Çantası", "Cüzdan", "Anahtarlık",
+        "Şapka", "Bere", "Atkı", "Eldiven", "Gözlük", "Güneş Gözlüğü", "Kemer",
+        "Kravat", "Papyon", "Bilezik", "Yüzük", "Kolye", "Küpe",
+
+        # Aydınlatma / küçük ev
+        "Lamba", "Avize", "Abajur", "Mum", "Çakmak", "Kibrit", "El Feneri", "Pil",
+        "Şarj Aleti", "Adaptör", "Uzatma Kablosu", "Priz",
+
+        # Dekorasyon
+        "Resim Çerçevesi", "Tablo", "Heykel", "Vazo", "Saksı", "Süs Eşyası", "Biblo",
+        "Halı", "Kilim",
+
+        # Saklama / taşıma
+        "Termos", "Matara", "Soğutucu Çanta", "Sepet", "Çekmece", "Kutu", "Sandık",
+        "Bavul", "Valiz", "Spor Çantası",
+
+        # Oyun / hobi
+        "Top", "Lego", "Puzzle", "Yapboz", "Tabu", "Monopoly", "Tavla Takımı",
+        "Satranç Takımı", "Domino Taşı", "Zar", "İskambil Destesi", "Uno Kartları",
+        "Dart Tahtası", "Bilardo Topu",
+
+        # Diğer
+        "Pusula", "Düdük", "Sapan", "Yelek", "Bıçak (Çakı)", "Çuval", "Süpürge Sapı",
+    ],
+
+    "deyimler": [
+        # Beden deyimleri
+        "Ağzı kulaklarına varmak", "Burnu büyümek", "Burnundan kıl aldırmamak",
+        "Burun kıvırmak", "Gözü doymak", "Gözü açık gitmek", "Göz kulak olmak",
+        "Gözünü dört açmak", "Gözden düşmek", "Kulak misafiri olmak", "Kulak vermek",
+        "Kulağına küpe olmak", "Dil dökmek", "Dilini tutmak", "Diş bilemek",
+        "Boğazına düğümlenmek", "Karnı zil çalmak", "Karnı tok sırtı pek",
+        "Kalp kırmak", "Yüreği ağzına gelmek", "Yüreği yanmak",
+        "Eli kolu bağlı", "Eli açık", "Eli sıkı", "El üstünde tutmak",
+        "Ayak diremek", "Ayakta kalmak", "Ayakları yere değmemek",
+        "Ayağına dolanmak", "Ayağına çorap olmak",
+
+        # Deyimler
+        "Üç maymunu oynamak", "Bir taşla iki kuş vurmak", "Bardağı taşıran son damla",
+        "Baltayı taşa vurmak", "Çantada keklik", "Foyası meydana çıkmak",
+        "Pireyi deve yapmak", "Sinekten yağ çıkarmak", "Kazın ayağı öyle değil",
+        "Damdan düşer gibi", "Saman altından su yürütmek", "Etekleri zil çalmak",
+        "Pabucu dama atılmak", "Pabucu büyük çıkmak", "Çiğnemeden yutmak",
+        "Tereyağından kıl çeker gibi", "Atı alan Üsküdar'ı geçti",
+        "İçi içine sığmamak", "Kafayı yemek", "Kafa göz yarmak", "Kafa kola almak",
+        "Surat asmak", "Yüz çevirmek", "Yüz vermek", "Yüzü kızarmak",
+        "Yağ çekmek", "Pul kadar suyu olmak", "İğneyle kuyu kazmak",
+        "Damarına basmak", "Burun buruna gelmek", "Boyun eğmek",
+        "Kuyruğunu kıstırmak", "Kuyruğunu titretmek", "Kapıyı yüzüne kapamak",
+        "Su koyuvermek", "Eline su dökemez", "Avucunu yalamak",
+        "Boş boğazlık etmek", "Çenesi düşmek", "Lafı ağzına tıkamak",
+
+        # Atasözleri
+        "Damlaya damlaya göl olur",
+        "Bal tutan parmağını yalar",
+        "Tatlı dil yılanı deliğinden çıkarır",
+        "Acele işe şeytan karışır",
+        "Aç tavuk kendini buğday ambarında sanır",
+        "Akıllı düşman akılsız dosttan iyidir",
+        "Az tamah çok ziyan getirir",
+        "Bir elin nesi var iki elin sesi var",
+        "Boş çuval ayakta durmaz",
+        "Bugünün işini yarına bırakma",
+        "Çürük tahta çivi tutmaz",
+        "Ektiğini biçersin",
+        "El elden üstündür",
+        "Erken kalkan yol alır",
+        "Görünen köy kılavuz istemez",
+        "Güneş balçıkla sıvanmaz",
+        "İğneyi kendine batır çuvaldızı başkasına",
+        "İnsan yedisinde ne ise yetmişinde de odur",
+        "Komşu komşunun külüne muhtaçtır",
+        "Kuzguna yavrusu güzel görünür",
+        "Lafla peynir gemisi yürümez",
+        "Misafir umduğunu değil bulduğunu yer",
+        "Olacakla öleceğe çare yoktur",
+        "Para parayı çeker",
+        "Sakla samanı gelir zamanı",
+        "Söz gümüşse sükut altındır",
+        "Üzüm üzüme baka baka kararır",
+        "Vakit nakittir",
+        "Yalancının mumu yatsıya kadar yanar",
+        "Yiğit lafının eridir",
+        "Damlaya damlaya göl olur",
+        "Ağaç yaşken eğilir",
+        "Bir musibet bin nasihatten yeğdir",
+        "İki dinle bir söyle",
+        "Ne ekersen onu biçersin",
+        "Sona kalan dona kalır",
+        "Ucuz etin yahnisi yavan olur",
+        "Yuvarlanan taş yosun tutmaz",
+        "Çıkmadık candan ümit kesilmez",
+        "İti an çomağı hazırla",
+        "Bir fincan kahvenin kırk yıl hatırı vardır",
+        "Eğri otur doğru konuş",
+        "Sakınılan göze çöp batar",
+        "Söz uçar yazı kalır",
+        "Kavak yeli esmek",
+        "İşi tıkırında",
+        "Armut piş ağzıma düş",
+        "Misafir on kısmetle gelir",
+        "Devlet kuşu", "Devekuşu gibi davranmak",
+        "Su uyur düşman uyumaz",
+        "Tilkinin dönüp dolaşıp geleceği yer kürkçü dükkanıdır",
+        "Tencere yuvarlanmış kapağını bulmuş",
+        "Bana arkadaşını söyle sana kim olduğunu söyleyeyim",
+        "İt ürür kervan yürür",
+        "Sabreden derviş muradına ermiş",
+        "Damdan düşenin halinden damdan düşen anlar",
+        "Hamama giren terler",
+        "Bir koyundan iki post çıkmaz",
+        "Çok bilen çok yanılır",
+        "Üzümünü ye bağını sorma",
+        "Söyleyenden dinleyen arif gerek",
+        "Kel ölür sırma saçlı olur, kör ölür badem gözlü olur",
+    ],
+
 }
 
 # Her kategorideki duplikatları sırayı bozmadan temizle.
@@ -932,6 +1523,130 @@ EASY_NAMES = {
         "Balina", "Beyaz Köpekbalığı", "T-Rex", "Unicorn", "Ejderha",
         "Phoenix", "Kraken", "Pikachu", "Çita", "Kanarya", "Tavşan",
         "Devekuşu", "Yılan",
+    ],
+    "yemekler": [
+        "Lahmacun", "Pide", "Pizza", "Hamburger", "Döner", "İskender Kebap", "Adana Kebap",
+        "Mantı", "Çiğ Köfte", "Köfte", "Karnıyarık", "Mercimek Çorbası", "Menemen",
+        "Simit", "Börek", "Sucuklu Yumurta", "Künefe", "Baklava", "Sütlaç", "Dondurma",
+        "Kuru Fasulye", "Pilav", "Sushi", "Ramen", "Lazanya", "Spagetti", "Carbonara",
+        "Cheeseburger", "Hot Dog", "Sandviç", "Cheesecake", "Pancake", "Waffle", "Donut",
+        "Taco", "Burrito", "Croissant", "Falafel", "Humus", "Tiramisu",
+        "Coca-Cola", "Ayran", "Türk Kahvesi", "Çay", "Kola",
+        "Çikolata", "Patates Kızartması", "Salata", "Patlamış Mısır", "Tost",
+    ],
+    "filmler": [
+        "Titanik", "Avatar", "Avengers", "Iron Man", "Spider-Man", "Batman", "Joker",
+        "The Dark Knight", "Star Wars", "Harry Potter ve Felsefe Taşı",
+        "Yüzüklerin Efendisi", "Inception (Başlangıç)", "Interstellar (Yıldızlararası)",
+        "The Matrix", "Forrest Gump", "Esaretin Bedeli", "Pulp Fiction", "Baba",
+        "Jurassic Park", "E.T.", "Gladyatör", "Rocky", "Terminator", "Alien",
+        "John Wick", "James Bond", "Hızlı ve Öfkeli", "Karayip Korsanları",
+        "Aslan Kral", "Karlar Ülkesi", "Şrek", "Buz Devri", "Kung Fu Panda",
+        "Top Gun", "La La Land", "Parazit (Parasite)",
+        "GORA", "Recep İvedik", "Vizontele", "Babam ve Oğlum", "Eşkıya",
+        "Hababam Sınıfı", "Düğün Dernek", "Yedinci Koğuştaki Mucize",
+    ],
+    "markalar": [
+        "Apple", "Google", "Microsoft", "Amazon", "Facebook", "Instagram", "WhatsApp",
+        "TikTok", "YouTube", "Netflix", "Spotify",
+        "Coca-Cola", "Pepsi", "Fanta", "Red Bull", "Starbucks", "McDonald's", "Burger King",
+        "KFC", "Domino's Pizza", "Nutella", "Oreo", "Pringles", "Snickers", "Kit Kat",
+        "Nike", "Adidas", "Puma", "Lacoste", "Gucci", "Louis Vuitton", "Chanel",
+        "Zara", "H&M", "Mango",
+        "BMW", "Mercedes-Benz", "Audi", "Volkswagen", "Ferrari", "Lamborghini",
+        "Toyota", "Honda", "Tesla", "Ford",
+        "Samsung", "Sony", "LG", "Huawei", "Xiaomi",
+        "Disney", "Marvel", "Nintendo", "PlayStation", "Xbox", "Lego",
+        "IKEA", "Migros", "BİM", "Hepsiburada", "Trendyol",
+        "Turkcell", "THY", "Arçelik", "Ülker", "Eti",
+    ],
+    "sehirler": [
+        "İstanbul", "Ankara", "İzmir", "Bursa", "Antalya", "Adana", "Konya", "Gaziantep",
+        "Kayseri", "Eskişehir", "Trabzon", "Samsun", "Diyarbakır", "Şanlıurfa",
+        "Bodrum", "Marmaris", "Fethiye", "Kapadokya", "Pamukkale",
+        "Londra", "Paris", "Berlin", "Roma", "Madrid", "Lizbon", "Amsterdam", "Viyana",
+        "Atina", "Moskova", "Prag", "Budapeşte", "Barselona", "Venedik",
+        "New York", "Los Angeles", "Las Vegas", "Miami", "Washington",
+        "Tokyo", "Seul", "Pekin", "Şangay", "Hong Kong", "Singapur", "Bangkok", "Dubai",
+        "Mekke", "Medine", "Kahire", "Cape Town", "Sidney", "Rio de Janeiro",
+    ],
+    "meslekler": [
+        "Doktor", "Hemşire", "Diş Hekimi", "Eczacı", "Veteriner", "Psikolog",
+        "Öğretmen", "Profesör", "Avukat", "Hakim", "Polis", "Asker", "İtfaiyeci",
+        "Pilot", "Hostes", "Şoför", "Taksici", "Kaptan",
+        "Mühendis", "Yazılım Mühendisi", "Mimar",
+        "Aşçı", "Şef", "Garson", "Fırıncı", "Kasap", "Manav",
+        "Kuaför", "Berber", "Terzi", "Modacı", "Manken",
+        "Çiftçi", "Bahçıvan", "Çoban", "Balıkçı",
+        "Müzisyen", "Şarkıcı", "DJ", "Aktör", "Yönetmen", "Yazar", "Gazeteci",
+        "Ressam", "Fotoğrafçı",
+        "Futbolcu", "Basketbolcu", "Boksör", "Antrenör", "Hakem",
+        "Marangoz", "Elektrikçi", "Tesisatçı", "Çilingir", "Boyacı",
+        "Postacı", "Temizlikçi",
+        "İmam", "Papaz",
+        "Sihirbaz", "Palyaço",
+        "YouTuber", "TikToker", "Influencer", "Streamer",
+    ],
+    "sporlar": [
+        "Futbol", "Basketbol", "Voleybol", "Tenis", "Masa Tenisi", "Badminton",
+        "Yüzme", "Sörf", "Yelken", "Kürek",
+        "Boks", "Güreş", "Karate", "Tekvando", "Judo", "MMA",
+        "Atletizm", "Maraton", "100 Metre Koşu", "Uzun Atlama",
+        "Halter", "Yoga", "Pilates",
+        "Kayak", "Snowboard", "Buz Pateni", "Buz Hokeyi",
+        "Bisiklet", "Formula 1", "MotoGP",
+        "Golf", "Bilardo", "Bowling", "Dart", "Okçuluk",
+        "Satranç", "Poker",
+        "Dağcılık", "Paraşüt", "Bungee Jumping",
+        "Cimnastik", "Skateboard",
+        "Amerikan Futbolu", "Ragbi", "Beyzbol", "Hentbol",
+        "Binicilik", "At Yarışı",
+    ],
+    "esyalar": [
+        "Masa", "Sandalye", "Kanepe", "Yatak", "Dolap", "Sehpa",
+        "Buzdolabı", "Çamaşır Makinesi", "Fırın", "Mikrodalga Fırın", "Ütü", "Süpürge",
+        "Televizyon", "Bilgisayar", "Laptop", "Tablet", "Telefon", "Kulaklık",
+        "Saat", "Kol Saati", "Duvar Saati",
+        "Kalem", "Defter", "Kitap", "Silgi", "Makas", "Cetvel",
+        "Çatal", "Kaşık", "Bıçak", "Tabak", "Bardak", "Tencere", "Tava",
+        "Çekiç", "Tornavida", "Matkap",
+        "Halı", "Perde", "Yastık", "Battaniye", "Havlu", "Terlik",
+        "Diş Fırçası", "Sabun", "Şampuan", "Ayna", "Tarak",
+        "Şemsiye", "Çanta", "Cüzdan", "Anahtar", "Gözlük", "Şapka",
+        "Lamba", "Mum", "El Feneri",
+        "Top", "Lego", "Puzzle", "Tavla Takımı", "Satranç Takımı",
+    ],
+    "deyimler": [
+        "Damlaya damlaya göl olur",
+        "Bir elin nesi var iki elin sesi var",
+        "Tatlı dil yılanı deliğinden çıkarır",
+        "Ağaç yaşken eğilir",
+        "Acele işe şeytan karışır",
+        "Erken kalkan yol alır",
+        "Söz gümüşse sükut altındır",
+        "Para parayı çeker",
+        "Vakit nakittir",
+        "Bal tutan parmağını yalar",
+        "Yalancının mumu yatsıya kadar yanar",
+        "Bir taşla iki kuş vurmak",
+        "Pireyi deve yapmak",
+        "Etekleri zil çalmak",
+        "Burnu büyümek",
+        "Kulak misafiri olmak",
+        "Karnı zil çalmak",
+        "Üç maymunu oynamak",
+        "Çantada keklik",
+        "Bardağı taşıran son damla",
+        "Atı alan Üsküdar'ı geçti",
+        "Tencere yuvarlanmış kapağını bulmuş",
+        "İt ürür kervan yürür",
+        "Görünen köy kılavuz istemez",
+        "Armut piş ağzıma düş",
+        "Su uyur düşman uyumaz",
+        "Damdan düşer gibi",
+        "Ağzı kulaklarına varmak",
+        "Gözünü dört açmak",
+        "Kalp kırmak",
     ],
 }
 
