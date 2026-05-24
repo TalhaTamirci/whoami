@@ -6,7 +6,8 @@ import random
 import asyncio
 import json
 import time
-from names import resolve_pool
+from names import resolve_pool, SUPPORTED_LANGS, DEFAULT_LANG
+from messages import t, normalize_lang
 
 
 class Player:
@@ -14,10 +15,11 @@ class Player:
 
     DEFAULT_AVATAR = "🎭"
 
-    def __init__(self, player_id: str, name: str, websocket):
+    def __init__(self, player_id: str, name: str, websocket, lang: str = DEFAULT_LANG):
         self.id = player_id
         self.name = name
         self.ws = websocket
+        self.lang: str = normalize_lang(lang)  # UI dili — sunucu mesajları bu dilde gönderilir
         self.avatar: str = self.DEFAULT_AVATAR
         self.assigned_name: str | None = None  # kafasındaki isim
         self.revealed: bool = False  # doğru tahmin ettiyse True
@@ -74,6 +76,7 @@ class Room:
         self._next_rank = 1  # sıradaki açılan oyuncunun sırası
         self.current_category: str = "populer_ikonlar"
         self.current_difficulty: str = "hepsi"
+        self.pool_lang: str = DEFAULT_LANG  # kelime havuzunun dili (host seçer)
         self.custom_words: list[str] = []
         self.pool_limit: int = 0  # 0 = sınırsız (tüm havuz)
         self.active_pool: list[str] = []  # bu turda kullanılan havuz
@@ -100,23 +103,30 @@ class Room:
 
     def assign_names(self, category: str = "unluler", difficulty: str = "hepsi",
                      custom_words: list[str] | None = None, timer_seconds: int = 0,
-                     pool_limit: int = 0):
+                     pool_limit: int = 0, pool_lang: str | None = None,
+                     requester_lang: str | None = None):
         """Her oyuncuya rastgele kelime ata.
 
         pool_limit > 0 ise, tam havuzdan o kadar öğe rastgele seçilir ve
         hem isim atama hem eleme defteri o alt-küme üzerinden çalışır.
+
+        pool_lang: kelime havuzunun dili (tr/en/de). None ise mevcut oda dili korunur.
+        requester_lang: hata mesajları bu dilde döner (host'un UI dili).
         """
+        rlang = requester_lang or self.host.lang
+        if pool_lang:
+            self.pool_lang = normalize_lang(pool_lang)
         player_list = list(self.players.values())
-        full_pool = resolve_pool(category, difficulty, custom_words)
+        full_pool = resolve_pool(category, difficulty, custom_words, self.pool_lang)
         if not full_pool:
-            raise ValueError("Kategori boş, oyun başlatılamaz.")
+            raise ValueError(t(rlang, "category_empty"))
 
         # Pool limit uygula
         limit = max(0, int(pool_limit or 0))
         if limit > 0:
             if limit < len(player_list):
                 raise ValueError(
-                    f"Toplam seçenek ({limit}) oyuncu sayısından ({len(player_list)}) az olamaz."
+                    t(rlang, "pool_smaller_than_players", limit=limit, players=len(player_list))
                 )
             if limit < len(full_pool):
                 active = random.sample(full_pool, limit)
@@ -128,7 +138,7 @@ class Room:
 
         if len(player_list) > len(active):
             raise ValueError(
-                f"Havuzda en fazla {len(active)} kelime var, {len(player_list)} oyuncuya yetmez."
+                t(rlang, "pool_not_enough_words", available=len(active), players=len(player_list))
             )
 
         names = random.sample(active, len(player_list))
@@ -196,15 +206,16 @@ class Room:
 
     def check_guess(self, player_id: str, guess: str) -> tuple[bool, str]:
         """Oyuncunun tahminini kontrol et.
-        Returns: (doğru_mu, mesaj)
+        Returns: (doğru_mu, oyuncunun diline göre lokalize mesaj)
         """
         player = self.players.get(player_id)
         if not player:
-            return False, "Oyuncu bulunamadı."
+            return False, t(DEFAULT_LANG, "player_not_found")
+        plang = player.lang
         if player.revealed:
-            return False, "Zaten doğru tahmin ettin!"
+            return False, t(plang, "already_guessed")
         if self.state != self.PLAYING:
-            return False, "Oyun aktif değil."
+            return False, t(plang, "game_not_active")
 
         # büyük/küçük harf duyarsız karşılaştırma
         if guess.strip().lower() == player.assigned_name.strip().lower():
@@ -213,9 +224,9 @@ class Room:
             self._next_rank += 1
             player.reveal_turn = self.round_number
             player.reveal_time_seconds = int(time.time() - self.started_at) if self.started_at else 0
-            return True, f"Doğru! Sen {player.assigned_name} idin!"
+            return True, t(plang, "guess_correct", name=player.assigned_name)
         else:
-            return False, "Yanlış tahmin, tekrar dene!"
+            return False, t(plang, "guess_wrong")
 
     def is_game_over(self) -> bool:
         """Tüm oyuncular ismini açtıysa oyun bitti."""
@@ -269,6 +280,7 @@ class Room:
                 "players": players_data,
                 "category": self.current_category,
                 "difficulty": self.current_difficulty,
+                "poolLang": self.pool_lang,
                 "categoryItems": category_items,
                 "poolLimit": self.pool_limit,
                 "turnPlayerId": self.current_turn_id,
@@ -321,6 +333,7 @@ class Room:
             "type": "lobby_update",
             "players": players_data,
             "hostId": self.host.id,
+            "poolLang": self.pool_lang,
         })
 
 
@@ -355,23 +368,26 @@ def get_player_room(player_id: str) -> Room | None:
     return _rooms.get(code) if code else None
 
 
-def create_or_join_room(player_name: str, room_code: str | None, websocket) -> tuple[Player, Room, bool]:
+def create_or_join_room(player_name: str, room_code: str | None, websocket,
+                        lang: str = DEFAULT_LANG) -> tuple[Player, Room, bool]:
     """Odaya katıl veya yeni oda oluştur.
     Returns: (player, room, is_new_room)
     """
     player_id = _generate_player_id()
-    player = Player(player_id, player_name, websocket)
+    player = Player(player_id, player_name, websocket, lang=lang)
 
     if room_code and room_code in _rooms:
         room = _rooms[room_code]
         if room.state != Room.LOBBY:
-            raise ValueError("Oyun zaten başlamış, katılamazsın!")
+            raise ValueError(t(player.lang, "room_game_started"))
         room.add_player(player)
         _player_room_map[player_id] = room.code
         return player, room, False
     else:
         code = _generate_room_code() if not room_code else room_code
         room = Room(code, player)
+        # Yeni odada başlangıç pool_lang'i, oda kuran oyuncunun dili olsun
+        room.pool_lang = player.lang
         _rooms[code] = room
         _player_room_map[player_id] = code
         return player, room, True

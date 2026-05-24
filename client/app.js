@@ -26,6 +26,382 @@ const AVATAR_OPTIONS = [
     "👽", "🧙", "🧛", "🧝", "🤡", "💀",
 ];
 
+// ── i18n ────────────────────────────────────────────
+const SUPPORTED_LANGS = ["tr", "en", "de"];
+
+const I18N = {
+    tr: {
+        // Lobby
+        app_title: "Ben Kimim?",
+        subtitle: "Discord'da arka planda oyna!",
+        your_name: "Adın",
+        your_name_placeholder: "Adını yaz...",
+        choose_avatar: "Avatar Seç",
+        room_code: "Oda Kodu",
+        room_code_hint: "(boş bırak = yeni oda)",
+        room_code_label: "Oda Kodu:",
+        join_room: "Odaya Katıl",
+        joined: "✓ Katıldın",
+        copy_code: "Kodu kopyala",
+        copy_link: "Davet linkini kopyala",
+        players: "Oyuncular",
+        host_badge: "👑 Host",
+        // Host controls
+        pool_lang: "Kelime Dili",
+        pool_lang_label: "Kelime Dili:",
+        game_mode: "Oyun Modu",
+        game_mode_label: "Oyun Modu:",
+        difficulty: "Zorluk",
+        diff_kolay: "Kolay (Sadece çok bilinenler)",
+        diff_hepsi: "Hepsi (Tüm liste)",
+        diff_ozel_sayi: "Özel (Toplam seçenek sayısı)",
+        pool_size: "Toplam Seçenek Sayısı",
+        pool_size_hint: "(havuzdan kaç öğe çekilsin — eleme defterinde de bu kadar gösterilir)",
+        turn_timer: "Tur Süresi (saniye, 0 = kapalı)",
+        custom_words: "Özel Kelimeler",
+        custom_words_hint: "(her satıra bir tane, en az oyuncu sayısı kadar)",
+        custom_words_placeholder: "Mesela:\nAhmet Hoca\nBerfin\nKantinci Hasan\n...",
+        start_game: "Oyunu Başlat",
+        waiting_host: "Oda sahibinin başlatmasını bekle...",
+        // Categories
+        cat_populer_ikonlar: "İkonik Kişiler / Karakterler",
+        cat_hayvanlar: "🐾 Hayvanlar (Kurgusal Dahil)",
+        cat_tarihi_olaylar: "📜 Tarihi Olaylar",
+        cat_yemekler: "🍔 Yemekler",
+        cat_filmler: "🎬 Filmler",
+        cat_markalar: "🏷️ Markalar",
+        cat_sehirler: "🌍 Şehirler",
+        cat_meslekler: "👷 Meslekler",
+        cat_sporlar: "⚽ Spor Dalları",
+        cat_esyalar: "🪑 Eşyalar",
+        cat_deyimler: "💬 Atasözleri & Deyimler",
+        cat_karma: "🎲 Karma Mod (Hepsi Birden)",
+        cat_karma_short: "🎲 Karma Mod",
+        cat_ozel: "✏️ Özel Kategori (Sen Yaz)",
+        // Connection
+        no_connection: "● Bağlantı yok",
+        connected: "● Bağlandı",
+        disconnected: "● Bağlantı kesildi",
+        conn_error: "● Bağlantı hatası",
+        // Game
+        turn_label: "Sıra:",
+        pass_btn: "Pas ⏭",
+        table: "MASA",
+        guess_placeholder: "Kafandaki ismi tahmin et...",
+        guess_placeholder_revealed: "Bildin! Diğer oyuncuları izle.",
+        guess_placeholder_not_turn: "Sıran değil, bekle...",
+        guess_btn: "Tahmin Et",
+        // Log
+        log_panel: "Soru/Cevap Defteri",
+        log_title: "💬 Soru / Cevap",
+        log_empty: "Henüz mesaj yok. Sorularını yazmaya başla!",
+        log_input_placeholder: "Soru/Not yaz... (örn. 'Erkek misin?')",
+        send: "Gönder",
+        quick_yes: "✅ Evet",
+        quick_no: "❌ Hayır",
+        quick_maybe: "🤔 Belki",
+        label_yes: "Evet",
+        label_no: "Hayır",
+        label_maybe: "Belki",
+        close: "Kapat",
+        // Elim
+        elim_panel: "Eleme Defteri",
+        elim_title: "📝 Eleme Defteri",
+        elim_notes_placeholder: "Notların... (örn. 'erkek, tarihi figür, asker olabilir')",
+        elim_search_placeholder: "🔍 Ara...",
+        elim_reset: "Hepsini geri al",
+        elim_tab_all: "Hepsi",
+        elim_tab_active: "Aday",
+        elim_tab_suspect: "Şüpheli",
+        elim_tab_eliminated: "Elenen",
+        elim_empty_no_list: "Liste yok. Oyun başladığında doldurulacak.",
+        elim_empty_no_match: "Eşleşen öğe yok.",
+        elim_count_template: "{active} aday · {suspect} şüpheli · {elim} elenmiş / {total}",
+        elim_guess_btn: "Tahmin Et",
+        elim_guess_tip: "Tıkla → aday / şüpheli / elenmiş",
+        elim_guess_tooltip_can: '"{item}" olarak tahmin gönder',
+        elim_guess_tooltip_revealed: "Zaten bildin",
+        elim_guess_tooltip_not_turn: "Sıran değil",
+        elim_guess_confirm: '"{item}" olarak tahmin gönderilsin mi?',
+        elim_reset_confirm: "{count} işaretlenmiş öğeyi sıfırlamak istiyor musun?",
+        // Result
+        game_over: "Oyun Bitti!",
+        new_round_btn: "Aynı Oyuncularla Yeni Tur",
+        new_round_hint: "Aynı odada, aynı oyuncularla devam edersiniz.",
+        waiting_new_round: "Oda sahibinin yeni tur başlatmasını bekle...",
+        // Misc
+        room_label: "Oda: {code}",
+        you_suffix: " (sen)",
+        guessed_correct: '✅ Tahmin etti: "{text}" — Doğru!',
+        guessed_wrong: '❌ Tahmin etti: "{text}" — Yanlış',
+        sound_toggle: "Ses Efektleri",
+        theme_toggle: "Temayı Değiştir",
+        please_enter_name: "Lütfen adını yaz!",
+        link_copy_failed: "Link kopyalanamadı.",
+        custom_min_words: "Özel kategori için en az 2 kelime girmelisin (şu an {count}).",
+        pool_below_players: "Toplam seçenek sayısı oyuncu sayısından ({count}) az olamaz.",
+        pool_below_two: "Toplam seçenek sayısı en az 2 olmalı.",
+        stat_rank: "{rank}. bilen",
+        stat_turn: "{turn}. tur",
+        duration_sec: "{n}sn",
+        duration_min: "{n}dk",
+        duration_min_sec: "{m}dk {s}sn",
+    },
+    en: {
+        app_title: "Who am I?",
+        subtitle: "Play in the background on Discord!",
+        your_name: "Your Name",
+        your_name_placeholder: "Type your name...",
+        choose_avatar: "Choose Avatar",
+        room_code: "Room Code",
+        room_code_hint: "(leave empty = new room)",
+        room_code_label: "Room Code:",
+        join_room: "Join Room",
+        joined: "✓ Joined",
+        copy_code: "Copy code",
+        copy_link: "Copy invite link",
+        players: "Players",
+        host_badge: "👑 Host",
+        pool_lang: "Word Language",
+        pool_lang_label: "Word Language:",
+        game_mode: "Game Mode",
+        game_mode_label: "Game Mode:",
+        difficulty: "Difficulty",
+        diff_kolay: "Easy (Only well-known ones)",
+        diff_hepsi: "All (Full list)",
+        diff_ozel_sayi: "Custom (Total pool size)",
+        pool_size: "Total Pool Size",
+        pool_size_hint: "(how many items to pull from the pool — same count shown in elimination list)",
+        turn_timer: "Turn Time (seconds, 0 = off)",
+        custom_words: "Custom Words",
+        custom_words_hint: "(one per line, at least as many as players)",
+        custom_words_placeholder: "Example:\nMr. Smith\nBeth\nGrumpy Bob\n...",
+        start_game: "Start Game",
+        waiting_host: "Waiting for the host to start...",
+        cat_populer_ikonlar: "Iconic People / Characters",
+        cat_hayvanlar: "🐾 Animals (Incl. Fictional)",
+        cat_tarihi_olaylar: "📜 Historical Events",
+        cat_yemekler: "🍔 Foods",
+        cat_filmler: "🎬 Movies",
+        cat_markalar: "🏷️ Brands",
+        cat_sehirler: "🌍 Cities",
+        cat_meslekler: "👷 Professions",
+        cat_sporlar: "⚽ Sports",
+        cat_esyalar: "🪑 Objects",
+        cat_deyimler: "💬 Idioms & Sayings",
+        cat_karma: "🎲 Mixed Mode (Everything)",
+        cat_karma_short: "🎲 Mixed Mode",
+        cat_ozel: "✏️ Custom Category (You Write)",
+        no_connection: "● No connection",
+        connected: "● Connected",
+        disconnected: "● Disconnected",
+        conn_error: "● Connection error",
+        turn_label: "Turn:",
+        pass_btn: "Pass ⏭",
+        table: "TABLE",
+        guess_placeholder: "Guess the name in your head...",
+        guess_placeholder_revealed: "You got it! Watch the others.",
+        guess_placeholder_not_turn: "Not your turn — wait...",
+        guess_btn: "Guess",
+        log_panel: "Question/Answer Log",
+        log_title: "💬 Q & A",
+        log_empty: "No messages yet. Start asking!",
+        log_input_placeholder: "Type a question/note... (e.g. 'Am I male?')",
+        send: "Send",
+        quick_yes: "✅ Yes",
+        quick_no: "❌ No",
+        quick_maybe: "🤔 Maybe",
+        label_yes: "Yes",
+        label_no: "No",
+        label_maybe: "Maybe",
+        close: "Close",
+        elim_panel: "Elimination Notes",
+        elim_title: "📝 Elimination Notes",
+        elim_notes_placeholder: "Your notes... (e.g. 'male, historical figure, maybe soldier')",
+        elim_search_placeholder: "🔍 Search...",
+        elim_reset: "Reset all marks",
+        elim_tab_all: "All",
+        elim_tab_active: "Candidate",
+        elim_tab_suspect: "Suspect",
+        elim_tab_eliminated: "Eliminated",
+        elim_empty_no_list: "List is empty. It'll be filled when the game starts.",
+        elim_empty_no_match: "No matching items.",
+        elim_count_template: "{active} candidate · {suspect} suspect · {elim} eliminated / {total}",
+        elim_guess_btn: "Guess",
+        elim_guess_tip: "Click → candidate / suspect / eliminated",
+        elim_guess_tooltip_can: 'Send guess as "{item}"',
+        elim_guess_tooltip_revealed: "You've already guessed",
+        elim_guess_tooltip_not_turn: "Not your turn",
+        elim_guess_confirm: 'Send guess as "{item}"?',
+        elim_reset_confirm: "Reset {count} marked items?",
+        game_over: "Game Over!",
+        new_round_btn: "New Round with Same Players",
+        new_round_hint: "Continue in the same room, with the same players.",
+        waiting_new_round: "Waiting for the host to start a new round...",
+        room_label: "Room: {code}",
+        you_suffix: " (you)",
+        guessed_correct: '✅ Guessed: "{text}" — Correct!',
+        guessed_wrong: '❌ Guessed: "{text}" — Wrong',
+        sound_toggle: "Sound Effects",
+        theme_toggle: "Toggle Theme",
+        please_enter_name: "Please enter your name!",
+        link_copy_failed: "Couldn't copy the link.",
+        custom_min_words: "You need at least 2 custom words (currently {count}).",
+        pool_below_players: "Pool size can't be smaller than the number of players ({count}).",
+        pool_below_two: "Pool size must be at least 2.",
+        stat_rank: "#{rank} guesser",
+        stat_turn: "round {turn}",
+        duration_sec: "{n}s",
+        duration_min: "{n}m",
+        duration_min_sec: "{m}m {s}s",
+    },
+    de: {
+        app_title: "Wer bin ich?",
+        subtitle: "Spiel im Hintergrund auf Discord!",
+        your_name: "Dein Name",
+        your_name_placeholder: "Tippe deinen Namen...",
+        choose_avatar: "Avatar wählen",
+        room_code: "Raumcode",
+        room_code_hint: "(leer lassen = neuer Raum)",
+        room_code_label: "Raumcode:",
+        join_room: "Raum beitreten",
+        joined: "✓ Beigetreten",
+        copy_code: "Code kopieren",
+        copy_link: "Einladungslink kopieren",
+        players: "Spieler",
+        host_badge: "👑 Host",
+        pool_lang: "Wortsprache",
+        pool_lang_label: "Wortsprache:",
+        game_mode: "Spielmodus",
+        game_mode_label: "Spielmodus:",
+        difficulty: "Schwierigkeit",
+        diff_kolay: "Einfach (Nur bekannte)",
+        diff_hepsi: "Alle (Komplette Liste)",
+        diff_ozel_sayi: "Eigene (Gesamtzahl Optionen)",
+        pool_size: "Gesamtzahl der Optionen",
+        pool_size_hint: "(wie viele Einträge aus dem Pool — wird auch in der Ausschlussliste gezeigt)",
+        turn_timer: "Rundenzeit (Sekunden, 0 = aus)",
+        custom_words: "Eigene Wörter",
+        custom_words_hint: "(eines pro Zeile, mindestens so viele wie Spieler)",
+        custom_words_placeholder: "Zum Beispiel:\nHerr Müller\nLisa\nTante Anna\n...",
+        start_game: "Spiel starten",
+        waiting_host: "Warte, bis der Host startet...",
+        cat_populer_ikonlar: "Ikonische Persönlichkeiten / Charaktere",
+        cat_hayvanlar: "🐾 Tiere (inkl. fiktional)",
+        cat_tarihi_olaylar: "📜 Historische Ereignisse",
+        cat_yemekler: "🍔 Speisen",
+        cat_filmler: "🎬 Filme",
+        cat_markalar: "🏷️ Marken",
+        cat_sehirler: "🌍 Städte",
+        cat_meslekler: "👷 Berufe",
+        cat_sporlar: "⚽ Sportarten",
+        cat_esyalar: "🪑 Gegenstände",
+        cat_deyimler: "💬 Sprichwörter & Redewendungen",
+        cat_karma: "🎲 Mixmodus (Alles gemischt)",
+        cat_karma_short: "🎲 Mixmodus",
+        cat_ozel: "✏️ Eigene Kategorie (Selbst tippen)",
+        no_connection: "● Keine Verbindung",
+        connected: "● Verbunden",
+        disconnected: "● Verbindung getrennt",
+        conn_error: "● Verbindungsfehler",
+        turn_label: "Dran:",
+        pass_btn: "Passen ⏭",
+        table: "TISCH",
+        guess_placeholder: "Rate den Namen in deinem Kopf...",
+        guess_placeholder_revealed: "Du hast's! Schau den anderen zu.",
+        guess_placeholder_not_turn: "Du bist nicht dran — warte...",
+        guess_btn: "Tippen",
+        log_panel: "Fragen/Antworten-Liste",
+        log_title: "💬 Fragen & Antworten",
+        log_empty: "Noch keine Nachrichten. Stell deine erste Frage!",
+        log_input_placeholder: "Frage/Notiz... (z.B. 'Bin ich männlich?')",
+        send: "Senden",
+        quick_yes: "✅ Ja",
+        quick_no: "❌ Nein",
+        quick_maybe: "🤔 Vielleicht",
+        label_yes: "Ja",
+        label_no: "Nein",
+        label_maybe: "Vielleicht",
+        close: "Schließen",
+        elim_panel: "Ausschluss-Notizen",
+        elim_title: "📝 Ausschluss-Notizen",
+        elim_notes_placeholder: "Deine Notizen... (z.B. 'männlich, historische Figur, evtl. Soldat')",
+        elim_search_placeholder: "🔍 Suchen...",
+        elim_reset: "Alle zurücksetzen",
+        elim_tab_all: "Alle",
+        elim_tab_active: "Kandidat",
+        elim_tab_suspect: "Verdächtig",
+        elim_tab_eliminated: "Ausgeschlossen",
+        elim_empty_no_list: "Liste ist leer. Wird beim Spielstart gefüllt.",
+        elim_empty_no_match: "Keine Treffer.",
+        elim_count_template: "{active} Kandidat · {suspect} verdächtig · {elim} ausgeschlossen / {total}",
+        elim_guess_btn: "Tippen",
+        elim_guess_tip: "Klick → Kandidat / verdächtig / ausgeschlossen",
+        elim_guess_tooltip_can: 'Als "{item}" tippen',
+        elim_guess_tooltip_revealed: "Du hast schon getippt",
+        elim_guess_tooltip_not_turn: "Du bist nicht dran",
+        elim_guess_confirm: 'Als "{item}" tippen?',
+        elim_reset_confirm: "{count} markierte Einträge zurücksetzen?",
+        game_over: "Spiel zu Ende!",
+        new_round_btn: "Neue Runde mit denselben Spielern",
+        new_round_hint: "Weiter im selben Raum, mit denselben Spielern.",
+        waiting_new_round: "Warte, bis der Host eine neue Runde startet...",
+        room_label: "Raum: {code}",
+        you_suffix: " (du)",
+        guessed_correct: '✅ Getippt: "{text}" — Richtig!',
+        guessed_wrong: '❌ Getippt: "{text}" — Falsch',
+        sound_toggle: "Soundeffekte",
+        theme_toggle: "Theme wechseln",
+        please_enter_name: "Bitte deinen Namen eingeben!",
+        link_copy_failed: "Link konnte nicht kopiert werden.",
+        custom_min_words: "Du brauchst mindestens 2 eigene Wörter (aktuell {count}).",
+        pool_below_players: "Pool-Größe darf nicht kleiner als die Spielerzahl ({count}) sein.",
+        pool_below_two: "Pool-Größe muss mindestens 2 sein.",
+        stat_rank: "{rank}. erraten",
+        stat_turn: "Runde {turn}",
+        duration_sec: "{n}s",
+        duration_min: "{n}m",
+        duration_min_sec: "{m}m {s}s",
+    },
+};
+
+function detectInitialLang() {
+    const saved = localStorage.getItem("whoami:lang");
+    if (saved && SUPPORTED_LANGS.includes(saved)) return saved;
+    const nav = (navigator.language || "tr").toLowerCase().slice(0, 2);
+    return SUPPORTED_LANGS.includes(nav) ? nav : "tr";
+}
+
+let currentLang = detectInitialLang();
+
+function t(key, vars) {
+    const dict = I18N[currentLang] || I18N.tr;
+    let str = dict[key];
+    if (str == null) str = (I18N.tr[key] != null ? I18N.tr[key] : key);
+    if (vars) {
+        for (const k of Object.keys(vars)) {
+            str = str.split("{" + k + "}").join(String(vars[k]));
+        }
+    }
+    return str;
+}
+
+function applyI18nToDOM() {
+    document.documentElement.setAttribute("lang", currentLang);
+    document.querySelectorAll("[data-i18n]").forEach((el) => {
+        const key = el.getAttribute("data-i18n");
+        if (key) el.textContent = t(key);
+    });
+    document.querySelectorAll("[data-i18n-placeholder]").forEach((el) => {
+        const key = el.getAttribute("data-i18n-placeholder");
+        if (key) el.setAttribute("placeholder", t(key));
+    });
+    document.querySelectorAll("[data-i18n-title]").forEach((el) => {
+        const key = el.getAttribute("data-i18n-title");
+        if (key) el.setAttribute("title", t(key));
+    });
+}
+
 // ── State ───────────────────────────────────────────
 let ws = null;
 let myPlayerId = null;
@@ -60,6 +436,7 @@ const playerList = $("player-list");
 const hostControls = $("host-controls");
 const btnStart = $("btn-start");
 const selectCategory = $("select-category");
+const selectPoolLang = $("select-pool-lang");
 const selectDifficulty = $("select-difficulty");
 const inputTimer = $("input-timer");
 const poolSizeGroup = $("pool-size-group");
@@ -97,6 +474,7 @@ const rankingsList = $("rankings-list");
 const hostControlsResult = $("host-controls-result");
 const btnNewRound = $("btn-new-round");
 const selectCategoryResult = $("select-category-result");
+const selectPoolLangResult = $("select-pool-lang-result");
 const waitingNewRound = $("waiting-new-round");
 
 // Eleme Paneli (mevcut)
@@ -183,13 +561,14 @@ function connectWebSocket() {
     ws = new WebSocket(WS_URL);
 
     ws.onopen = () => {
-        connectionStatus.textContent = "● Bağlandı";
+        connectionStatus.textContent = t("connected");
         connectionStatus.className = "status-connected";
 
         ws.send(JSON.stringify({
             type: "join",
             playerName: inputName.value.trim(),
             roomCode: inputRoom.value.trim().toUpperCase(),
+            lang: currentLang,
         }));
     };
 
@@ -199,12 +578,12 @@ function connectWebSocket() {
     };
 
     ws.onclose = () => {
-        connectionStatus.textContent = "● Bağlantı kesildi";
+        connectionStatus.textContent = t("disconnected");
         connectionStatus.className = "status-disconnected";
     };
 
     ws.onerror = () => {
-        connectionStatus.textContent = "● Bağlantı hatası";
+        connectionStatus.textContent = t("conn_error");
         connectionStatus.className = "status-disconnected";
     };
 }
@@ -248,7 +627,13 @@ function handleWelcome(data) {
     inputName.disabled = true;
     inputRoom.disabled = true;
     btnJoin.disabled = true;
-    btnJoin.textContent = "✓ Katıldın";
+    btnJoin.textContent = t("joined");
+
+    // Host'un pool_lang seçicilerini odanın mevcut diline senkronla
+    if (data.poolLang) {
+        if (selectPoolLang) selectPoolLang.value = data.poolLang;
+        if (selectPoolLangResult) selectPoolLangResult.value = data.poolLang;
+    }
 
     // Avatar'ı sunucuya da bildir
     sendMessage({ type: "set_avatar", avatar: myAvatar });
@@ -281,7 +666,7 @@ function handleLobbyUpdate(data) {
         if (p.id === data.hostId) {
             const badge = document.createElement("span");
             badge.className = "host-badge";
-            badge.textContent = "👑 Host";
+            badge.textContent = t("host_badge");
             li.appendChild(badge);
         }
         if (p.id === myPlayerId) {
@@ -289,6 +674,15 @@ function handleLobbyUpdate(data) {
         }
         playerList.appendChild(li);
     });
+    // Host'un pool_lang seçicileri odanın güncel dilini göstersin
+    if (data.poolLang) {
+        if (selectPoolLang && selectPoolLang.value !== data.poolLang) {
+            selectPoolLang.value = data.poolLang;
+        }
+        if (selectPoolLangResult && selectPoolLangResult.value !== data.poolLang) {
+            selectPoolLangResult.value = data.poolLang;
+        }
+    }
 }
 
 function handleGameStarted(data) {
@@ -299,8 +693,13 @@ function handleGameStarted(data) {
     qaLog = [];
     logPanelSeenCount = 0;
 
+    if (data.poolLang) {
+        if (selectPoolLang) selectPoolLang.value = data.poolLang;
+        if (selectPoolLangResult) selectPoolLangResult.value = data.poolLang;
+    }
+
     showScreen(screenGame);
-    gameRoomCode.textContent = `Oda: ${myRoomCode}`;
+    gameRoomCode.textContent = t("room_label", { code: myRoomCode });
     renderPlayersOnTable(currentPlayers);
     renderTurnBar();
     renderLog();
@@ -530,10 +929,10 @@ function escapeHtml(s) {
 
 function formatDuration(seconds) {
     const s = Math.max(0, Math.floor(Number(seconds) || 0));
-    if (s < 60) return `${s}sn`;
+    if (s < 60) return t("duration_sec", { n: s });
     const m = Math.floor(s / 60);
     const r = s % 60;
-    return r === 0 ? `${m}dk` : `${m}dk ${r}sn`;
+    return r === 0 ? t("duration_min", { n: m }) : t("duration_min_sec", { m: m, s: r });
 }
 
 function updateGuessUIState() {
@@ -544,23 +943,23 @@ function updateGuessUIState() {
     if (iAmRevealed) {
         inputGuess.disabled = true;
         btnGuess.disabled = true;
-        inputGuess.placeholder = "Bildin! Diğer oyuncuları izle.";
+        inputGuess.placeholder = t("guess_placeholder_revealed");
     } else if (!isMyTurn) {
         inputGuess.disabled = true;
         btnGuess.disabled = true;
-        inputGuess.placeholder = "Sıran değil, bekle...";
+        inputGuess.placeholder = t("guess_placeholder_not_turn");
     } else {
         inputGuess.disabled = false;
         btnGuess.disabled = false;
-        inputGuess.placeholder = "Kafandaki ismi tahmin et...";
+        inputGuess.placeholder = t("guess_placeholder");
         if (document.activeElement !== inputGuess) inputGuess.focus();
     }
 }
 
 function formatRevealStats(entry) {
     const parts = [];
-    if (entry.rank) parts.push(`${entry.rank}. bilen`);
-    if (entry.turnCount) parts.push(`${entry.turnCount}. tur`);
+    if (entry.rank) parts.push(t("stat_rank", { rank: entry.rank }));
+    if (entry.turnCount) parts.push(t("stat_turn", { turn: entry.turnCount }));
     if (entry.elapsedSeconds != null) parts.push(formatDuration(entry.elapsedSeconds));
     return parts.length ? `(${parts.join(" · ")})` : "";
 }
@@ -575,7 +974,7 @@ function renderLog() {
     if (qaLog.length === 0) {
         const empty = document.createElement("div");
         empty.className = "log-empty";
-        empty.textContent = "Henüz mesaj yok. Sorularını yazmaya başla!";
+        empty.textContent = t("log_empty");
         logList.appendChild(empty);
         return;
     }
@@ -593,15 +992,15 @@ function renderLog() {
 
         const author = document.createElement("div");
         author.className = "log-entry-author";
-        author.textContent = entry.playerName + (entry.playerId === myPlayerId ? " (sen)" : "");
+        author.textContent = entry.playerName + (entry.playerId === myPlayerId ? t("you_suffix") : "");
 
         const txt = document.createElement("div");
         txt.className = "log-entry-text";
         if (entry.kind === "guess_correct") {
             const stats = formatRevealStats(entry);
-            txt.textContent = `✅ Tahmin etti: "${entry.text}" — Doğru!${stats ? "  " + stats : ""}`;
+            txt.textContent = t("guessed_correct", { text: entry.text }) + (stats ? "  " + stats : "");
         } else if (entry.kind === "guess_wrong") {
-            txt.textContent = `❌ Tahmin etti: "${entry.text}" — Yanlış`;
+            txt.textContent = t("guessed_wrong", { text: entry.text });
         } else {
             txt.textContent = entry.text;
         }
@@ -677,8 +1076,8 @@ function renderElimList() {
         const empty = document.createElement("div");
         empty.className = "elim-empty";
         empty.textContent = elimItems.length === 0
-            ? "Liste yok. Oyun başladığında doldurulacak."
-            : "Eşleşen öğe yok.";
+            ? t("elim_empty_no_list")
+            : t("elim_empty_no_match");
         elimList.appendChild(empty);
     } else {
         filtered.forEach((item) => {
@@ -703,22 +1102,22 @@ function renderElimList() {
             const guessBtn = document.createElement("button");
             guessBtn.type = "button";
             guessBtn.className = "elim-item-guess";
-            guessBtn.textContent = "Tahmin Et";
+            guessBtn.textContent = t("elim_guess_btn");
             guessBtn.disabled = !canGuess;
             guessBtn.title = canGuess
-                ? `"${item}" olarak tahmin gönder`
-                : iAmRevealed ? "Zaten bildin" : "Sıran değil";
+                ? t("elim_guess_tooltip_can", { item })
+                : iAmRevealed ? t("elim_guess_tooltip_revealed") : t("elim_guess_tooltip_not_turn");
             guessBtn.addEventListener("click", (e) => {
                 e.stopPropagation();
                 if (!canGuess) return;
-                if (!confirm(`"${item}" olarak tahmin gönderilsin mi?`)) return;
+                if (!confirm(t("elim_guess_confirm", { item }))) return;
                 sendMessage({ type: "guess", guess: item });
             });
 
             row.appendChild(mark);
             row.appendChild(text);
             row.appendChild(guessBtn);
-            row.title = "Tıkla → aday / şüpheli / elenmiş";
+            row.title = t("elim_guess_tip");
             row.addEventListener("click", () => cycleElim(item));
             elimList.appendChild(row);
         });
@@ -731,7 +1130,9 @@ function renderElimList() {
     });
     const total = elimItems.length;
     const active = total - suspectCount - elimCount2;
-    elimCount.textContent = `${active} aday · ${suspectCount} şüpheli · ${elimCount2} elenmiş / ${total}`;
+    elimCount.textContent = t("elim_count_template", {
+        active, suspect: suspectCount, elim: elimCount2, total,
+    });
 
     if (elimCount2 + suspectCount > 0) {
         elimFabBadge.textContent = elimCount2 + suspectCount;
@@ -787,7 +1188,7 @@ function prefillFromUrl() {
 btnJoin.addEventListener("click", () => {
     const name = inputName.value.trim();
     if (!name) {
-        alert("Lütfen adını yaz!");
+        alert(t("please_enter_name"));
         inputName.focus();
         return;
     }
@@ -813,7 +1214,7 @@ btnCopyLink.addEventListener("click", () => {
             setTimeout(() => (btnCopyLink.textContent = "🔗"), 1500);
         });
     } catch (e) {
-        alert("Link kopyalanamadı.");
+        alert(t("link_copy_failed"));
     }
 });
 
@@ -836,7 +1237,7 @@ function updatePoolSizeVisibility() {
 }
 selectDifficulty.addEventListener("change", updatePoolSizeVisibility);
 
-function buildGameConfig(category) {
+function buildGameConfig(category, poolLangValue) {
     const difficulty = selectDifficulty.value;
     const timerSeconds = parseInt(inputTimer.value || "0", 10) || 0;
     const poolLimit = difficulty === "ozel_sayi"
@@ -849,21 +1250,22 @@ function buildGameConfig(category) {
             .map((s) => s.trim())
             .filter((s) => s.length > 0);
         if (customWords.length < currentPlayers.length && customWords.length < 2) {
-            alert(`Özel kategori için en az 2 kelime girmelisin (şu an ${customWords.length}).`);
+            alert(t("custom_min_words", { count: customWords.length }));
             return null;
         }
     }
     if (difficulty === "ozel_sayi") {
         if (poolLimit < currentPlayers.length) {
-            alert(`Toplam seçenek sayısı oyuncu sayısından (${currentPlayers.length}) az olamaz.`);
+            alert(t("pool_below_players", { count: currentPlayers.length }));
             return null;
         }
         if (poolLimit < 2) {
-            alert("Toplam seçenek sayısı en az 2 olmalı.");
+            alert(t("pool_below_two"));
             return null;
         }
     }
-    return { category, difficulty, timerSeconds, customWords, poolLimit };
+    const poolLang = poolLangValue || (selectPoolLang ? selectPoolLang.value : currentLang);
+    return { category, difficulty, timerSeconds, customWords, poolLimit, poolLang };
 }
 
 btnStart.addEventListener("click", () => {
@@ -876,6 +1278,7 @@ btnStart.addEventListener("click", () => {
         customWords: cfg.customWords,
         timerSeconds: cfg.timerSeconds,
         poolLimit: cfg.poolLimit,
+        poolLang: cfg.poolLang,
     });
 });
 
@@ -887,7 +1290,8 @@ btnGuess.addEventListener("click", () => {
 inputGuess.addEventListener("keydown", (e) => { if (e.key === "Enter") btnGuess.click(); });
 
 btnNewRound.addEventListener("click", () => {
-    const cfg = buildGameConfig(selectCategoryResult.value);
+    const poolLangResult = selectPoolLangResult ? selectPoolLangResult.value : null;
+    const cfg = buildGameConfig(selectCategoryResult.value, poolLangResult);
     if (!cfg) return;
     sendMessage({
         type: "new_round",
@@ -896,6 +1300,7 @@ btnNewRound.addEventListener("click", () => {
         customWords: cfg.customWords,
         timerSeconds: cfg.timerSeconds,
         poolLimit: cfg.poolLimit,
+        poolLang: cfg.poolLang,
     });
 });
 
@@ -933,7 +1338,7 @@ logInput.addEventListener("keydown", (e) => {
 logQuickBtns.forEach((btn) => {
     btn.addEventListener("click", () => {
         const kind = btn.dataset.kind;
-        const labels = { yes: "Evet", no: "Hayır", maybe: "Belki" };
+        const labels = { yes: t("label_yes"), no: t("label_no"), maybe: t("label_maybe") };
         sendLogMessage(labels[kind] || "?", kind);
     });
 });
@@ -956,7 +1361,7 @@ elimTabs.forEach((tab) => {
 elimReset.addEventListener("click", () => {
     const total = Object.keys(elimState).length;
     if (total === 0) return;
-    if (!confirm(`${total} işaretlenmiş öğeyi sıfırlamak istiyor musun?`)) return;
+    if (!confirm(t("elim_reset_confirm", { count: total }))) return;
     elimState = {};
     localStorage.removeItem(elimStorageKey("state"));
     renderElimList();
@@ -1015,7 +1420,42 @@ document.addEventListener("DOMContentLoaded", () => {
         localStorage.setItem("theme", newTheme);
     });
 
+    // Dil seçici
+    const langSelect = document.getElementById("lang-select");
+    if (langSelect) {
+        langSelect.value = currentLang;
+        langSelect.addEventListener("change", () => {
+            const newLang = langSelect.value;
+            if (!SUPPORTED_LANGS.includes(newLang)) return;
+            currentLang = newLang;
+            localStorage.setItem("whoami:lang", currentLang);
+            applyI18nToDOM();
+            // Aktif ekranlardaki dinamik metinleri tazele
+            if (myRoomCode) gameRoomCode.textContent = t("room_label", { code: myRoomCode });
+            updateGuessUIState();
+            renderTurnBar();
+            renderLog();
+            if (elimItems && elimItems.length > 0) renderElimList();
+            if (connectionStatus.classList.contains("status-connected")) {
+                connectionStatus.textContent = t("connected");
+            } else if (ws && ws.readyState === WebSocket.OPEN) {
+                connectionStatus.textContent = t("connected");
+            } else if (ws) {
+                connectionStatus.textContent = t("disconnected");
+            } else {
+                connectionStatus.textContent = t("no_connection");
+            }
+            if (btnJoin.disabled) btnJoin.textContent = t("joined");
+            else btnJoin.textContent = t("join_room");
+            // Sunucuya UI dilini bildir ki gelecekteki mesajlar bu dilde olsun
+            if (ws && ws.readyState === WebSocket.OPEN && myPlayerId) {
+                sendMessage({ type: "set_lang", lang: currentLang });
+            }
+        });
+    }
+
     // İlk yüklemede UI hazırlıkları
+    applyI18nToDOM();
     renderAvatarGrid();
     prefillFromUrl();
     updateSoundIcon();

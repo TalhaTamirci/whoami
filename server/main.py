@@ -16,6 +16,7 @@ from game import (
     Room,
     Player,
 )
+from messages import t, normalize_lang, DEFAULT_LANG
 
 # Aktif bağlantıları takip et: websocket -> player_id
 connected_players: dict[websockets.WebSocketServerProtocol, str] = {}
@@ -25,16 +26,17 @@ async def handle_join(websocket, data: dict) -> Player | None:
     """Oyuncu katılma isteğini işle."""
     player_name = data.get("playerName", "").strip()
     room_code = data.get("roomCode", "").strip().upper() or None
+    lang = normalize_lang(data.get("lang"))
 
     if not player_name:
         await websocket.send(json.dumps({
             "type": "error",
-            "message": "İsim boş olamaz!"
+            "message": t(lang, "empty_name")
         }))
         return None
 
     try:
-        player, room, is_new = create_or_join_room(player_name, room_code, websocket)
+        player, room, is_new = create_or_join_room(player_name, room_code, websocket, lang=lang)
     except ValueError as e:
         await websocket.send(json.dumps({
             "type": "error",
@@ -50,6 +52,7 @@ async def handle_join(websocket, data: dict) -> Player | None:
         "playerId": player.id,
         "roomCode": room.code,
         "isHost": room.host.id == player.id,
+        "poolLang": room.pool_lang,
     })
 
     # Lobby güncelle
@@ -66,10 +69,13 @@ async def handle_start_game(player_id: str, data: dict):
     if not room:
         return
 
+    requester = room.players.get(player_id)
+    rlang = requester.lang if requester else DEFAULT_LANG
+
     if room.host.id != player_id:
         await room.players[player_id].send({
             "type": "error",
-            "message": "Sadece oda sahibi oyunu başlatabilir!"
+            "message": t(rlang, "only_host_can_start")
         })
         return
 
@@ -78,9 +84,11 @@ async def handle_start_game(player_id: str, data: dict):
     custom_words = data.get("customWords") or []
     timer_seconds = int(data.get("timerSeconds") or 0)
     pool_limit = int(data.get("poolLimit") or 0)
+    pool_lang = data.get("poolLang") or room.pool_lang
 
     try:
-        room.assign_names(category, difficulty, custom_words, timer_seconds, pool_limit)
+        room.assign_names(category, difficulty, custom_words, timer_seconds, pool_limit,
+                          pool_lang=pool_lang, requester_lang=rlang)
     except ValueError as e:
         await room.players[player_id].send({
             "type": "error",
@@ -91,7 +99,7 @@ async def handle_start_game(player_id: str, data: dict):
     await room.send_game_state()
     room.start_timer_task()
 
-    print(f"[▶] Oda {room.code} oyunu başlattı ({len(room.players)} oyuncu, kategori={category}, zorluk={difficulty}, havuz={pool_limit or 'tam'}, süre={timer_seconds}s)")
+    print(f"[▶] Oda {room.code} oyunu başlattı ({len(room.players)} oyuncu, dil={room.pool_lang}, kategori={category}, zorluk={difficulty}, havuz={pool_limit or 'tam'}, süre={timer_seconds}s)")
     for p in room.players.values():
         print(f"    {p.name} → {p.assigned_name}")
 
@@ -110,7 +118,7 @@ async def handle_guess(player_id: str, data: dict):
         await player.send({
             "type": "guess_result",
             "correct": False,
-            "message": "Oyun aktif değil.",
+            "message": t(player.lang, "game_not_active"),
         })
         return
 
@@ -119,7 +127,7 @@ async def handle_guess(player_id: str, data: dict):
         await player.send({
             "type": "guess_result",
             "correct": False,
-            "message": "Sıran değil, biraz bekle!",
+            "message": t(player.lang, "not_your_turn"),
         })
         return
 
@@ -128,7 +136,7 @@ async def handle_guess(player_id: str, data: dict):
         await player.send({
             "type": "guess_result",
             "correct": False,
-            "message": "Boş tahmin gönderilemez!"
+            "message": t(player.lang, "empty_guess"),
         })
         return
 
@@ -201,10 +209,13 @@ async def handle_new_round(player_id: str, data: dict):
     if not room:
         return
 
+    requester = room.players.get(player_id)
+    rlang = requester.lang if requester else DEFAULT_LANG
+
     if room.host.id != player_id:
         await room.players[player_id].send({
             "type": "error",
-            "message": "Sadece oda sahibi yeni tur başlatabilir!"
+            "message": t(rlang, "only_host_can_new_round")
         })
         return
 
@@ -213,9 +224,11 @@ async def handle_new_round(player_id: str, data: dict):
     custom_words = data.get("customWords") or []
     timer_seconds = int(data.get("timerSeconds") or 0)
     pool_limit = int(data.get("poolLimit") or 0)
+    pool_lang = data.get("poolLang") or room.pool_lang
 
     try:
-        room.assign_names(category, difficulty, custom_words, timer_seconds, pool_limit)
+        room.assign_names(category, difficulty, custom_words, timer_seconds, pool_limit,
+                          pool_lang=pool_lang, requester_lang=rlang)
     except ValueError as e:
         await room.players[player_id].send({
             "type": "error",
@@ -225,7 +238,7 @@ async def handle_new_round(player_id: str, data: dict):
 
     await room.send_game_state()
     room.start_timer_task()
-    print(f"[▶] Oda {room.code} yeni tur başlattı")
+    print(f"[▶] Oda {room.code} yeni tur başlattı (dil={room.pool_lang})")
 
 
 async def handle_set_avatar(player_id: str, data: dict):
@@ -242,6 +255,17 @@ async def handle_set_avatar(player_id: str, data: dict):
     # En fazla 4 karakter (emoji sequence olabilir)
     player.avatar = avatar[:8]
     await room.send_lobby_update()
+
+
+async def handle_set_lang(player_id: str, data: dict):
+    """Oyuncu UI dilini değiştirir — sonraki sunucu mesajları bu dilde gönderilir."""
+    room = get_player_room(player_id)
+    if not room:
+        return
+    player = room.players.get(player_id)
+    if not player:
+        return
+    player.lang = normalize_lang(data.get("lang"))
 
 
 async def handle_post_message(player_id: str, data: dict):
@@ -281,9 +305,11 @@ async def handle_next_turn(player_id: str, data: dict):
         return
     # Sıradaki oyuncu ya da host pas çekebilir
     if player_id != room.current_turn_id and player_id != room.host.id:
+        requester = room.players.get(player_id)
+        rlang = requester.lang if requester else DEFAULT_LANG
         await room.players[player_id].send({
             "type": "error",
-            "message": "Sadece sırası gelen oyuncu veya oda sahibi pas çekebilir."
+            "message": t(rlang, "only_turn_or_host_pass")
         })
         return
     room.advance_turn()
@@ -314,9 +340,15 @@ async def handler(websocket):
             try:
                 data = json.loads(raw_message)
             except json.JSONDecodeError:
+                # player_id yoksa default dil kullan
+                err_lang = DEFAULT_LANG
+                if player_id:
+                    room = get_player_room(player_id)
+                    if room and player_id in room.players:
+                        err_lang = room.players[player_id].lang
                 await websocket.send(json.dumps({
                     "type": "error",
-                    "message": "Geçersiz JSON formatı."
+                    "message": t(err_lang, "invalid_json")
                 }))
                 continue
 
@@ -343,6 +375,10 @@ async def handler(websocket):
                 if player_id:
                     await handle_set_avatar(player_id, data)
 
+            elif msg_type == "set_lang":
+                if player_id:
+                    await handle_set_lang(player_id, data)
+
             elif msg_type == "post_message":
                 if player_id:
                     await handle_post_message(player_id, data)
@@ -352,9 +388,14 @@ async def handler(websocket):
                     await handle_next_turn(player_id, data)
 
             else:
+                err_lang = DEFAULT_LANG
+                if player_id:
+                    room = get_player_room(player_id)
+                    if room and player_id in room.players:
+                        err_lang = room.players[player_id].lang
                 await websocket.send(json.dumps({
                     "type": "error",
-                    "message": f"Bilinmeyen event tipi: {msg_type}"
+                    "message": t(err_lang, "unknown_event_type", kind=msg_type)
                 }))
 
     except websockets.exceptions.ConnectionClosed:

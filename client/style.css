@@ -916,6 +916,25 @@ body.dark-mode .elim-fab:hover { background: #6c83ff; }
 .sound-btn { font-size: 1.3rem; }
 .sound-btn span { line-height: 1; }
 
+.lang-select {
+    background: var(--bg-color, #fff);
+    color: var(--text-color, #222);
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    border-radius: 8px;
+    padding: 6px 10px;
+    font-size: 0.95rem;
+    cursor: pointer;
+    outline: none;
+    transition: background 0.2s, border-color 0.2s;
+}
+.lang-select:hover { border-color: rgba(0, 0, 0, 0.4); }
+body.dark-mode .lang-select {
+    background: #2a2f3a;
+    color: #f0f0f0;
+    border-color: rgba(255, 255, 255, 0.2);
+}
+body.dark-mode .lang-select:hover { border-color: rgba(255, 255, 255, 0.5); }
+
 
 /* ══════════════════════════════════
    AVATAR PICKER (lobby)
