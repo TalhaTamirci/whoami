@@ -18,9 +18,6 @@ from game import (
 )
 from messages import t, normalize_lang, DEFAULT_LANG
 
-import arena
-import games  # noqa: F401 — arena oyunlarını GAME_REGISTRY'ye kaydeder
-
 # Aktif bağlantıları takip et: websocket -> player_id
 connected_players: dict[websockets.WebSocketServerProtocol, str] = {}
 
@@ -357,14 +354,6 @@ async def handler(websocket):
 
             msg_type = data.get("type")
 
-            # ── Arena oyunları (Ben Kimim? dışındaki her şey) ──
-            if msg_type == "join" and data.get("game") and data.get("game") != "whoami":
-                await arena.handle_join(websocket, data)
-                continue
-            if arena.is_arena_ws(websocket):
-                await arena.handle_message(websocket, data)
-                continue
-
             if msg_type == "join":
                 player = await handle_join(websocket, data)
                 if player:
@@ -412,16 +401,13 @@ async def handler(websocket):
     except websockets.exceptions.ConnectionClosed:
         pass
     finally:
-        if arena.is_arena_ws(websocket):
-            await arena.handle_disconnect(websocket)
-        else:
-            await handle_disconnect(websocket)
+        await handle_disconnect(websocket)
 
 
-def health_check(connection, request):
-    """Cloudflare tüneli sağlık kontrolü için HTTP yanıt (websockets >= 14 API)."""
-    if request.path == "/health":
-        return connection.respond(200, "OK\n")
+async def health_check(path, request_headers):
+    """Cloudflare tüneli sağlık kontrolü için HTTP yanıt."""
+    if path == "/health":
+        return (200, [], b"OK")
     # None dönerse normal WebSocket upgrade devam eder
     return None
 

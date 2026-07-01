@@ -3,259 +3,266 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Oyun Merkezi</title>
-    <meta name="description" content="Arkadaşlarınla tarayıcıda oyna: Ben Kimim?, Koridor, Skor 4, Noktalar & Kutular.">
-    <meta name="theme-color" content="#7c5cff">
+    <meta name="description" content="Ben Kimim? — Discord'da arka planda oynanan çok oyunculu tahmin oyunu">
+    <meta name="theme-color" content="#0097e6">
+    <title>Ben Kimim? 🎭</title>
+    <link rel="stylesheet" href="style.css">
     <link rel="manifest" href="manifest.json">
-    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🎮%3C/text%3E%3C/svg%3E">
-    <script>
-        // Eski davet linkleri: kök adrese ?room=KOD ile gelenler whoami'ye yönlensin.
-        (function () {
-            var params = new URLSearchParams(location.search);
-            var room = params.get("room");
-            if (room) {
-                location.replace("whoami/?room=" + encodeURIComponent(room));
-            }
-        })();
-    </script>
-    <style>
-        :root {
-            --bg: #0f1220;
-            --panel: #1a1f35;
-            --accent: #7c5cff;
-            --accent-2: #00e5a0;
-            --text: #eef0ff;
-            --muted: rgba(238, 240, 255, 0.6);
-            --border: rgba(238, 240, 255, 0.08);
-        }
-
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-
-        html { scroll-behavior: smooth; }
-
-        body {
-            min-height: 100vh;
-            min-height: 100dvh;
-            display: flex;
-            flex-direction: column;
-            background-color: var(--bg);
-            background-image:
-                radial-gradient(ellipse 80% 50% at 20% -10%, rgba(124, 92, 255, 0.28), transparent 60%),
-                radial-gradient(ellipse 60% 40% at 90% 0%, rgba(0, 229, 160, 0.14), transparent 55%),
-                radial-gradient(ellipse 70% 60% at 50% 110%, rgba(124, 92, 255, 0.12), transparent 60%);
-            color: var(--text);
-            font-family: "Segoe UI", system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
-            -webkit-font-smoothing: antialiased;
-        }
-
-        main {
-            flex: 1;
-            width: 100%;
-            max-width: 980px;
-            margin: 0 auto;
-            padding: clamp(40px, 8vh, 90px) 20px 40px;
-        }
-
-        /* ── Hero ── */
-        .hero { text-align: center; margin-bottom: clamp(36px, 6vh, 64px); }
-
-        .hero .kicker {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            letter-spacing: 0.18em;
-            text-transform: uppercase;
-            color: var(--accent-2);
-            border: 1px solid rgba(0, 229, 160, 0.3);
-            background: rgba(0, 229, 160, 0.07);
-            border-radius: 999px;
-            padding: 6px 16px;
-            margin-bottom: 22px;
-        }
-
-        .hero h1 {
-            font-size: clamp(2.4rem, 7vw, 4.2rem);
-            font-weight: 800;
-            line-height: 1.08;
-            letter-spacing: -0.02em;
-            background: linear-gradient(100deg, var(--text) 20%, var(--accent) 55%, var(--accent-2) 90%);
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-            color: transparent;
-        }
-
-        .hero p {
-            margin-top: 16px;
-            font-size: clamp(1rem, 2.4vw, 1.15rem);
-            color: var(--muted);
-            max-width: 46ch;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        /* ── Kart ızgarası ── */
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr));
-            gap: 18px;
-        }
-
-        .card {
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            background: var(--panel);
-            border: 1px solid var(--border);
-            border-radius: 20px;
-            padding: 26px 22px 22px;
-            text-decoration: none;
-            color: var(--text);
-            overflow: hidden;
-            transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
-        }
-
-        .card::before {
-            content: "";
-            position: absolute;
-            inset: 0;
-            background: radial-gradient(ellipse 90% 70% at 50% -20%, rgba(124, 92, 255, 0.18), transparent 65%);
-            opacity: 0;
-            transition: opacity 0.25s ease;
-            pointer-events: none;
-        }
-
-        .card:hover,
-        .card:focus-visible {
-            transform: translateY(-6px);
-            border-color: rgba(124, 92, 255, 0.55);
-            box-shadow: 0 14px 34px rgba(0, 0, 0, 0.45), 0 0 0 1px rgba(124, 92, 255, 0.25);
-        }
-
-        .card:hover::before,
-        .card:focus-visible::before { opacity: 1; }
-
-        .card:focus-visible { outline: 2px solid var(--accent-2); outline-offset: 3px; }
-
-        .card .emoji {
-            font-size: 2.6rem;
-            line-height: 1;
-            filter: drop-shadow(0 6px 14px rgba(0, 0, 0, 0.35));
-            transition: transform 0.25s ease;
-        }
-
-        .card:hover .emoji { transform: scale(1.12) rotate(-4deg); }
-
-        .card h2 { font-size: 1.25rem; font-weight: 700; letter-spacing: -0.01em; }
-
-        .card .desc { font-size: 0.92rem; color: var(--muted); line-height: 1.45; flex: 1; }
-
-        .badge {
-            align-self: flex-start;
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            font-size: 0.75rem;
-            font-weight: 600;
-            color: var(--accent-2);
-            background: rgba(0, 229, 160, 0.09);
-            border: 1px solid rgba(0, 229, 160, 0.25);
-            border-radius: 999px;
-            padding: 4px 12px;
-        }
-
-        .card .cta {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            color: var(--accent);
-            margin-top: 4px;
-            transition: gap 0.2s ease;
-        }
-
-        .card:hover .cta { gap: 11px; }
-
-        /* ── Footer ── */
-        footer {
-            text-align: center;
-            padding: 28px 20px 34px;
-            font-size: 0.9rem;
-            color: var(--muted);
-            border-top: 1px solid var(--border);
-        }
-
-        footer a {
-            color: var(--accent-2);
-            text-decoration: none;
-            font-weight: 600;
-        }
-
-        footer a:hover { text-decoration: underline; }
-
-        @media (prefers-reduced-motion: reduce) {
-            .card, .card .emoji, .card .cta, .card::before { transition: none; }
-        }
-    </style>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🎭%3C/text%3E%3C/svg%3E">
 </head>
 <body>
 
-    <main>
-        <header class="hero">
-            <span class="kicker">🎮 Oyun Merkezi</span>
-            <h1>Hangi oyunu<br>oynayalım?</h1>
-            <p>Kurulum yok, hesap yok. Bir oyun seç, davet linkini arkadaşına at, hemen oynamaya başla.</p>
-        </header>
+    <div class="top-right-controls">
+        <select id="lang-select" class="lang-select" title="Language / Sprache / Dil">
+            <option value="tr">🇹🇷 TR</option>
+            <option value="en">🇬🇧 EN</option>
+            <option value="de">🇩🇪 DE</option>
+        </select>
+        <button id="btn-sound-toggle" class="theme-btn sound-btn" data-i18n-title="sound_toggle" title="Ses Efektleri">
+            <span id="sound-icon-on">🔊</span>
+            <span id="sound-icon-off" class="hidden">🔇</span>
+        </button>
+        <button id="theme-toggle" class="theme-btn" data-i18n-title="theme_toggle" title="Temayı Değiştir">
+            <svg id="moon-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-moon"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+            <svg id="sun-icon" class="hidden" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-sun"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+        </button>
+    </div>
 
-        <nav class="grid" aria-label="Oyunlar">
-            <a class="card" href="whoami/">
-                <span class="emoji" aria-hidden="true">🎭</span>
-                <h2>Ben Kimim?</h2>
-                <p class="desc">Alnındaki ismi sorularla tahmin et — parti oyunu klasiği.</p>
-                <span class="badge">👥 2+ oyuncu</span>
-                <span class="cta">Oyna <span aria-hidden="true">→</span></span>
-            </a>
+    <!-- ═══════════════ LOBBY EKRANI ═══════════════ -->
+    <div id="screen-lobby" class="screen active">
+        <div class="lobby-container">
+            <h1>🎭 <span data-i18n="app_title">Ben Kimim?</span></h1>
+            <p class="subtitle" data-i18n="subtitle">Discord'da arka planda oyna!</p>
 
-            <a class="card" href="koridor/">
-                <span class="emoji" aria-hidden="true">🧱</span>
-                <h2>Koridor</h2>
-                <p class="desc">Duvar koy, rakibi yavaşlat, karşıya ilk sen geç.</p>
-                <span class="badge">👥 2 oyuncu</span>
-                <span class="cta">Oyna <span aria-hidden="true">→</span></span>
-            </a>
+            <div class="form-group">
+                <label for="input-name" data-i18n="your_name">Adın</label>
+                <input type="text" id="input-name" data-i18n-placeholder="your_name_placeholder" placeholder="Adını yaz..." maxlength="20" autocomplete="off">
+            </div>
 
-            <a class="card" href="skor4/">
-                <span class="emoji" aria-hidden="true">🔵</span>
-                <h2>Skor 4</h2>
-                <p class="desc">Taşları bırak, 4'ü yan yana getiren kazanır.</p>
-                <span class="badge">👥 2 oyuncu</span>
-                <span class="cta">Oyna <span aria-hidden="true">→</span></span>
-            </a>
+            <div class="form-group">
+                <label data-i18n="choose_avatar">Avatar Seç</label>
+                <div id="avatar-grid" class="avatar-grid">
+                    <!-- JS dolduracak -->
+                </div>
+            </div>
 
-            <a class="card" href="noktalar/">
-                <span class="emoji" aria-hidden="true">✏️</span>
-                <h2>Noktalar &amp; Kutular</h2>
-                <p class="desc">Çizgileri çek, kutuları kap — en çok kutu kimin?</p>
-                <span class="badge">👥 2-4 oyuncu</span>
-                <span class="cta">Oyna <span aria-hidden="true">→</span></span>
-            </a>
-        </nav>
-    </main>
+            <div class="form-group">
+                <label for="input-room"><span data-i18n="room_code">Oda Kodu</span> <span class="hint" data-i18n="room_code_hint">(boş bırak = yeni oda)</span></label>
+                <input type="text" id="input-room" placeholder="ABC123" maxlength="6" autocomplete="off" style="text-transform: uppercase;">
+            </div>
 
-    <footer>
-        <a href="https://ahmetkadir.com" target="_blank" rel="noopener">ahmetkadir.com</a>
-    </footer>
+            <button id="btn-join" class="btn-primary" data-i18n="join_room">Odaya Katıl</button>
 
-    <script>
-        if ("serviceWorker" in navigator) {
-            window.addEventListener("load", function () {
-                navigator.serviceWorker.register("sw.js").catch(function () {});
-            });
-        }
-    </script>
+            <!-- Bağlantı sonrası lobby bilgisi -->
+            <div id="lobby-info" class="hidden">
+                <div class="room-code-display">
+                    <span data-i18n="room_code_label">Oda Kodu:</span> <span id="display-room-code">---</span>
+                    <button id="btn-copy-code" class="btn-small" data-i18n-title="copy_code" title="Kodu kopyala">📋</button>
+                    <button id="btn-copy-link" class="btn-small" data-i18n-title="copy_link" title="Davet linkini kopyala">🔗</button>
+                </div>
+
+                <h3 data-i18n="players">Oyuncular</h3>
+                <ul id="player-list"></ul>
+
+                <div id="host-controls" class="hidden">
+                    <div class="form-group" style="margin-top: 15px;">
+                        <label for="select-pool-lang" data-i18n="pool_lang">Kelime Dili</label>
+                        <select id="select-pool-lang" class="select-styled">
+                            <option value="tr">🇹🇷 Türkçe</option>
+                            <option value="en">🇬🇧 English</option>
+                            <option value="de">🇩🇪 Deutsch</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="select-category" data-i18n="game_mode">Oyun Modu</label>
+                        <select id="select-category" class="select-styled">
+                            <option value="populer_ikonlar" data-i18n="cat_populer_ikonlar">İkonik Kişiler Karakterler</option>
+                            <option value="hayvanlar" data-i18n="cat_hayvanlar">Hayvanlar (Kurgusal Dahil)</option>
+                            <option value="tarihi_olaylar" data-i18n="cat_tarihi_olaylar">Tarihi Olaylar</option>
+                            <option value="yemekler" data-i18n="cat_yemekler">🍔 Yemekler</option>
+                            <option value="filmler" data-i18n="cat_filmler">🎬 Filmler</option>
+                            <option value="markalar" data-i18n="cat_markalar">🏷️ Markalar</option>
+                            <option value="sehirler" data-i18n="cat_sehirler">🌍 Şehirler</option>
+                            <option value="meslekler" data-i18n="cat_meslekler">👷 Meslekler</option>
+                            <option value="sporlar" data-i18n="cat_sporlar">⚽ Spor Dalları</option>
+                            <option value="esyalar" data-i18n="cat_esyalar">🪑 Eşyalar</option>
+                            <option value="deyimler" data-i18n="cat_deyimler">💬 Atasözleri & Deyimler</option>
+                            <option value="karma" data-i18n="cat_karma">🎲 Karma Mod (Hepsi Birden)</option>
+                            <option value="ozel" data-i18n="cat_ozel">✏️ Özel Kategori (Sen Yaz)</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="select-difficulty" data-i18n="difficulty">Zorluk</label>
+                        <select id="select-difficulty" class="select-styled">
+                            <option value="kolay" data-i18n="diff_kolay">Kolay (Sadece çok bilinenler)</option>
+                            <option value="hepsi" selected data-i18n="diff_hepsi">Hepsi (Tüm liste)</option>
+                            <option value="ozel_sayi" data-i18n="diff_ozel_sayi">Özel (Toplam seçenek sayısı)</option>
+                        </select>
+                    </div>
+
+                    <div id="pool-size-group" class="form-group hidden">
+                        <label for="input-pool-size"><span data-i18n="pool_size">Toplam Seçenek Sayısı</span> <span class="hint" data-i18n="pool_size_hint">(havuzdan kaç öğe çekilsin — eleme defterinde de bu kadar gösterilir)</span></label>
+                        <input type="number" id="input-pool-size" min="2" max="3000" step="1" value="30" class="select-styled">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="input-timer" data-i18n="turn_timer">Tur Süresi (saniye, 0 = kapalı)</label>
+                        <input type="number" id="input-timer" min="0" max="300" step="5" value="0" class="select-styled">
+                    </div>
+
+                    <div id="custom-category-group" class="form-group hidden">
+                        <label for="input-custom-words"><span data-i18n="custom_words">Özel Kelimeler</span> <span class="hint" data-i18n="custom_words_hint">(her satıra bir tane, en az oyuncu sayısı kadar)</span></label>
+                        <textarea id="input-custom-words" class="select-styled" rows="5" data-i18n-placeholder="custom_words_placeholder" placeholder="Mesela:&#10;Ahmet Hoca&#10;Berfin&#10;Kantinci Hasan&#10;..."></textarea>
+                    </div>
+
+                    <button id="btn-start" class="btn-primary" data-i18n="start_game">Oyunu Başlat</button>
+                </div>
+
+                <p id="waiting-msg" class="hint" data-i18n="waiting_host">Oda sahibinin başlatmasını bekle...</p>
+            </div>
+
+            <div id="connection-status" class="status-disconnected" data-i18n="no_connection">● Bağlantı yok</div>
+        </div>
+    </div>
+
+    <!-- ═══════════════ OYUN EKRANI ═══════════════ -->
+    <div id="screen-game" class="screen">
+        <div class="game-header">
+            <span class="room-badge" id="game-room-code"></span>
+            <h2>🎭 <span data-i18n="app_title">Ben Kimim?</span></h2>
+            <div id="turn-bar" class="turn-bar hidden">
+                <span class="turn-label" data-i18n="turn_label">Sıra:</span>
+                <span id="turn-player-name" class="turn-name">-</span>
+                <span id="timer-pill" class="timer-pill hidden">⏱ <span id="timer-value">00:00</span></span>
+                <button id="btn-pass" class="btn-small pass-btn" data-i18n="pass_btn">Pas ⏭</button>
+            </div>
+        </div>
+
+        <!-- Masa ve oyuncular -->
+        <div id="game-table-area">
+            <div id="table-center">
+                <!-- placeholder: masa görseli -->
+                <div class="table-placeholder" data-i18n="table">MASA</div>
+            </div>
+            <div id="players-circle">
+                <!-- JS tarafından doldurulacak -->
+            </div>
+        </div>
+
+        <!-- Tahmin alanı -->
+        <div id="guess-area">
+            <div id="guess-feedback" class="hidden"></div>
+            <div class="guess-input-row">
+                <input type="text" id="input-guess" data-i18n-placeholder="guess_placeholder" placeholder="Kafandaki ismi tahmin et..." autocomplete="off">
+                <div class="guess-controls">
+                    <button id="btn-guess" class="btn-primary" data-i18n="guess_btn">Tahmin Et</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ═══════════════ SORU/CEVAP LOG (sol alt) ═══════════════ -->
+        <button id="btn-log-toggle" class="log-fab" data-i18n-title="log_panel" title="Soru/Cevap Defteri">
+            <span class="log-fab-icon">💬</span>
+            <span class="log-fab-badge hidden" id="log-fab-badge">0</span>
+        </button>
+
+        <div id="log-panel" class="log-panel hidden">
+            <div class="elim-header">
+                <div class="elim-title">
+                    <span data-i18n="log_title">💬 Soru / Cevap</span>
+                </div>
+                <button id="btn-log-close" class="elim-close" data-i18n-title="close" title="Kapat">✕</button>
+            </div>
+
+            <div id="log-list" class="log-list"></div>
+
+            <div class="log-quick">
+                <button class="log-quick-btn" data-kind="yes" data-i18n="quick_yes">✅ Evet</button>
+                <button class="log-quick-btn" data-kind="no" data-i18n="quick_no">❌ Hayır</button>
+                <button class="log-quick-btn" data-kind="maybe" data-i18n="quick_maybe">🤔 Belki</button>
+            </div>
+
+            <div class="log-input-row">
+                <input type="text" id="log-input" data-i18n-placeholder="log_input_placeholder" placeholder="Soru/Not yaz... (örn. 'Erkek misin?')" maxlength="200" autocomplete="off">
+                <button id="btn-log-send" class="btn-primary log-send" data-i18n="send">Gönder</button>
+            </div>
+        </div>
+
+        <!-- ═══════════════ ELEME PANELİ (sağ alt) ═══════════════ -->
+        <button id="btn-elim-toggle" class="elim-fab" data-i18n-title="elim_panel" title="Eleme Defteri">
+            <span class="elim-fab-icon">📝</span>
+            <span class="elim-fab-badge" id="elim-fab-badge">0</span>
+        </button>
+
+        <div id="elim-panel" class="elim-panel hidden">
+            <div class="elim-header">
+                <div class="elim-title">
+                    <span data-i18n="elim_title">📝 Eleme Defteri</span>
+                    <span class="elim-count" id="elim-count">0 / 0</span>
+                </div>
+                <button id="btn-elim-close" class="elim-close" data-i18n-title="close" title="Kapat">✕</button>
+            </div>
+
+            <textarea id="elim-notes" class="elim-notes" data-i18n-placeholder="elim_notes_placeholder" placeholder="Notların... (örn. 'erkek, tarihi figür, asker olabilir')" rows="2"></textarea>
+
+            <div class="elim-toolbar">
+                <input type="text" id="elim-search" class="elim-search" data-i18n-placeholder="elim_search_placeholder" placeholder="🔍 Ara..." autocomplete="off">
+                <button id="btn-elim-reset" class="btn-small elim-reset" data-i18n-title="elim_reset" title="Hepsini geri al">↺</button>
+            </div>
+
+            <div class="elim-tabs">
+                <button class="elim-tab active" data-tab="all" data-i18n="elim_tab_all">Hepsi</button>
+                <button class="elim-tab" data-tab="active" data-i18n="elim_tab_active">Aday</button>
+                <button class="elim-tab" data-tab="suspect" data-i18n="elim_tab_suspect">Şüpheli</button>
+                <button class="elim-tab" data-tab="eliminated" data-i18n="elim_tab_eliminated">Elenen</button>
+            </div>
+
+            <div id="elim-list" class="elim-list"></div>
+        </div>
+    </div>
+
+    <!-- ═══════════════ SONUÇ EKRANI ═══════════════ -->
+    <div id="screen-result" class="screen">
+        <div class="result-container">
+            <h1>🏆 <span data-i18n="game_over">Oyun Bitti!</span></h1>
+            <div id="rankings-list"></div>
+
+            <div id="host-controls-result" class="hidden" style="margin-top: 20px;">
+                <div class="form-group" style="text-align: center;">
+                    <label for="select-pool-lang-result" style="display: inline-block; margin-right: 10px;" data-i18n="pool_lang_label">Kelime Dili:</label>
+                    <select id="select-pool-lang-result" class="select-styled" style="display: inline-block; width: auto;">
+                        <option value="tr">🇹🇷 Türkçe</option>
+                        <option value="en">🇬🇧 English</option>
+                        <option value="de">🇩🇪 Deutsch</option>
+                    </select>
+                </div>
+                <div class="form-group" style="text-align: center;">
+                    <label for="select-category-result" style="display: inline-block; margin-right: 10px;" data-i18n="game_mode_label">Oyun Modu:</label>
+                    <select id="select-category-result" class="select-styled" style="display: inline-block; width: auto;">
+                        <option value="populer_ikonlar" data-i18n="cat_populer_ikonlar">İkonik Kişiler Karakterler</option>
+                        <option value="hayvanlar" data-i18n="cat_hayvanlar">Hayvanlar (Kurgusal Dahil)</option>
+                        <option value="tarihi_olaylar" data-i18n="cat_tarihi_olaylar">Tarihi Olaylar</option>
+                        <option value="yemekler" data-i18n="cat_yemekler">🍔 Yemekler</option>
+                        <option value="filmler" data-i18n="cat_filmler">🎬 Filmler</option>
+                        <option value="markalar" data-i18n="cat_markalar">🏷️ Markalar</option>
+                        <option value="sehirler" data-i18n="cat_sehirler">🌍 Şehirler</option>
+                        <option value="meslekler" data-i18n="cat_meslekler">👷 Meslekler</option>
+                        <option value="sporlar" data-i18n="cat_sporlar">⚽ Spor Dalları</option>
+                        <option value="esyalar" data-i18n="cat_esyalar">🪑 Eşyalar</option>
+                        <option value="deyimler" data-i18n="cat_deyimler">💬 Atasözleri & Deyimler</option>
+                        <option value="karma" data-i18n="cat_karma_short">🎲 Karma Mod</option>
+                    </select>
+                </div>
+                <button id="btn-new-round" class="btn-primary" data-i18n="new_round_btn">Aynı Oyuncularla Yeni Tur</button>
+                <p class="hint" style="margin-top:6px;" data-i18n="new_round_hint">Aynı odada, aynı oyuncularla devam edersiniz.</p>
+            </div>
+
+            <p id="waiting-new-round" class="hint" data-i18n="waiting_new_round">Oda sahibinin yeni tur başlatmasını bekle...</p>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
 </body>
 </html>

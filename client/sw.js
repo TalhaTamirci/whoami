@@ -1,7 +1,9 @@
-const CACHE_NAME = "oyunhub-v1";
+const CACHE_NAME = "whoami-v1";
 const CORE_ASSETS = [
     "./",
     "./index.html",
+    "./style.css",
+    "./app.js",
     "./manifest.json",
 ];
 
@@ -13,15 +15,10 @@ self.addEventListener("install", (event) => {
 });
 
 self.addEventListener("activate", (event) => {
-    // Sadece kendi prefix'imizdeki eski cache'leri temizle; diğer SW'lerin
-    // (whoami/koridor/skor4/noktalar) cache'lerine dokunma. Eskiden root
-    // scope'ta kullanılan "whoami-v1" tek seferlik açıkça silinir.
     event.waitUntil(
         caches.keys().then((keys) =>
             Promise.all(
-                keys
-                    .filter((k) => (k.startsWith("oyunhub-") && k !== CACHE_NAME) || k === "whoami-v1")
-                    .map((k) => caches.delete(k))
+                keys.filter((k) => k !== CACHE_NAME).map((k) => caches.delete(k))
             )
         )
     );
